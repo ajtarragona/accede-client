@@ -30,3 +30,4 @@ class AccedeTestController extends Controller
 		return $tercers;
 	}
 }
+
