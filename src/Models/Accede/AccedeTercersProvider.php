@@ -1,6 +1,7 @@
 <?php
 
 namespace Ajtarragona\AccedeTercers\Models\Accede; 
+
 use Ajtarragona\AccedeTercers\Models\Accede\AccedeObject;
 use Ajtarragona\AccedeTercers\Models\Accede\Request as AccedeRequest;
 use Ajtarragona\AccedeTercers\Models\Accede\Security as AccedeSecurity;
@@ -8,6 +9,7 @@ use Ajtarragona\AccedeTercers\Models\Accede\Operation as AccedeOperation;
 use Ajtarragona\AccedeTercers\Models\Accede\Response as AccedeResponse;
 use Ajtarragona\AccedeTercers\Models\Accede\Beans\Tercer as TercerAccede;
 use Ajtarragona\AccedeTercers\Models\Accede\Beans\Domicili as DomiciliAccede;
+use Ajtarragona\AccedeTercers\Models\Accede\Beans\Via as ViaAccede;
 
 
 class AccedeTercersProvider {

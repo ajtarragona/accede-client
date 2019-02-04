@@ -15,9 +15,12 @@ class AccedeTercersServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        
+        //cargo rutas
         $this->loadRoutesFrom(__DIR__.'/routes.php');
 
 
+        //publico configuracion
         $config = __DIR__.'/Config/accede-tercers.php';
         
         $this->publishes([
@@ -37,8 +40,14 @@ class AccedeTercersServiceProvider extends ServiceProvider
     public function register()
     {
        	
-       	
 
+        //defino facade
+       	$this->app->bind('accedetercers', function(){
+            return new \Ajtarragona\AccedeTercers\Models\Accede\AccedeTercersProvider;
+        });
+
+
+        //helpers
         foreach (glob(__DIR__.'/Helpers/*.php') as $filename){
             require_once($filename);
         }
