@@ -114,7 +114,6 @@ Funció | Paràmetres | Retorn
 ### AccedeVialer
 Funció | Paràmetres | Retorn 
 --- | --- | --- 
-
 *getPais($codigoPais)* | |
 *getAllPaisos()* | |
 *searchPaisosByName($filter)* | |
