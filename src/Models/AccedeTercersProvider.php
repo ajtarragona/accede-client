@@ -29,7 +29,7 @@ class AccedeTercersProvider extends AccedeProvider{
 			"obtenerDomicilios" => AccedeObject::ACCEDE_BOOL_FALSE
 		);
 		$response=$this->sendRequest("TER","LST",$params);
-		return TercerAccede::parseResponse($response, true);
+		return TercerAccede::parseSingle($response);
 	} 
 
 
@@ -181,17 +181,6 @@ class AccedeTercersProvider extends AccedeProvider{
 
 	
 
-	public function getDomicilisByVia($codiVia,$numeroDesde=false,$numeroHasta=false) {	
-		$params=array(
-			"codigoVia" => $codiVia
-		);
-		if($numeroDesde){
-			$params["numeroDesde"]= $numeroDesde;
-			$params["numeroHasta"]= $numeroHasta?$numeroHasta:$numeroDesde;
-		}
-		$response=$this->sendRequest("DOM","LST",$params);
-		return DomiciliAccede::parseResponse($response);
-	}
 	
 
 	public function createTercer($tercer){

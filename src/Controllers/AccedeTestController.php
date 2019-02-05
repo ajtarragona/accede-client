@@ -17,10 +17,10 @@ class AccedeTestController extends Controller
 		//$tercers=$accedetercers->getTercerByNIF($filter);
 		//dd($tercers);
 		//dd($filter);
-		$vies=$accedevialer->searchViesByName($filter);
+		$vies=$accedevialer->getAllPaisos();
 
 		if($vies) dd($vies);
-		
+		return;
 		if($tercers){
 			foreach($tercers as $tercer){
 				$domicilios=$accedetercers->getDomicilisTercer($tercer->codigoTercero);

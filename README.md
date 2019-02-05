@@ -104,7 +104,6 @@ public function test(){
 	public function getTercerByDNI($dni){
 	public function getTercerByNIF($nif){
 	public function getDomicilisTercer($id){
-	public function getDomicilisByVia($codiVia,$numeroDesde=false,$numeroHasta=false) {	
 	public function createTercer($tercer){
 	public function updateTercer($tercer){}
 	public function deleteTercer($id){}
@@ -112,83 +111,31 @@ public function test(){
 
 ### Vialer
 ```php
-	public function searchViesByName($filter, $codiProvincia=false, $codiMunicipi=false ) {	
-	public function getAllVies($codiProvincia=false, $codiMunicipi=false ) {	
-```
-
-## Objectes
-
-### \Ajtarragona\Accede\Models\Beans\Tercer
-```php
-$codigoTercero;
-$codigoTipoDocumento;
-$nombreTipoDocumento;
-$documento;
-$nombre;
-$apellido1;
-$apellido2;
-$telefono;
-$usuarioAlta;
-$fechaAlta;
-$situacionTercero;
-```
-
-### \Ajtarragona\Accede\Models\Beans\Via
-```php
-$codigoVia;
-$codigoIneVia;
-$nombreVia;
-$nombreLargoVia;
-$nombreAntiguoVia;
-$situacionVia;
-$codigoTipoVia;
-$nombreTipoVia;
-$codigoIneEntidadColectiva;
-$nombreEntidadColectiva;
-$codigoIneEntidadSingular;
-$nombreEntidadSingular;
-$codigoIneNucleo;
-$nombreNucleo;
-```
-
-### \Ajtarragona\Accede\Models\Beans\Domicili
-```php
-$codigoDomicilio;
-$codigoDireccionSuelo;
-$codigoTipoOcupacion;
-$nombreTipoOcupacion;
-$normalizadoDomicilio;
-$codigoProvincia;
-$nombreProvincia;
-$codigoMunicipio;
-$nombreMunicipio;
-$codigoEntidadSingular;
-$codigoIneEntidadSingular;
-$nombreEntidadSingular;
-$codigoNucleo;
-$codigoIneNucleo;
-$nombreNucleo;
-$distrito;
-$seccion;
-$letraSeccion;
-$codigoTipoVia;
-$codigoIneTipoVia;
-$nombreTipoVia;
-$codigoVia;
-$codigoIneVia;
-$nombreVia;
-$numeroDesde;
-$codigoPlanta;
-$nombrePlanta;
-$codigoPuerta;
-$codigoPostal;
-$codigoTipoVivienda;
-$nombreTipoVivienda;
-$codigoTipoNumeracion;
-$nombreTipoNumeracion;
-$situacionTramo;
-$cadenaDomicilio;
-$cadenaDomicilioCompleta;
-$usuarioAlta;
-$fechaAlta;
+	getPais($codigoPais)
+	getAllPaisos()
+	searchPaisosByName($filter)
+	getProvincia($codigoProvincia)
+	getAllProvincies()
+	searchProvinciesByName($filter)
+	getMunicipi($codigoMunicipio,$codigoProvincia=false)
+	getAllMunicipis($codigoProvincia=false)
+	searchMunicipisByName($filter,$codigoProvincia=false)
+	getPortal($codigoPortal)
+	getAllPortals( )
+	getPorta($codigoPuerta) 
+	getAllPortes( ) 
+	getPlanta($codigoPlanta)
+	getAllPlantes( )
+	getEscala($codigoEscalera)
+	getAllEscales( ) 
+	getAllBlocs($codiProvincia=false, $codiMunicipi=false)
+	getBloc($codigoBloque)
+	getAllCodisPostals($codiProvincia=false, $codiMunicipi=false)
+	getCodiPostal($codigoPostal, $codiProvincia=false, $codiMunicipi=false)
+	searchViesByName($filter, $codiProvincia=false, $codiMunicipi=false )
+	getAllVies($codiProvincia=false, $codiMunicipi=false )
+	getAllTipusVia($codiProvincia=false, $codiMunicipi=false ) 
+	getTipusVia($codigoTipoVia)
+	searchDomicilis($params=[])
+	getDomicilisByVia($codiVia,$numeroDesde=false,$numeroHasta=false)
 ```

@@ -4,6 +4,7 @@ use Ajtarragona\Accede\Models\AccedeObject;
 use Ajtarragona\Accede\Models\Response as AccedeResponse;
 use Ajtarragona\Accede\Models\Helpers\AccedeHelper;
 use \SoapClient;
+use Illuminate\Support\Facades\Log;
 
 
 class Request  extends AccedeObject{
@@ -25,7 +26,7 @@ class Request  extends AccedeObject{
 	
 		$this->ope=$ope;
 		$this->sec=$sec;
-		$this->par = AccedeHelper::encodeArray($par);
+		if($par && count($par)>0) $this->par = AccedeHelper::encodeArray($par);
 		$this->dat=$dat;
 
 		if($wsurl) $this->client = new SoapClient($wsurl);
@@ -42,6 +43,8 @@ class Request  extends AccedeObject{
 	public function send(){
 		$sml=$this->toSML();
 		//dump($sml);
+
+		if(config("accede.debug")) Log::debug('Accede Request: \n'.$sml);
 		//$sml="<![CDATA[".$sml."]]>";
 		
 		//_dump(htmlentities($sml));
@@ -50,6 +53,7 @@ class Request  extends AccedeObject{
 
 		try{
 			$ret=$this->client->__soapCall(self::SERVICIO, $params);
+			if(config("accede.debug")) Log::debug('Accede Response: \n'.$ret);
 			$ret=AccedeHelper::decodeArray(AccedeHelper::fromSML($ret));
 			//dd($ret);
 			$response=AccedeResponse::parseArray($ret);

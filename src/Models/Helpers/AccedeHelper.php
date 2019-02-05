@@ -108,12 +108,12 @@ class AccedeHelper{
 		$ret=$value;
 		//return $ret;
 		if(self::is_base64($value)){
-        	$ret=base64_decode($value);
-        	$ret=mb_convert_encoding($ret, 'UTF-8', 'UTF-8');
+        
+        	$ret=utf8_encode(base64_decode($value));
+        
         }else if(self::is_UTCDate($value)){
         	$ret=self::getDateFromUTC($value);
         }
-
 		
 		return $ret;
 	}
@@ -145,7 +145,7 @@ class AccedeHelper{
 					// add single node.
 					
 	                $ret[$key] = self::accedeDecodedValue($value);
-	                
+	               
 	                //$ret[$key]=$value;
 				}
 			}

@@ -7,12 +7,15 @@
 		protected static $SML_SINGLE = "domicilio";
 		protected static $SML_LIST = "l_domicilio";
 
+		
 		public $codigoDomicilio;
 	    public $codigoDireccionSuelo;
 	    public $codigoTipoOcupacion;
 	    public $nombreTipoOcupacion;
 	    public $normalizadoDomicilio;
-	    public $codigoProvincia;
+	    public $codigoPais;
+		public $nombrePais;
+		public $codigoProvincia;
 	    public $nombreProvincia;
 	    public $codigoMunicipio;
 	    public $nombreMunicipio;
