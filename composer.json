@@ -1,7 +1,9 @@
 {
     "name": "ajtarragona/accede-client",
-    "description": "Client d'accés als tercers i vialer d'Accede (Firmadoc)",
+    "description": "Client d'accés als tercers i vialer d'Accede (Aytos)",
+    "keywords" : ["laravel5","laravel","accede","aytos","firmadoc","tercers","vialer"],
     "type": "library",
+    "license": "MIT",
     "authors": [
         {
             "name": "Txomin Medrano Martorell",
