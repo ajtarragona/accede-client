@@ -1,7 +1,7 @@
 <?php
-	namespace Ajtarragona\AccedeTercers\Models\Accede; 
+	namespace Ajtarragona\Accede\Models; 
 
-	use Ajtarragona\AccedeTercers\Models\Accede\AccedeObject;
+	use Ajtarragona\Accede\Models\AccedeObject;
 
 	class Response extends AccedeObject{
 		protected static $SML_SINGLE = "s";

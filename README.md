@@ -2,7 +2,7 @@
 
 ## Accede-Tercers
 
-Paquet d'accés al WS de Accede (Aytos) per a Tercers i vialer
+Paquet d'accés al WS de Accede (Aytos) per a Tercers i Vialer
 
 
 ## Instalació
@@ -26,10 +26,10 @@ ACCEDE_ORGANISM
 Alternativament, pots publicar l'arxiu de configuració del paquet amb la comanda:
 
 ```bash
-php artisan vendor:publish --tag=ajtarragona-accede-tercers
+php artisan vendor:publish --tag=ajtarragona-accede
 ```
 
-Això copiarà l'arxiu a `config/accede-tercers.php`.
+Això copiarà l'arxiu a `config/accede.php`.
 
 
 
@@ -85,3 +85,22 @@ public function test(){
 ## Funcions:
 
 in progress...
+
+	public function getTercerById($id){
+	public function searchTercersByName($name){
+	public function searchTercersBySurname1($surname){
+	public function searchTercersBySurname2($surname){
+	public function searchTercersBySurnames($surname1, $surname2){
+	public function searchTercersByFullName($filter){
+	public function getTercerByPasaporte($pasaporte){
+	public function getTercerByTarjetaResidencia($tresidencia){
+	public function getTercerByCIF($cif){
+	public function getTercerByDNI($dni){
+	public function getTercerByNIF($nif){
+	public function getDomicilisTercer($id){
+	public function getDomicilisByVia($codiVia,$numeroDesde=false,$numeroHasta=false) {	
+	public function createTercer($tercer){
+	public function updateTercer($tercer){}
+	public function deleteTercer($id){}
+	public function searchViesByName($filter, $codiProvincia=false, $codiMunicipi=false ) {	
+	public function getAllVies($codiProvincia=false, $codiMunicipi=false ) {	

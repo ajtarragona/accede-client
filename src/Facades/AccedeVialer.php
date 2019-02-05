@@ -4,13 +4,13 @@ namespace Ajtarragona\Accede\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class AccedeTercers extends Facade
+class AccedeVialer extends Facade
 {
     /**
      * {@inheritdoc}
      */
     protected static function getFacadeAccessor()
     {
-        return 'accedetercers';
+        return 'accedevialer';
     }
 }

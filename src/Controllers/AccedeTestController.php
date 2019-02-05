@@ -1,25 +1,25 @@
 <?php
 
-namespace Ajtarragona\AccedeTercers\Controllers; 
+namespace Ajtarragona\Accede\Controllers; 
 
 use App\Http\Controllers\Controller;
-use Ajtarragona\AccedeTercers\Models\Accede\AccedeTercersProvider;
+use Ajtarragona\Accede\Models\AccedeTercersProvider;
 use AccedeTercers; //facade
 
 class AccedeTestController extends Controller
 {
 
-	public function test($filter, AccedeTercersProvider $accede){ //con inyeccion
+	public function test($filter, AccedeTercersProvider $accedetercers){ //con inyeccion
 
-		$tercers=$accede->getTercerByNIF($filter);
+		$tercers=$accedetercers->getTercerByNIF($filter);
 		//dd($tercers);
 
-		$vies=$accede->searchViesByName($filter);
+		$vies=$accedetercers->searchViesByName($filter);
 		if($vies) return $vies;
 		
 		if($tercers){
 			foreach($tercers as $tercer){
-				$domicilios=$accede->getDomicilisTercer($tercer->codigoTercero);
+				$domicilios=$accedetercers->getDomicilisTercer($tercer->codigoTercero);
 				$tercer->l_domicilio=$domicilios;
 			}
 			return $tercers;
@@ -41,11 +41,11 @@ class AccedeTestController extends Controller
 	}
 
 	public function testHelper($filter){ //con helper
-		$tercers=accede()->getTercerByNIF($filter);
+		$tercers=accedetercers()->getTercerByNIF($filter);
 		
 		if($tercers){
 			foreach($tercers as $tercer){
-				$domicilios=accede()->getDomicilisTercer($tercer->codigoTercero);
+				$domicilios=accedetercers()->getDomicilisTercer($tercer->codigoTercero);
 				$tercer->l_domicilio=$domicilios;
 			}
 			return $tercers;

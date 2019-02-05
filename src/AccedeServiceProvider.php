@@ -1,12 +1,12 @@
 <?php
 
-namespace Ajtarragona\AccedeTercers;
+namespace Ajtarragona\Accede;
 
 use Illuminate\Support\ServiceProvider;
 //use Illuminate\Support\Facades\Blade;
 //use Illuminate\Support\Facades\Schema;
 
-class AccedeTercersServiceProvider extends ServiceProvider
+class AccedeServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
@@ -21,14 +21,14 @@ class AccedeTercersServiceProvider extends ServiceProvider
 
 
         //publico configuracion
-        $config = __DIR__.'/Config/accede-tercers.php';
+        $config = __DIR__.'/Config/accede.php';
         
         $this->publishes([
-            $config => config_path('accede-tercers.php'),
-        ], 'ajtarragona-accede-tercers');
+            $config => config_path('accede.php'),
+        ], 'ajtarragona-accede');
 
 
-        $this->mergeConfigFrom($config, 'accede-tercers');
+        $this->mergeConfigFrom($config, 'accede');
        
     }
 
@@ -41,9 +41,13 @@ class AccedeTercersServiceProvider extends ServiceProvider
     {
        	
 
-        //defino facade
-       	$this->app->bind('accedetercers', function(){
-            return new \Ajtarragona\AccedeTercers\Models\Accede\AccedeTercersProvider;
+        //defino facades
+        $this->app->bind('accedetercers', function(){
+            return new \Ajtarragona\Accede\Models\AccedeTercersProvider;
+        });
+        
+       	$this->app->bind('accedevialer', function(){
+            return new \Ajtarragona\Accede\Models\AccedeVialerProvider;
         });
 
 

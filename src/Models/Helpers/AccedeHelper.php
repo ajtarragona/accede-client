@@ -1,7 +1,7 @@
 <?php
 
-namespace Ajtarragona\AccedeTercers\Models\Accede\Helpers; 
-use Ajtarragona\AccedeTercers\Models\Accede\AccedeObject;
+namespace Ajtarragona\Accede\Models\Helpers; 
+use Ajtarragona\Accede\Models\AccedeObject;
 
 class AccedeHelper{
 

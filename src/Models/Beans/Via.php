@@ -1,7 +1,7 @@
 <?php
 
-	namespace Ajtarragona\AccedeTercers\Models\Accede\Beans; 
-	use Ajtarragona\AccedeTercers\Models\Accede\AccedeObject;
+	namespace Ajtarragona\Accede\Models\Beans; 
+	use Ajtarragona\Accede\Models\AccedeObject;
 
 	class Via extends AccedeObject  {
 

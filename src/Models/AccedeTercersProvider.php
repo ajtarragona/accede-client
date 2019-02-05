@@ -1,20 +1,16 @@
 <?php
 
-namespace Ajtarragona\AccedeTercers\Models\Accede; 
+namespace Ajtarragona\Accede\Models; 
 
-use Ajtarragona\AccedeTercers\Models\Accede\AccedeObject;
-use Ajtarragona\AccedeTercers\Models\Accede\Request as AccedeRequest;
-use Ajtarragona\AccedeTercers\Models\Accede\Security as AccedeSecurity;
-use Ajtarragona\AccedeTercers\Models\Accede\Operation as AccedeOperation;
-use Ajtarragona\AccedeTercers\Models\Accede\Response as AccedeResponse;
-use Ajtarragona\AccedeTercers\Models\Accede\Beans\Tercer as TercerAccede;
-use Ajtarragona\AccedeTercers\Models\Accede\Beans\Domicili as DomiciliAccede;
-use Ajtarragona\AccedeTercers\Models\Accede\Beans\Via as ViaAccede;
+use Ajtarragona\AccedeTercers\Models\AccedeProvider;
+use Ajtarragona\AccedeTercers\Models\AccedeObject;
+
+use Ajtarragona\AccedeTercers\Models\Beans\Tercer as TercerAccede;
+use Ajtarragona\AccedeTercers\Models\Beans\Domicili as DomiciliAccede;
 
 
-class AccedeTercersProvider {
+class AccedeTercersProvider extends AccedeProvider{
 	
-	private $options;
 	
 	const TIPO_DOCUMENTO_SIN_DOCUMENTO = 0;
 	const TIPO_DOCUMENTO_NIF = 1;
@@ -24,28 +20,7 @@ class AccedeTercersProvider {
 	const TIPO_DOCUMENTO_DNI = 6;
 
 
-	public function __construct($options=array()) { 
-		$opts=config('accede-tercers');
-		if($options) $opts=array_merge($opts,$options);
-		$this->options= json_decode(json_encode($opts), FALSE);
-	}
-
-
-	private function sendRequest($tobj,$cmd, $params=false){
-		$op=new AccedeOperation("TER",$tobj, $cmd,"2.0");
-		$sec=new AccedeSecurity($this->options);
-		
-		$request= new AccedeRequest($op,$sec,$params);
-		//dd($request);
-		$request->setWSUrl($this->options->ws_url."?wsdl");
-		//dd($request);
-		return $request->send();
-	}
-
-
-
 	
-
 
 	public function getTercerById($id){
 		$params=array(
@@ -241,34 +216,7 @@ class AccedeTercersProvider {
 
 
 
-	public function searchViesByName($filter, $codiProvincia=false, $codiMunicipi=false ) {	
-		if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
-		if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
-		
-		$params=array(
-			"nombreVia" => strtoupper("%".$filter."%"),
-			"codigoProvincia" => $codiProvincia,
-			"codigoMunicipio" => $codiMunicipi
-		);
-
-		$response=$this->sendRequest("VIA","LST",$params);
-		return ViaAccede::parseResponse($response);
-	}
-
 	
-	public function getAllVies($codiProvincia=false, $codiMunicipi=false ) {	
-		if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
-		if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
-		
-		$params=array(
-			"codigoProvincia" => $codiProvincia,
-			"codigoMunicipio" => $codiMunicipi
-		);
-
-		$response=$this->sendRequest("VIA","LST",$params);
-		return ViaAccede::parseResponse($response);
-	}
-
 
 	
 

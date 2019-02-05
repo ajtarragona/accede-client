@@ -1,6 +1,6 @@
 {
-    "name": "ajtarragona/accede-tercers",
-    "description": "Client d'accés als tercers d'Accede (Firmadoc)",
+    "name": "ajtarragona/accede-client",
+    "description": "Client d'accés als tercers i vialer d'Accede (Firmadoc)",
     "type": "library",
     "authors": [
         {
@@ -15,13 +15,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Ajtarragona\\AccedeTercers\\": "./src"
+            "Ajtarragona\\Accede\\": "./src"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Ajtarragona\\AccedeTercers\\AccedeTercersServiceProvider"
+                "Ajtarragona\\Accede\\AccedeServiceProvider"
             ]
         }
     }

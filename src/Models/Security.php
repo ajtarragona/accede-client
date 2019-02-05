@@ -1,7 +1,7 @@
 <?php 
-	namespace Ajtarragona\AccedeTercers\Models\Accede; 
-	use Ajtarragona\AccedeTercers\Models\Accede\AccedeObject;
-	use Ajtarragona\AccedeTercers\Models\Accede\Helpers\AccedeHelper;
+	namespace Ajtarragona\Accede\Models; 
+	use Ajtarragona\Accede\Models\AccedeObject;
+	use Ajtarragona\Accede\Models\Helpers\AccedeHelper;
 	
 	class Security extends AccedeObject{
 		
