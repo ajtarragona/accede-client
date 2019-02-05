@@ -39,7 +39,7 @@ Un cop configurat, el paquet està a punt per fer-se servir.
 
 Ho pots fer de les següents maneres:
 
-###A través d'una `Facade`:
+### A través d'una `Facade`:
 
 ```bash
 use AccedeTercers;
@@ -55,7 +55,7 @@ En aquest cas caldria, per au n ús més simple, pots registrar l'alias de la Fa
 'AccedeTercers' => Ajtarragona\AccedeTercers\Facades\AccedeTercers::class
 ```
 
-###Vía Injecció de dependències:
+### Vía Injecció de dependències:
 
 Als teus controlladors, helpers, model:
 
@@ -68,7 +68,7 @@ public function test(AccedeTercersProvider $accede){
 }
 ```
 
-###Vía funció `helper`:
+### Vía funció `helper`:
 ```bash
 ...
 public function test(AccedeTercersProvider $accede){
@@ -78,6 +78,6 @@ public function test(AccedeTercersProvider $accede){
 ```
 
 
-##Funcions:
+## Funcions:
 
 in progress...
