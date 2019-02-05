@@ -49,10 +49,14 @@ public function test(){
 	...
 }
 ```
-En aquest cas caldria, per au n ús més simple, pots registrar l'alias de la Facade a l'arxiu `config/app.php` :
+En aquest cas, per facilitar-ne l'ús, es pot registrar l'alias de la Facade a l'arxiu `config/app.php` :
 
 ```php
-'AccedeTercers' => Ajtarragona\AccedeTercers\Facades\AccedeTercers::class
+'aliases' => [
+	...
+	'AccedeTercers' => Ajtarragona\AccedeTercers\Facades\AccedeTercers::class
+]
+
 ```
 
 ### Vía Injecció de dependències:
@@ -71,7 +75,7 @@ public function test(AccedeTercersProvider $accede){
 ### Vía funció `helper`:
 ```bash
 ...
-public function test(AccedeTercersProvider $accede){
+public function test(){
 	$vies=accede()->getAllVies();
 	...
 }
