@@ -98,7 +98,7 @@ Funció | Paràmetres | Retorn
 *searchTercersByName($name)* | `name`: nom del tercer (que contingui) | Un array d'objectes `Tercer`
 *searchTercersBySurname1($surname)* | `surname`: primer cognom del tercer (que contingui) | Un array d'objectes `Tercer`
 *searchTercersBySurname2($surname)* | `surname`: segon cognom del tercer (que contingui) | Un array d'objectes `Tercer`
-*searchTercersBySurnames($surname1, $surname2)* | `surname1`: primer cognom del tercer (que contingui) \ `surname2`: segon cognom del tercer (que contingui)  | Un array d'objectes `Tercer`
+*searchTercersBySurnames($surname1, $surname2)* | `surname1`: primer cognom del tercer (que contingui) \\ `surname2`: segon cognom del tercer (que contingui)  | Un array d'objectes `Tercer`
 
 > En tots els casos es retorna una excepció si falla o no es troba res.
 
