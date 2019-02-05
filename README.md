@@ -93,7 +93,7 @@ public function test(){
 ### AccedeTercers
 ##### getTercerById
 Funció | Paràmetres | Retorn 
---- | --- | --- | ---
+--- | --- | --- 
 *getTercerById($id)* | `id`: codi del tercer| Un objecte `Tercer` .
 *searchTercersByName($name)* | `name`: nom del tercer (que contingui) | Un array d'objectes `Tercer`
 *searchTercersBySurname1($surname)* | `surname`: primer cognom del tercer (que contingui) | Un array d'objectes `Tercer`
