@@ -91,22 +91,30 @@ public function test(){
 ## Funcions:
 
 ### Tercers
+#### getTercerById
+Parameter | Type | Required | Description
+--- | --- | --- | ---
+*id* | `integer` | false | Codi del tercero
+
+Retorna un objecte `Tercer` o una excepció si falla o no troba res.
+
+
 ```php
-	public function getTercerById($id){
-	public function searchTercersByName($name){
-	public function searchTercersBySurname1($surname){
-	public function searchTercersBySurname2($surname){
-	public function searchTercersBySurnames($surname1, $surname2){
-	public function searchTercersByFullName($filter){
-	public function getTercerByPasaporte($pasaporte){
-	public function getTercerByTarjetaResidencia($tresidencia){
-	public function getTercerByCIF($cif){
-	public function getTercerByDNI($dni){
-	public function getTercerByNIF($nif){
-	public function getDomicilisTercer($id){
-	public function createTercer($tercer){
-	public function updateTercer($tercer){}
-	public function deleteTercer($id){}
+	getTercerById($id)
+	searchTercersByName($name)
+	searchTercersBySurname1($surname)
+	searchTercersBySurname2($surname)
+	searchTercersBySurnames($surname1, $surname2)
+	searchTercersByFullName($filter)
+	getTercerByPasaporte($pasaporte)
+	getTercerByTarjetaResidencia($tresidencia)
+	getTercerByCIF($cif)
+	getTercerByDNI($dni)
+	getTercerByNIF($nif)
+	getDomicilisTercer($id)
+	createTercer($tercer)
+	updateTercer($tercer)
+	deleteTercer($id)
 ```
 
 ### Vialer
