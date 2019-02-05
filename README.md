@@ -114,8 +114,8 @@ Funció | Paràmetres | Retorn
 ### AccedeVialer
 Funció | Paràmetres | Retorn 
 --- | --- | --- 
-*getPais* | `codigoPais` |
-*getAllPaisos* | |
+*getPais* | `codigoPais` | Un objecte `Pais`
+*getAllPaisos* | | Un array d'objected `Pais`
 *searchPaisosByName* | `filter` |
 *getProvincia* | `codigoProvincia` |
 *getAllProvincies* | |
