@@ -103,6 +103,7 @@ Funció | Paràmetres | Retorn
 **getTercerByCIF** | `cif`: que el cif sigui igual | Un array d'objectes `Tercer`
 **getTercerByDNI** | `dni`: que el dni sigui igual | Un array d'objectes `Tercer`
 **getTercerByNIF** | `nif`: que el cif sigui igual | Un array d'objectes `Tercer`
+**getDomicilisTercer** | `id`: codi del tercer | Array d'objectes `Domicili`
 **createTercer** | `tercer`: objecte tercer | boolea
 **updateTercer** | `tercer`: objecte tercer | boolea
 **deleteTercer** | `id`: codi del tercer | boolea
