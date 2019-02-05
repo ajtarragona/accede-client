@@ -8,7 +8,7 @@ Paquet d'accés al WS de Accede (Aytos) per a **Tercers** i **Vialer**
 ## Instalació
 
 ```bash
-composer require ajtarragona/accede-tercers:"@dev"
+composer require ajtarragona/accede-client:"@dev"
 ```
 
 ## Configuració
@@ -43,6 +43,7 @@ Ho pots fer de les següents maneres:
 
 ```php
 use AccedeTercers;
+use AccedeVialer;
 ...
 public function test(){
 	$tercer=AccedeTercers::getTercerById(123456);
