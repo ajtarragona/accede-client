@@ -90,8 +90,8 @@ public function test(){
 
 ## Funcions:
 
-### Tercers
-#### getTercerById
+### AccedeTercers
+##### getTercerById
 Parameter | Type | Required | Description
 --- | --- | --- | ---
 *id* | `integer` | false | Codi del tercero
@@ -117,7 +117,7 @@ Retorna un objecte `Tercer` o una excepció si falla o no troba res.
 	deleteTercer($id)
 ```
 
-### Vialer
+### AccedeVialer
 ```php
 	getPais($codigoPais)
 	getAllPaisos()
