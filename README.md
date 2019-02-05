@@ -1,8 +1,8 @@
 # ACCEDE (Tercers i Vialer) Client for Laravel 5.6
 
-## Accede-Tercers
+## Accede-Client
 
-Paquet d'accés al WS de Accede (Aytos) per a Tercers i Vialer
+Paquet d'accés al WS de Accede (Aytos) per a **Tercers** i **Vialer**
 
 
 ## Instalació
