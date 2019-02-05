@@ -7,6 +7,7 @@ use Ajtarragona\Accede\Models\AccedeTercersProvider;
 use Ajtarragona\Accede\Models\AccedeVialerProvider;
 use AccedeTercers; //facade
 use AccedeVialer; //facade
+use \Exception;
 
 class AccedeTestController extends Controller
 {
@@ -17,48 +18,57 @@ class AccedeTestController extends Controller
 		//$tercers=$accedetercers->getTercerByNIF($filter);
 		//dd($tercers);
 		//dd($filter);
-		$vies=$accedevialer->getAllPaisos();
+		try{
+			$vies=AccedeVialer::searchViesByName($filter);
 
-		if($vies) dd($vies);
-		return;
-		if($tercers){
+			return $vies;
+			
 			foreach($tercers as $tercer){
 				$domicilios=$accedetercers->getDomicilisTercer($tercer->codigoTercero);
 				$tercer->l_domicilio=$domicilios;
 			}
 			return $tercers;
+			
+		}catch(Exception $e){
+			dd($e);
 		}
 	}
 
 	public function testFacade($filter){ //con facade
-	
-		$vies=AccedeVialer::searchViesByName($filter);
-		if($vies) return $vies;
+		try{
+			$vies=AccedeVialer::searchViesByName($filter);
+			return $vies;
 
-		$tercers=AccedeTercers::getTercerByNIF($filter);
-		//dd($tercers);
-		
-		if($tercers){
+			$tercers=AccedeTercers::getTercerByNIF($filter);
+			//dd($tercers);
+			
+			
 			foreach($tercers as $tercer){
 				$domicilios=AccedeTercers::getDomicilisTercer($tercer->codigoTercero);
 				$tercer->l_domicilio=$domicilios;
 			}
 			return $tercers;
+			
+		}catch(Exception $e){
+			dd($e);
 		}
 	}
 
 	public function testHelper($filter){ //con helper
-		$vies=accedevialer()->searchViesByName($filter);
-		if($vies) return $vies;
+		try{
+			$vies=accedevialer()->searchViesByName($filter);
+			return $vies;
 
-		$tercers=accedetercers()->getTercerByNIF($filter);
+			$tercers=accedetercers()->getTercerByNIF($filter);
 		
-		if($tercers){
+		
 			foreach($tercers as $tercer){
 				$domicilios=accedetercers()->getDomicilisTercer($tercer->codigoTercero);
 				$tercer->l_domicilio=$domicilios;
 			}
 			return $tercers;
+		}catch(Exception $e){
+			dd($e);
 		}
 	}
 }
