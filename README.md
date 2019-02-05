@@ -1,6 +1,5 @@
 # ACCEDE (Tercers i Vialer) Client for Laravel 5.6
 
-## Accede-Client
 
 Paquet d'accés al WS de Accede (Aytos) per a **Tercers** i **Vialer**
 
@@ -88,7 +87,7 @@ public function test(){
 ```
 
 
-## Funcions:
+## Funcions
 
 ### AccedeTercers
 Funció | Paràmetres | Retorn 
