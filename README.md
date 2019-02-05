@@ -93,7 +93,7 @@ public function test(){
 ### AccedeTercers
 Funció | Paràmetres | Retorn 
 --- | --- | --- 
-*getTercerById($id)* | `id`: codi del tercer| Un objecte `Tercer` .
+*getTercerById($id)* | `id`: codi del tercer| Un objecte `Tercer` 
 *searchTercersByName($name)* | `name`: que contingui el nom del tercer | Un array d'objectes `Tercer`
 *searchTercersBySurname1($surname)* | `surname`: que contingui el primer cognom del tercer | Un array d'objectes `Tercer`
 *searchTercersBySurname2($surname)* | `surname`: que contingui el segon cognom del tercer | Un array d'objectes `Tercer`
@@ -112,32 +112,33 @@ Funció | Paràmetres | Retorn
 
 
 ### AccedeVialer
-```php
-	getPais($codigoPais)
-	getAllPaisos()
-	searchPaisosByName($filter)
-	getProvincia($codigoProvincia)
-	getAllProvincies()
-	searchProvinciesByName($filter)
-	getMunicipi($codigoMunicipio,$codigoProvincia=false)
-	getAllMunicipis($codigoProvincia=false)
-	searchMunicipisByName($filter,$codigoProvincia=false)
-	getPortal($codigoPortal)
-	getAllPortals( )
-	getPorta($codigoPuerta) 
-	getAllPortes( ) 
-	getPlanta($codigoPlanta)
-	getAllPlantes( )
-	getEscala($codigoEscalera)
-	getAllEscales( ) 
-	getAllBlocs($codiProvincia=false, $codiMunicipi=false)
-	getBloc($codigoBloque)
-	getAllCodisPostals($codiProvincia=false, $codiMunicipi=false)
-	getCodiPostal($codigoPostal, $codiProvincia=false, $codiMunicipi=false)
-	searchViesByName($filter, $codiProvincia=false, $codiMunicipi=false )
-	getAllVies($codiProvincia=false, $codiMunicipi=false )
-	getAllTipusVia($codiProvincia=false, $codiMunicipi=false ) 
-	getTipusVia($codigoTipoVia)
-	searchDomicilis($params=[])
-	getDomicilisByVia($codiVia,$numeroDesde=false,$numeroHasta=false)
-```
+Funció | Paràmetres | Retorn 
+--- | --- | --- 
+
+*getPais($codigoPais)* | |
+*getAllPaisos()* | |
+*searchPaisosByName($filter)* | |
+*getProvincia($codigoProvincia)* | |
+*getAllProvincies()* | |
+*searchProvinciesByName($filter)* | |
+*getMunicipi($codigoMunicipio,$codigoProvincia=false)* | |
+*getAllMunicipis($codigoProvincia=false)* | |
+*searchMunicipisByName($filter,$codigoProvincia=false)* | |
+*getPortal($codigoPortal)* | |
+*getAllPortals( )* | |
+*getPorta($codigoPuerta) * | |
+*getAllPortes( ) * | |
+*getPlanta($codigoPlanta)* | |
+*getAllPlantes( )* | |
+*getEscala($codigoEscalera)* | |
+*getAllEscales( ) * | |
+*getAllBlocs($codiProvincia=false, $codiMunicipi=false)* | |
+*getBloc($codigoBloque)* | |
+*getAllCodisPostals($codiProvincia=false, $codiMunicipi=false)* | |
+*getCodiPostal($codigoPostal, $codiProvincia=false, $codiMunicipi=false)* | |
+*searchViesByName($filter, $codiProvincia=false, $codiMunicipi=false )* | |
+*getAllVies($codiProvincia=false, $codiMunicipi=false )* | |
+*getAllTipusVia($codiProvincia=false, $codiMunicipi=false ) * | |
+*getTipusVia($codigoTipoVia)* | |
+*searchDomicilis($params=[])* | |
+*getDomicilisByVia($codiVia,$numeroDesde=false,$numeroHasta=false)* | |
