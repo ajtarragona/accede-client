@@ -11,16 +11,16 @@ use Ajtarragona\Accede\Models\Response as AccedeResponse;
 
 class AccedeProvider {
 	
-	private $options;
+	protected $options;
 	
 	public function __construct($options=array()) { 
-		$opts=config('accede-tercers');
+		$opts=config('accede');
 		if($options) $opts=array_merge($opts,$options);
 		$this->options= json_decode(json_encode($opts), FALSE);
 	}
 
 
-	private function sendRequest($tobj,$cmd, $params=false){
+	protected function sendRequest($tobj,$cmd, $params=false){
 		$op=new AccedeOperation("TER",$tobj, $cmd,"2.0");
 		$sec=new AccedeSecurity($this->options);
 		

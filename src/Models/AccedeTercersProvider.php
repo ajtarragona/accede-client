@@ -2,11 +2,11 @@
 
 namespace Ajtarragona\Accede\Models; 
 
-use Ajtarragona\AccedeTercers\Models\AccedeProvider;
-use Ajtarragona\AccedeTercers\Models\AccedeObject;
+use Ajtarragona\Accede\Models\AccedeProvider;
+use Ajtarragona\Accede\Models\AccedeObject;
 
-use Ajtarragona\AccedeTercers\Models\Beans\Tercer as TercerAccede;
-use Ajtarragona\AccedeTercers\Models\Beans\Domicili as DomiciliAccede;
+use Ajtarragona\Accede\Models\Beans\Tercer as TercerAccede;
+use Ajtarragona\Accede\Models\Beans\Domicili as DomiciliAccede;
 
 
 class AccedeTercersProvider extends AccedeProvider{

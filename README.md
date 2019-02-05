@@ -41,7 +41,7 @@ Ho pots fer de les següents maneres:
 
 ### A través d'una `Facade`:
 
-```bash
+```php
 use AccedeTercers;
 ...
 public function test(){
@@ -65,7 +65,7 @@ En aquest cas, per facilitar-ne l'ús, es pot registrar l'alias de la Facade a l
 
 Als teus controlladors, helpers, model:
 
-```bash
+```php
 use Ajtarragona\AccedeTercers\Models\Accede\AccedeTercersProvider;
 use Ajtarragona\AccedeTercers\Models\Accede\AccedeVialerProvider;
 ...
@@ -77,7 +77,7 @@ public function test(AccedeTercersProvider $accedetercers, AccedeVialerProvider 
 ```
 
 ### Vía funció `helper`:
-```bash
+```php
 ...
 public function test(){
 	$tercer=accedetercers()->getTercerById(123456);
@@ -90,7 +90,7 @@ public function test(){
 ## Funcions:
 
 ### Tercers
-```bash
+```php
 	public function getTercerById($id){
 	public function searchTercersByName($name){
 	public function searchTercersBySurname1($surname){
@@ -110,7 +110,84 @@ public function test(){
 ```
 
 ### Vialer
-```bash
+```php
 	public function searchViesByName($filter, $codiProvincia=false, $codiMunicipi=false ) {	
 	public function getAllVies($codiProvincia=false, $codiMunicipi=false ) {	
+```
+
+## Objectes
+
+### \Ajtarragona\Accede\Models\Beans\Tercer
+```php
+$codigoTercero;
+$codigoTipoDocumento;
+$nombreTipoDocumento;
+$documento;
+$nombre;
+$apellido1;
+$apellido2;
+$telefono;
+$usuarioAlta;
+$fechaAlta;
+$situacionTercero;
+```
+
+### \Ajtarragona\Accede\Models\Beans\Via
+```php
+$codigoVia;
+$codigoIneVia;
+$nombreVia;
+$nombreLargoVia;
+$nombreAntiguoVia;
+$situacionVia;
+$codigoTipoVia;
+$nombreTipoVia;
+$codigoIneEntidadColectiva;
+$nombreEntidadColectiva;
+$codigoIneEntidadSingular;
+$nombreEntidadSingular;
+$codigoIneNucleo;
+$nombreNucleo;
+```
+
+### \Ajtarragona\Accede\Models\Beans\Domicili
+```php
+$codigoDomicilio;
+$codigoDireccionSuelo;
+$codigoTipoOcupacion;
+$nombreTipoOcupacion;
+$normalizadoDomicilio;
+$codigoProvincia;
+$nombreProvincia;
+$codigoMunicipio;
+$nombreMunicipio;
+$codigoEntidadSingular;
+$codigoIneEntidadSingular;
+$nombreEntidadSingular;
+$codigoNucleo;
+$codigoIneNucleo;
+$nombreNucleo;
+$distrito;
+$seccion;
+$letraSeccion;
+$codigoTipoVia;
+$codigoIneTipoVia;
+$nombreTipoVia;
+$codigoVia;
+$codigoIneVia;
+$nombreVia;
+$numeroDesde;
+$codigoPlanta;
+$nombrePlanta;
+$codigoPuerta;
+$codigoPostal;
+$codigoTipoVivienda;
+$nombreTipoVivienda;
+$codigoTipoNumeracion;
+$nombreTipoNumeracion;
+$situacionTramo;
+$cadenaDomicilio;
+$cadenaDomicilioCompleta;
+$usuarioAlta;
+$fechaAlta;
 ```
