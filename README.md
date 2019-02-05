@@ -13,7 +13,7 @@ composer require ajtarragona/accede-tercers:"@dev"
 
 ## Configuració
 
-Pots configurar el paquet a través de l'arxiu .env de l'aplicació. Aquests son els parámetres disponibles :
+Pots configurar el paquet a través de l'arxiu `.env` de l'aplicació. Aquests son els parámetres disponibles :
 ```bash
 ACCEDE_TOKEN_KEY 
 ACCEDE_WS_URL 
@@ -45,7 +45,8 @@ Ho pots fer de les següents maneres:
 use AccedeTercers;
 ...
 public function test(){
-	$vies=AccedeTercers::getAllVies();
+	$tercer=AccedeTercers::getTercerById(123456);
+	$vies=AccedeVialer::getAllVies();
 	...
 }
 ```
@@ -54,7 +55,8 @@ En aquest cas, per facilitar-ne l'ús, es pot registrar l'alias de la Facade a l
 ```php
 'aliases' => [
 	...
-	'AccedeTercers' => Ajtarragona\AccedeTercers\Facades\AccedeTercers::class
+	'AccedeTercers' => Ajtarragona\AccedeTercers\Facades\AccedeTercers::class,
+	'AccedeVialer' => Ajtarragona\AccedeTercers\Facades\AccedeVialer::class
 ]
 
 ```
@@ -65,9 +67,11 @@ Als teus controlladors, helpers, model:
 
 ```bash
 use Ajtarragona\AccedeTercers\Models\Accede\AccedeTercersProvider;
+use Ajtarragona\AccedeTercers\Models\Accede\AccedeVialerProvider;
 ...
-public function test(AccedeTercersProvider $accede){
-	$vies=$accede->getAllVies();
+public function test(AccedeTercersProvider $accedetercers, AccedeVialerProvider $accedevialer){
+	$tercer=$accedetercers->getTercerById(123456);
+	$vies=$accedevialer->getAllVies();
 	...
 }
 ```
@@ -76,7 +80,8 @@ public function test(AccedeTercersProvider $accede){
 ```bash
 ...
 public function test(){
-	$vies=accede()->getAllVies();
+	$tercer=accedetercers()->getTercerById(123456);
+	$vies=accedevialer()->getAllVies();
 	...
 }
 ```
@@ -84,8 +89,8 @@ public function test(){
 
 ## Funcions:
 
-in progress...
-
+### Tercers
+```bash
 	public function getTercerById($id){
 	public function searchTercersByName($name){
 	public function searchTercersBySurname1($surname){
@@ -102,5 +107,10 @@ in progress...
 	public function createTercer($tercer){
 	public function updateTercer($tercer){}
 	public function deleteTercer($id){}
+```
+
+### Vialer
+```bash
 	public function searchViesByName($filter, $codiProvincia=false, $codiMunicipi=false ) {	
 	public function getAllVies($codiProvincia=false, $codiMunicipi=false ) {	
+```
