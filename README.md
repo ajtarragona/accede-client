@@ -5,23 +5,15 @@
 Paquet d'accés al WS de Accede (Aytos) per a Tercers i vialer
 
 
-## Installation
+## Instalació
 
 ```bash
 composer require ajtarragona/accede-tercers:"@dev"
 ```
 
-## Alias
+## Configuració
 
-For a simpler use of this package, you may register the alias in the alias array in your `config/app.php` file adding:
-
-```php
-'AccedeTercers' => Ajtarragona\AccedeTercers\Facades\AccedeTercers::class
-```
-
-## Configuration
-
-You should config the module via your .env file. Theese are the available parameters:
+Pots configurar el paquet a través de l'arxiu .env de l'aplicació. Aquests son els parámetres disponibles :
 ```bash
 ACCEDE_TOKEN_KEY 
 ACCEDE_WS_URL 
@@ -31,20 +23,23 @@ ACCEDE_CLIENT
 ACCEDE_ENTITY 
 ACCEDE_ORGANISM 
 ```
-
-Also, you may publish the configuration file.
+Alternativament, pots publicar l'arxiu de configuració del paquet amb la comanda:
 
 ```bash
 php artisan vendor:publish --tag=ajtarragona-accede-tercers
 ```
 
-This will copy the configuration file to `config/accede-tercers.php`.
+Això copiarà l'arxiu a `config/accede-tercers.php`.
 
 
 
-## Usage
+## Ús
 
-After the configuration, the package will we ready to use. You can use it via Facade:
+Un cop configurat, el paquet està a punt per fer-se servir. 
+
+Ho pots fer de les següents maneres:
+
+###A través d'una `Facade`:
 
 ```bash
 use AccedeTercers;
@@ -54,8 +49,15 @@ public function test(){
 	...
 }
 ```
+En aquest cas caldria, per au n ús més simple, pots registrar l'alias de la Facade a l'arxiu `config/app.php` :
 
-Or via dependency injection in your controllers, helpers o model:
+```php
+'AccedeTercers' => Ajtarragona\AccedeTercers\Facades\AccedeTercers::class
+```
+
+###Vía Injecció de dependències:
+
+Als teus controlladors, helpers, model:
 
 ```bash
 use Ajtarragona\AccedeTercers\Models\Accede\AccedeTercersProvider;
@@ -65,3 +67,17 @@ public function test(AccedeTercersProvider $accede){
 	...
 }
 ```
+
+###Vía funció `helper`:
+```bash
+...
+public function test(AccedeTercersProvider $accede){
+	$vies=accede()->getAllVies();
+	...
+}
+```
+
+
+##Funcions:
+
+in progress...
