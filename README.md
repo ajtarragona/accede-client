@@ -92,11 +92,16 @@ public function test(){
 
 ### AccedeTercers
 ##### getTercerById
-Parameter | Type | Required | Description
+Funció | Paràmetres | Retorn 
 --- | --- | --- | ---
-*id* | `integer` | false | Codi del tercero
+*getTercerById($id)* | `id`: codi del tercer| Un objecte `Tercer` .
+*searchTercersByName($name)* | `name`: nom del tercer (que contingui) | Un array d'objectes `Tercer`
+*searchTercersBySurname1($surname)* | `surname`: primer cognom del tercer (que contingui) | Un array d'objectes `Tercer`
+*searchTercersBySurname2($surname)* | `surname`: segon cognom del tercer (que contingui) | Un array d'objectes `Tercer`
+*searchTercersBySurnames($surname1, $surname2)* | `surname1`: primer cognom del tercer (que contingui) \ `surname2`: segon cognom del tercer (que contingui)  | Un array d'objectes `Tercer`
 
-Retorna un objecte `Tercer` o una excepció si falla o no troba res.
+> En tots els casos es retorna una excepció si falla o no es troba res.
+
 
 
 ```php
