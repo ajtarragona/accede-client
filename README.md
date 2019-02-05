@@ -116,7 +116,7 @@ Funció | Paràmetres | Retorn
 --- | --- | --- 
 *getPais* | `codigoPais` | Un objecte `Pais`
 *getAllPaisos* | | Un array d'objectes `Pais`
-*searchPaisosByName* | `filter` | Un array d'objectes `Pais` el nom dels quals contingui el filtre passat. És insensible a majúscules <br> > busqueda exacta
+*searchPaisosByName* | `filter` | Un array d'objectes `Pais` el nom dels quals contingui el filtre passat. <br/><small>És insensible a majúscules</small> <br> <small>Busqueda exacta</small>
 *getProvincia* | `codigoProvincia` |
 *getAllProvincies* | |
 *searchProvinciesByName* | `filter` |
