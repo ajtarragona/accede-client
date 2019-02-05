@@ -116,10 +116,10 @@ Funció | Paràmetres | Retorn
 --- | --- | --- 
 *getPais* | `codigoPais` | Un objecte `Pais`
 *getAllPaisos* | | Un array d'objectes `Pais`
-*searchPaisosByName* | `filter` | Un array d'objectes `Pais` el nom dels quals contingui el filtre passat. <br/><small>És insensible a majúscules</small> <br> <small>Busqueda exacta</small>
-*getProvincia* | `codigoProvincia` |
-*getAllProvincies* | |
-*searchProvinciesByName* | `filter` |
+*searchPaisosByName* | `filter` | Un array d'objectes `Pais` el nom dels quals sigui igual al filtre passat. <br/><small>És insensible a majúscules</small> <br> <small>Busqueda exacta</small>
+*getProvincia* | `codigoProvincia` | Un objecte `Provincia` segons el codi passat
+*getAllProvincies* | | Un array d'objectes `Provincia`
+*searchProvinciesByName* | `filter` | Un array d'objectes `Provincia`  el nom dels quals sigui igual al filtre passat. <br/><small>És insensible a majúscules</small> <br> <small>Busqueda exacta</small>
 *getMunicipi* | `codigoMunicipio`<br/>`codigoProvincia=false` |
 *getAllMunicipis* | `codigoProvincia=false` |
 *searchMunicipisByName* | `filter`<br/>`codigoProvincia=false` |
@@ -141,3 +141,5 @@ Funció | Paràmetres | Retorn
 *getTipusVia* |  `codigoTipoVia` |
 *searchDomicilis* | `params=[]` |
 *getDomicilisByVia* | `codiVia`<br/>`numeroDesde=false`<br/>`numeroHasta=false` |
+
+> En tots els casos es retorna una excepció si falla o no es troba res.
