@@ -93,20 +93,20 @@ public function test(){
 ### AccedeTercers
 Funció | Paràmetres | Retorn 
 --- | --- | --- 
-*getTercerById* | `id`: codi del tercer| Un objecte `Tercer` 
-*searchTercersByName* | `name`: que contingui el nom del tercer | Un array d'objectes `Tercer`
-*searchTercersBySurname1* | `surname`: que contingui el primer cognom del tercer | Un array d'objectes `Tercer`
-*searchTercersBySurname2* | `surname`: que contingui el segon cognom del tercer | Un array d'objectes `Tercer`
-*searchTercersBySurnames* | `surname1`: que contingui el primer cognom del tercer<br/>`surname2`: que contingui el segon cognom del tercer | Un array d'objectes `Tercer`
-*searchTercersByFullName* | `filter`: que es contingui a nom o cognoms | Un array d'objectes `Tercer`
-*getTercerByPasaporte* | `pasaporte`: que el passaport sigui igual | Un array d'objectes `Tercer`
-*getTercerByTarjetaResidencia* | `tresidencia`: que la tarjeta sigui igual | Un array d'objectes `Tercer`
-*getTercerByCIF* | `cif`: que el cif sigui igual | Un array d'objectes `Tercer`
-*getTercerByDNI* | `dni`: que el dni sigui igual | Un array d'objectes `Tercer`
-*getTercerByNIF* | `nif`: que el cif sigui igual | Un array d'objectes `Tercer`
-*createTercer* | `tercer`: objecte tercer | boolea
-*updateTercer* | `tercer`: objecte tercer | boolea
-*deleteTercer* | `id`: codi del tercer | boolea
+**getTercerById** | `id`: codi del tercer| Un objecte `Tercer` 
+**searchTercersByName** | `name`: que contingui el nom del tercer | Un array d'objectes `Tercer`
+**searchTercersBySurname1** | `surname`: que contingui el primer cognom del tercer | Un array d'objectes `Tercer`
+**searchTercersBySurname2** | `surname`: que contingui el segon cognom del tercer | Un array d'objectes `Tercer`
+**searchTercersBySurnames** | `surname1`: que contingui el primer cognom del tercer<br/>`surname2`: que contingui el segon cognom del tercer | Un array d'objectes `Tercer`
+**searchTercersByFullName** | `filter`: que es contingui a nom o cognoms | Un array d'objectes `Tercer`
+**getTercerByPasaporte** | `pasaporte`: que el passaport sigui igual | Un array d'objectes `Tercer`
+**getTercerByTarjetaResidencia** | `tresidencia`: que la tarjeta sigui igual | Un array d'objectes `Tercer`
+**getTercerByCIF** | `cif`: que el cif sigui igual | Un array d'objectes `Tercer`
+**getTercerByDNI** | `dni`: que el dni sigui igual | Un array d'objectes `Tercer`
+**getTercerByNIF** | `nif`: que el cif sigui igual | Un array d'objectes `Tercer`
+**createTercer** | `tercer`: objecte tercer | boolea
+**updateTercer** | `tercer`: objecte tercer | boolea
+**deleteTercer** | `id`: codi del tercer | boolea
 
 > En tots els casos es retorna una excepció si falla o no es troba res.
 
@@ -114,32 +114,32 @@ Funció | Paràmetres | Retorn
 ### AccedeVialer
 Funció | Paràmetres | Retorn 
 --- | --- | --- 
-*getPais* | `codigoPais` | Un objecte `Pais`
-*getAllPaisos* | | Un array d'objectes `Pais`
-*searchPaisosByName* | `filter` | Un array d'objectes `Pais` el nom dels quals sigui igual al filtre passat. <br/><small>És insensible a majúscules</small> <br> <small>Busqueda exacta</small>
-*getProvincia* | `codigoProvincia` | Un objecte `Provincia` segons el codi passat
-*getAllProvincies* | | Un array d'objectes `Provincia`
-*searchProvinciesByName* | `filter` | Un array d'objectes `Provincia`  el nom dels quals sigui igual al filtre passat. <br/><small>És insensible a majúscules</small> <br> <small>Busqueda exacta</small>
-*getMunicipi* | `codigoMunicipio`<br/>`codigoProvincia=false` |
-*getAllMunicipis* | `codigoProvincia=false` |
-*searchMunicipisByName* | `filter`<br/>`codigoProvincia=false` |
-*getPortal* | `codigoPortal` |
-*getAllPortals* | |
-*getPorta* | `codigoPuerta` |
-*getAllPortes* | |
-*getPlanta* | `codigoPlanta` |
-*getAllPlantes* | |
-*getEscala* | `codigoEscalera` |
-*getAllEscales* | |
-*getAllBlocs* |  `codiProvincia=false`<br/>`codiMunicipi=false` |
-*getBloc* | `codigoBloque` |
-*getAllCodisPostals* | `codiProvincia=false`<br/> `codiMunicipi=false` |
-*getCodiPostal* | `codigoPostal`<br/> `codiProvincia=false`<br/> `codiMunicipi=false` |
-*searchViesByName* | `filter`<br/> `codiProvincia=false`<br/> `codiMunicipi=false` |
-*getAllVies* | `codiProvincia=false`<br/> `codiMunicipi=false` |
-*getAllTipusVia* | `codiProvincia=false`<br/> `codiMunicipi=false` |
-*getTipusVia* |  `codigoTipoVia` |
-*searchDomicilis* | `params=[]` |
-*getDomicilisByVia* | `codiVia`<br/>`numeroDesde=false`<br/>`numeroHasta=false` |
+**getPais** | `codigoPais` | Un objecte `Pais`
+**getAllPaisos** | | Un array d'objectes `Pais`
+**searchPaisosByName** | `filter` | Un array d'objectes `Pais` el nom dels quals sigui igual al filtre passat. <br/><small>És insensible a majúscules</small> <br> <small>Busqueda exacta</small>
+**getProvincia** | `codigoProvincia` | Un objecte `Provincia` segons el codi passat
+**getAllProvincies** | | Un array d'objectes `Provincia`
+**searchProvinciesByName** | `filter` | Un array d'objectes `Provincia`  el nom dels quals sigui igual al filtre passat. <br/><small>És insensible a majúscules</small> <br> <small>Busqueda exacta</small>
+**getMunicipi** | `codigoMunicipio`<br/>`codigoProvincia=false` |
+**getAllMunicipis** | `codigoProvincia=false` |
+**searchMunicipisByName** | `filter`<br/>`codigoProvincia=false` |
+**getPortal** | `codigoPortal` |
+**getAllPortals** | |
+**getPorta** | `codigoPuerta` |
+**getAllPortes** | |
+**getPlanta** | `codigoPlanta` |
+**getAllPlantes** | |
+**getEscala** | `codigoEscalera` |
+**getAllEscales** | |
+**getAllBlocs** |  `codiProvincia=false`<br/>`codiMunicipi=false` |
+**getBloc** | `codigoBloque` |
+**getAllCodisPostals** | `codiProvincia=false`<br/> `codiMunicipi=false` |
+**getCodiPostal** | `codigoPostal`<br/> `codiProvincia=false`<br/> `codiMunicipi=false` |
+**searchViesByName** | `filter`<br/> `codiProvincia=false`<br/> `codiMunicipi=false` |
+**getAllVies** | `codiProvincia=false`<br/> `codiMunicipi=false` |
+**getAllTipusVia** | `codiProvincia=false`<br/> `codiMunicipi=false` |
+**getTipusVia** |  `codigoTipoVia` |
+**searchDomicilis** | `params=[]` |
+**getDomicilisByVia** | `codiVia`<br/>`numeroDesde=false`<br/>`numeroHasta=false` |
 
 > En tots els casos es retorna una excepció si falla o no es troba res.
