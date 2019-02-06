@@ -26,7 +26,8 @@ class Request  extends AccedeObject{
 	
 		$this->ope=$ope;
 		$this->sec=$sec;
-		if($par && count($par)>0) $this->par = AccedeHelper::encodeArray($par);
+		//if($par && count($par)>0) 
+			$this->par = AccedeHelper::encodeArray($par);
 		$this->dat=$dat;
 
 		if($wsurl) $this->client = new SoapClient($wsurl);
@@ -42,8 +43,7 @@ class Request  extends AccedeObject{
 	
 	public function send(){
 		$sml=$this->toSML();
-		//dump($sml);
-
+		//dd($sml);
 		if(config("accede.debug")) Log::debug('Accede Request: \n'.$sml);
 		//$sml="<![CDATA[".$sml."]]>";
 		

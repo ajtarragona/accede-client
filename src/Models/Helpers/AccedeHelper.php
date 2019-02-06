@@ -38,7 +38,7 @@ class AccedeHelper{
 			_dump("VALUE:");
 			_dump($value);*/
 
-			if(isset($value) && (!empty($value) || $value===0) && !in_array($key, explode(",", AccedeObject::EXCLUDED_SML_KEYS) )){
+			if(isset($value) && ((is_array($value)) || !empty($value) || $value===0) && !in_array($key, explode(",", AccedeObject::EXCLUDED_SML_KEYS) )){
 				//_dump("ENTRO");
 				// no numeric keys in our xml please!
 				if (is_numeric($key))
@@ -94,7 +94,7 @@ class AccedeHelper{
 
 	public static function accedeEncodedValue($value, $encode=true){
 		$ret=$value;
-		
+		//dump($value);
 		if(self::is_date($value)) $ret = self::getFechaUTC($value);
 		if(is_int($value) || is_float($value)) $ret = $value;
 

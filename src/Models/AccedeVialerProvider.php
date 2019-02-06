@@ -40,7 +40,6 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 
-	//TODO: NO funciona
 	public function getAllPaisos() {	
 		$params=array(
 			//"codigoPais" => 108,
@@ -84,7 +83,6 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 
-	//TODO: NO funciona
 	public function getAllProvincies() {	
 		$params=array(
 			//"codigoAutonomia" => 9,
@@ -132,7 +130,6 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 
-	//TODO: NO funciona
 	public function getAllMunicipis($codigoProvincia=false) {	
 		if(!$codigoProvincia) $codigoProvincia=$this->options->codigo_provincia_tarragona;
 		
@@ -169,7 +166,6 @@ class AccedeVialerProvider extends AccedeProvider{
 	/*portal*/
 	/***********/
 	
-	//TODO: NO funciona
 	public function getPortal($codigoPortal) {	
 		$params=array(
 			"codigoPortal" => $codigoPortal,
@@ -181,7 +177,7 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 
-	//TODO: NO funciona
+	//TODO: no devuelve nada
 	public function getAllPortals( ) {	
 		
 		$params=array();
@@ -197,7 +193,6 @@ class AccedeVialerProvider extends AccedeProvider{
 	/*porta*/
 	/***********/
 	
-	//TODO: NO funciona
 	public function getPorta($codigoPuerta) {	
 		$params=array(
 			"codigoPuerta" => $codigoPuerta,
@@ -209,7 +204,6 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 
-	//TODO: NO funciona
 	public function getAllPortes( ) {	
 		
 		$params=array();
@@ -224,7 +218,6 @@ class AccedeVialerProvider extends AccedeProvider{
 	/*planta*/
 	/***********/
 	
-	//TODO: NO funciona
 	public function getPlanta($codigoPlanta) {	
 		$params=array(
 			"codigoPlanta" => $codigoPlanta,
@@ -236,7 +229,6 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 
-	//TODO: NO funciona
 	public function getAllPlantes( ) {	
 		
 		$params=array();
@@ -251,7 +243,6 @@ class AccedeVialerProvider extends AccedeProvider{
 	/*escales*/
 	/***********/
 	
-	//TODO: NO funciona
 	public function getEscala($codigoEscalera) {	
 		$params=array(
 			"codigoEscalera" => $codigoEscalera,
@@ -263,7 +254,6 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 
-	//TODO: NO funciona
 	public function getAllEscales( ) {	
 		
 		$params=array();
@@ -317,15 +307,17 @@ class AccedeVialerProvider extends AccedeProvider{
 	/*codis postals*/
 	/***********/	
 
-	public function getAllCodisPostals($codiProvincia=false, $codiMunicipi=false) {	
-		if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
-		if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
-		
-		$params=array(
-			 "codigoProvincia" => $codiProvincia,
-			 "codigoMunicipio" => $codiMunicipi
-		);
 
+	public function getAllCodisPostals($codiProvincia=false, $codiMunicipi=false) {	
+		if(!$codiProvincia && !$codiMunicipi ){
+			$codiProvincia=$this->options->codigo_provincia_tarragona;
+			$codiMunicipi=$this->options->codigo_municipio_tarragona;
+		}
+		
+		$params=array();
+
+		if($codiProvincia) $params["codigoProvincia"] = $codiProvincia;
+		if($codiMunicipi) $params["codigoMunicipio"] = $codiMunicipi;
 
 		$response=$this->sendRequest("CPO","LST",$params);
 		return CodiPostal::parseResponse($response);
@@ -333,20 +325,34 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 	public function getCodiPostal($codigoPostal, $codiProvincia=false, $codiMunicipi=false){
-		if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
-		if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
+		if(!$codiProvincia && !$codiMunicipi ){
+			$codiProvincia=$this->options->codigo_provincia_tarragona;
+			$codiMunicipi=$this->options->codigo_municipio_tarragona;
+		}
 		
-		$params=array(
-			 "codigoProvincia" => $codiProvincia,
-			 "codigoMunicipio" => $codiMunicipi,
-			 "codigoPostal" => $codigoPostal
-		);
+		$params=array();
+
+		if($codiProvincia) $params["codigoProvincia"] = $codiProvincia;
+		if($codiMunicipi) $params["codigoMunicipio"] = $codiMunicipi;
+
+		$params["codigoPostal"] = $codigoPostal;
 
 		$response=$this->sendRequest("CPO","LST",$params);
 		return CodiPostal::parseSingle($response);
 	}
 
-
+	public function getCodisPostalsVia($codigoIneVia, $numero=false){
+		//$via=self::getVia($codigoIneVia);
+		$args=["codigoIneVia"=>$codigoIneVia];
+		if($numero) $args["numero"] =$numero;
+		$domicilis=self::searchDomicilis($args);
+		$ret=[];
+		foreach($domicilis as $domicili){
+			if(!in_array($domicili->codigoPostal, $ret)) $ret[]=$domicili->codigoPostal;
+		}
+		sort($ret);
+		return $ret;
+	}
 
 
 
@@ -369,6 +375,21 @@ class AccedeVialerProvider extends AccedeProvider{
 	}
 
 	
+	public function getVia($codigoIneVia, $codiProvincia=false, $codiMunicipi=false) {	
+		if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
+		if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
+		
+		$params=array(
+			"codigoIneVia" => $codigoIneVia,
+			"codigoProvincia" => $codiProvincia,
+			"codigoMunicipio" => $codiMunicipi
+		);
+
+		$response=$this->sendRequest("VIA","LST",$params);
+		return Via::parseSingle($response);
+	}
+
+
 	public function getAllVies($codiProvincia=false, $codiMunicipi=false ) {	
 		if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
 		if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
@@ -391,12 +412,12 @@ class AccedeVialerProvider extends AccedeProvider{
 	/***********/	
 
 	public function getAllTipusVia($codiProvincia=false, $codiMunicipi=false ) {	
-		if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
-		if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
+		//if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
+		//if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
 		
 		$params=array(
-			"codigoProvincia" => $codiProvincia,
-			"codigoMunicipio" => $codiMunicipi
+			//"codigoProvincia" => $codiProvincia,
+			//"codigoMunicipio" => $codiMunicipi
 		);
 
 

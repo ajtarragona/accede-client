@@ -135,9 +135,11 @@ Funció | Paràmetres | Retorn
 **getBloc** | `codigoBloque` |
 **getAllCodisPostals** | `codiProvincia=false`<br/> `codiMunicipi=false` |
 **getCodiPostal** | `codigoPostal`<br/> `codiProvincia=false`<br/> `codiMunicipi=false` |
+**getCodisPostalsVia** | `codigoIneVia`<br/> `numero=false` |
 **searchViesByName** | `filter`<br/> `codiProvincia=false`<br/> `codiMunicipi=false` |
 **getAllVies** | `codiProvincia=false`<br/> `codiMunicipi=false` |
-**getAllTipusVia** | `codiProvincia=false`<br/> `codiMunicipi=false` |
+**getVia** | `codigoIneVia` |
+**getAllTipusVia** |  |
 **getTipusVia** |  `codigoTipoVia` |
 **searchDomicilis** | `params=[]` |
 **getDomicilisByVia** | `codiVia`<br/>`numeroDesde=false`<br/>`numeroHasta=false` |
