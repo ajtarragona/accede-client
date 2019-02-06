@@ -3,9 +3,10 @@
 namespace Ajtarragona\Accede\Models; 
 use Ajtarragona\Accede\Models\Helpers\AccedeHelper;
 use Ajtarragona\Accede\Exceptions\AccedeException;
+use Illuminate\Database\Eloquent\Model;
 
 
-class AccedeObject{
+class AccedeObject {
 
 	const EXCLUDED_SML_KEYS = "SMLNAME"; //comma separated
 	const ACCEDE_BOOL_TRUE = -1;
@@ -15,8 +16,9 @@ class AccedeObject{
 	protected static $SML_LIST = "l_object";
 
 
-	protected $SMLNAME;
+    protected $SMLNAME;
 
+    //protected $hidden = ['SMLNAME'];
     
 	public function __construct(){
 		$classname=get_called_class();
@@ -54,6 +56,18 @@ class AccedeObject{
 
 
 	}
+
+    public function __toString(){
+       $ret=[];
+       foreach($this as $key=>$value){
+            if(!in_array($key, explode(",", self::EXCLUDED_SML_KEYS) ) ) {
+                $ret[$key]=$value;
+             }
+
+       }
+       return json_encode($ret);
+       //return json_encode($this);
+    }
     
 
     public static function parseCreate($response){

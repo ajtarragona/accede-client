@@ -55,8 +55,8 @@ En aquest cas, per facilitar-ne l'ús, es pot registrar l'alias de la Facade a l
 ```php
 'aliases' => [
 	...
-	'AccedeTercers' => Ajtarragona\AccedeTercers\Facades\AccedeTercers::class,
-	'AccedeVialer' => Ajtarragona\AccedeTercers\Facades\AccedeVialer::class
+	'AccedeTercers' => Ajtarragona\Accede\Facades\AccedeTercers::class,
+	'AccedeVialer' => Ajtarragona\Accede\Facades\AccedeVialer::class
 ]
 
 ```
@@ -66,8 +66,8 @@ En aquest cas, per facilitar-ne l'ús, es pot registrar l'alias de la Facade a l
 Als teus controlladors, helpers, model:
 
 ```php
-use Ajtarragona\AccedeTercers\Models\Accede\AccedeTercersProvider;
-use Ajtarragona\AccedeTercers\Models\Accede\AccedeVialerProvider;
+use Ajtarragona\Accede\Models\AccedeTercersProvider;
+use Ajtarragona\Accede\Models\AccedeVialerProvider;
 ...
 public function test(AccedeTercersProvider $accedetercers, AccedeVialerProvider $accedevialer){
 	$tercer=$accedetercers->getTercerById(123456);

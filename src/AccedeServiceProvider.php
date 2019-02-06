@@ -16,6 +16,9 @@ class AccedeServiceProvider extends ServiceProvider
     public function boot()
     {
         
+        //vistas
+        $this->loadViewsFrom(__DIR__.'/resources/views', 'accede-client');
+        
         //cargo rutas
         $this->loadRoutesFrom(__DIR__.'/routes.php');
 
