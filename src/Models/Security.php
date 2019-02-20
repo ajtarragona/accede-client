@@ -11,7 +11,7 @@
 
 		public $cli;
 		public $org;
-		//public $ent;
+		public $ent;
 		public $usu;
 		public $pwd;
 
@@ -26,7 +26,7 @@
 			
 			$this->cli = $options->ws_sec_cli;
 			$this->org = (int) $options->ws_sec_org;
-			//$this->ent = (int) $options->ws_sec_ent;
+			$this->ent = (int) $options->ws_sec_ent;
 			$this->usu = $options->ws_sec_user;
 			$this->pwd = $options->ws_sec_pwd;
 

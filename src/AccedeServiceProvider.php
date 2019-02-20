@@ -49,8 +49,12 @@ class AccedeServiceProvider extends ServiceProvider
             return new \Ajtarragona\Accede\Models\AccedeTercersProvider;
         });
         
-       	$this->app->bind('accedevialer', function(){
+        $this->app->bind('accedevialer', function(){
             return new \Ajtarragona\Accede\Models\AccedeVialerProvider;
+        });
+
+        $this->app->bind('accederegistre', function(){
+            return new \Ajtarragona\Accede\Models\AccedeRegistreProvider;
         });
 
 

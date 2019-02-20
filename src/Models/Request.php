@@ -19,15 +19,20 @@ class Request  extends AccedeObject{
 	public $dat;
 	private $wsurl;
 	private $client;
+	protected $options=["excluded"=>false, "included"=>false];
 
 
-	public function __construct($ope,$sec,$par=false,$dat=false,$wsurl=false){
+	public function __construct($ope,$sec,$par=false,$dat=false,$wsurl=false,$options=[]){
 		parent::__construct();
-	
+		
+		$this->options=array_merge($this->options,$options);
+
 		$this->ope=$ope;
 		$this->sec=$sec;
+		//dd($this);
 		//if($par && count($par)>0) 
-			$this->par = AccedeHelper::encodeArray($par);
+		$this->par = AccedeHelper::encodeArray($par, $this->options);
+		//dd($this->par);
 		$this->dat=$dat;
 
 		if($wsurl) $this->client = new SoapClient($wsurl);

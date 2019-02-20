@@ -20,12 +20,12 @@ class AccedeProvider {
 	}
 
 
-	protected function sendRequest($tobj,$cmd, $params=false){
-		$op=new AccedeOperation("TER",$tobj, $cmd,"2.0");
+	protected function sendRequest($tobj,$cmd, $params=false,$apl="TER",$options=[]){
+		$op=new AccedeOperation($apl,$tobj, $cmd,"2.0");
+		//dd($op);
 		$sec=new AccedeSecurity($this->options);
-		
-		$request= new AccedeRequest($op,$sec,$params);
-		//dd($request);
+		//dd($sec);
+		$request = new AccedeRequest($op,$sec,$params,false,false,$options);
 		$request->setWSUrl($this->options->ws_url."?wsdl");
 		//dd($request);
 		return $request->send();

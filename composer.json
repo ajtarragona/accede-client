@@ -24,7 +24,13 @@
         "laravel": {
             "providers": [
                 "Ajtarragona\\Accede\\AccedeServiceProvider"
-            ]
+            ],
+            "aliases": {
+                "AccedeTercers" : "Ajtarragona\\Accede\\Facades\\AccedeTercers",
+                "AccedeVialer" : "Ajtarragona\\Accede\\Facades\\AccedeVialer",
+                "AccedeRegistre" : "Ajtarragona\\Accede\\Facades\\AccedeRegistre"
+        
+            }
         }
     }
 }

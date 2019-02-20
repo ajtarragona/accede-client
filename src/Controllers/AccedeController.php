@@ -5,9 +5,15 @@ namespace Ajtarragona\Accede\Controllers;
 use App\Http\Controllers\Controller;
 use Ajtarragona\Accede\Models\AccedeTercersProvider;
 use Ajtarragona\Accede\Models\AccedeVialerProvider;
+use Ajtarragona\Accede\Models\AccedeRegistreProvider;
+use Illuminate\Http\Request;
+
 use AccedeTercers; //facade
 use AccedeVialer; //facade
+use AccedeRegistre; //facade
 use \Exception;
+
+
 
 class AccedeController extends Controller{
 
@@ -145,5 +151,135 @@ class AccedeController extends Controller{
 		}
 		
 	}
+
+
+
+
+
+	protected $defaultregisterfilter=[
+		"es" => "E",
+		"eje" => 2018,
+		"numero" => false,
+		"documento" => false
+	];
+
+	public function registerform(){
+		$registres=[];
+
+		$registerfilter=session('registerfilter',$this->defaultregisterfilter);
+		$registerfilter=json_decode(json_encode($registerfilter), FALSE);
+
+		//dd($registerfilter);
+		try{
+			if($registerfilter->numero && $registerfilter->eje && $registerfilter->es){
+				//dd($request->all());
+				$registres= AccedeRegistre::getAnotacion($registerfilter->es, $registerfilter->eje, $registerfilter->numero);
+			}else if($registerfilter->documento && $registerfilter->eje){
+				$registres= AccedeRegistre::getAnotacionPorDni($registerfilter->eje, $registerfilter->documento);
+				//dd($registres);
+			}
+		}catch(Exception $e){
+
+		}
+		return view("accede-client::registre",compact('registres','registerfilter'));
+	}
+
+	
+	public function searchregister(Request $request){
+		session(['registerfilter'=>$request->all()]);
+		return redirect()->route('accede.registerform');
+
+	}
+
+
+
+
+
+
+	public function viesCombo($codigoProvincia,$codigoMunicipio, Request $request){
+		try{
+			if($request->term){
+				$vies=AccedeVialer::searchViesByName($request->term,intval($codigoProvincia),intval($codigoMunicipio));
+			}else{
+				$vies=AccedeVialer::getAllVies(intval($codigoProvincia),intval($codigoMunicipio));
+			}
+			
+			$ret=[];
+		    foreach($vies as $via){
+		        $ret[] = ["value"=>$via->codigoIneVia, "name"=>$via->codigoTipoVia . " ".$via->nombreLargoVia];
+		    }
+		    return response()->json($ret);
+
+		}catch(Exception $e){
+			return response()->json([
+				'error' => $e->getCode(),
+				'message' => $e->getMessage()
+			], 500);
+		}
+		
+	}
+
+	public function numeros($codigoIneVia){
+		try{
+			$numeros=AccedeVialer::getNumerosVia($codigoIneVia);
+			return response()->json($numeros);
+		}catch(Exception $e){
+			return response()->json([
+				'error' => $e->getCode(),
+				'message' => $e->getMessage()
+			], 500);
+		}
+	}
+	
+	public function escales($codigoIneVia, $numero=false){
+		try{
+			$escales=AccedeVialer::getEscalesVia($codigoIneVia, $numero);
+			return response()->json($escales);
+		}catch(Exception $e){
+			return response()->json([
+				'error' => $e->getCode(),
+				'message' => $e->getMessage()
+			], 500);
+		}
+	}
+
+	public function plantes($codigoIneVia, $numero=false){
+		try{
+			$escales=AccedeVialer::getPlantesVia($codigoIneVia, $numero);
+			return response()->json($escales);
+		}catch(Exception $e){
+			return response()->json([
+				'error' => $e->getCode(),
+				'message' => $e->getMessage()
+			], 500);
+		}
+	}
+
+	public function portes($codigoIneVia, $numero=false, $nombrePlanta=false){
+		try{
+			$escales=AccedeVialer::getPortesVia($codigoIneVia, $numero, $nombrePlanta);
+			return response()->json($escales);
+		}catch(Exception $e){
+			return response()->json([
+				'error' => $e->getCode(),
+				'message' => $e->getMessage()
+			], 500);
+		}
+	}
+
+	public function codispostals($codigoIneVia, $numero=false){
+		try{
+			$escales=AccedeVialer::getCodisPostalsVia($codigoIneVia, $numero);
+			return response()->json($escales);
+		}catch(Exception $e){
+			return response()->json([
+				'error' => $e->getCode(),
+				'message' => $e->getMessage()
+			], 500);
+		}
+	}
+
+	
+	
 
 }

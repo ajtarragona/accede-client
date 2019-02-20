@@ -71,5 +71,7 @@ class AccedeTestController extends Controller
 			dd($e);
 		}
 	}
+
+
 }
 

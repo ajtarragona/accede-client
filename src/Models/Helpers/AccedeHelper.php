@@ -95,10 +95,15 @@ class AccedeHelper{
 	public static function accedeEncodedValue($value, $encode=true){
 		$ret=$value;
 		//dump($value);
-		if(self::is_date($value)) $ret = self::getFechaUTC($value);
-		if(is_int($value) || is_float($value)) $ret = $value;
+		if(self::is_date($value)){
+			$ret = self::getFechaUTC($value);
+		}
 
-		else $ret = $encode?base64_encode($value):$value;
+		if(is_int($value) || is_float($value)){
+			$ret = $value;
+		}else{
+			$ret = $encode?base64_encode($value):$value;
+		}
 		
 		return $ret;
 	}
@@ -155,8 +160,9 @@ class AccedeHelper{
 	}
 
 
-	public static function encodeArray($data){
+	public static function encodeArray($data,$options=[]){
 		$ret=array();
+
 		foreach($data as $key => $value)
 		{
 			if(isset($value) && (!empty($value) || $value===0)){
@@ -171,15 +177,21 @@ class AccedeHelper{
 				{
 					if(is_object($value) || self::isAssoc($value)){
 						// recrusive call.
-						$ret[$key]=self::encodeArray($value);
+						$ret[$key]=self::encodeArray($value,$options);
 					}else{
 						$ret[$key]= implode(",",$value);
 					}
 				}
 				else 
 				{
+					
 					// add single node.
-	                $ret[$key] = self::accedeEncodedValue($value);
+					//dd($options);
+					//dd(isset($options["excluded"]) && in_array($key, $options["excluded"]));
+					$excluded=isset($options["excluded"]) && is_array($options["excluded"]) && in_array($key, $options["excluded"]);
+					//dd($excluded);
+	                $ret[$key] = self::accedeEncodedValue($value, !$excluded);
+	                
 				}
 			}
  
@@ -255,11 +267,20 @@ class AccedeHelper{
 	}*/
 
 	public static function generateNonce() {
+
+
+		return mt_rand(-1*mt_getrandmax(), mt_getrandmax());
+		
+		//dd($ret);
+		//$ret=bin2hex(openssl_random_pseudo_bytes(16));
+		/*return $ret;
+		//dd($ret);
+
 		$length=rand(18,19);
 		$sign=rand(0,1)?"":"-";
 
 		$nonce=$sign. self::randomLong($length);
-		return $nonce;
+		return $nonce;*/
 	}
 
 	public static function getSHA512Base64($data){

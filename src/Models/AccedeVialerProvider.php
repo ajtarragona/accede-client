@@ -341,19 +341,7 @@ class AccedeVialerProvider extends AccedeProvider{
 		return CodiPostal::parseSingle($response);
 	}
 
-	public function getCodisPostalsVia($codigoIneVia, $numero=false){
-		//$via=self::getVia($codigoIneVia);
-		$args=["codigoIneVia"=>$codigoIneVia];
-		if($numero) $args["numero"] =$numero;
-		$domicilis=self::searchDomicilis($args);
-		$ret=[];
-		foreach($domicilis as $domicili){
-			if(!in_array($domicili->codigoPostal, $ret)) $ret[]=$domicili->codigoPostal;
-		}
-		sort($ret);
-		return $ret;
-	}
-
+	
 
 
 
@@ -402,6 +390,11 @@ class AccedeVialerProvider extends AccedeProvider{
 		$response=$this->sendRequest("VIA","LST",$params);
 		return Via::parseResponse($response);
 	}
+
+
+
+
+	
 
 
 
@@ -471,6 +464,106 @@ class AccedeVialerProvider extends AccedeProvider{
 		}
 		return $this->searchDomicilis($params);
 	
+	}
+
+
+	
+
+
+	public function getCodisPostalsVia($codigoIneVia, $numero=false){
+		//$via=self::getVia($codigoIneVia);
+		$args=["codigoIneVia"=>intval($codigoIneVia)];
+		if($numero) $args["numero"] =intval($numero);
+		$domicilis=self::searchDomicilis($args);
+		$ret=[];
+		foreach($domicilis as $domicili){
+			if(!in_array($domicili->codigoPostal, $ret)) $ret[]=$domicili->codigoPostal;
+		}
+		sort($ret);
+		return $ret;
+	}
+
+
+	public function getNumerosVia($codigoIneVia){
+		//$via=self::getVia($codigoIneVia);
+		$args=["codigoIneVia"=>intval($codigoIneVia)];
+		$domicilis=self::searchDomicilis($args);
+		$ret=[];
+		foreach($domicilis as $domicili){
+			if($domicili->numeroDesde && !in_array($domicili->numeroDesde, $ret)) $ret[]=$domicili->numeroDesde;
+		}
+		sort($ret);
+		return $ret;
+	}
+	
+
+	public function getPlantesVia($codigoIneVia, $numero=false){
+		//$via=self::getVia($codigoIneVia);
+		$args=[
+			"codigoIneVia"=>intval($codigoIneVia)
+		];
+		if($numero) $args["numero"] =intval($numero);
+		
+		$domicilis=self::searchDomicilis($args);
+
+		$ret=[];
+		foreach($domicilis as $domicili){
+			if(isset($domicili->codigoPlanta) &&  $domicili->codigoPlanta && !isset($ret[$domicili->codigoPlanta]) ){
+				$ret[$domicili->codigoPlanta]=[
+					"codigoPlanta"=>$domicili->codigoPlanta,
+					"nombrePlanta"=>$domicili->nombrePlanta
+				];
+			}
+		}
+		sort($ret);
+		return $ret;
+	}
+
+
+	public function getEscalesVia($codigoIneVia, $numero=false){
+		//$via=self::getVia($codigoIneVia);
+		$args=[
+			"codigoIneVia"=>intval($codigoIneVia)
+		];
+		if($numero) $args["numero"] =intval($numero);
+
+		$domicilis=self::searchDomicilis($args);
+
+		$ret=[];
+		foreach($domicilis as $domicili){
+			if(isset($domicili->codigoEscalera) && $domicili->codigoEscalera && !isset($ret[$domicili->codigoEscalera])){
+				$ret[$domicili->codigoEscalera]=[
+					"codigoEscalera"=> $domicili->codigoEscalera,
+					"nombreEscalera"=> $domicili->nombreEscalera
+				];
+			}
+		}
+		sort($ret);
+		return $ret;
+	}
+	
+
+	public function getPortesVia($codigoIneVia, $numero=false, $nombrePlanta=false){
+		//$via=self::getVia($codigoIneVia);
+		$args=[
+			"codigoIneVia"=>intval($codigoIneVia),
+		];
+		if($numero) $args["numero"] =intval($numero);
+		if($nombrePlanta) $args["nombrePlanta"] = ($nombrePlanta."");
+
+		$domicilis=self::searchDomicilis($args);
+
+		$ret=[];
+		foreach($domicilis as $domicili){
+			if(isset($domicili->codigoPuerta) && $domicili->codigoPuerta && !isset($ret[$domicili->codigoPuerta])){
+				$ret[$domicili->codigoPuerta]=[
+					"codigoPuerta"=>$domicili->codigoPuerta,
+					"nombrePuerta"=>$domicili->codigoPuerta
+				];
+			}
+		}
+		sort($ret);
+		return $ret;
 	}
 	
 	
