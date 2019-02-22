@@ -143,6 +143,12 @@ Funció | Paràmetres | Retorn
 **getAllCodisPostals** | `codiProvincia=false`<br/> `codiMunicipi=false` |
 **getCodiPostal** | `codigoPostal`<br/> `codiProvincia=false`<br/> `codiMunicipi=false` |
 **getCodisPostalsVia** | `codigoIneVia`<br/> `numero=false` |
+**getNumerosVia** | `codigoIneVia` |
+**getBlocsVia** | `codigoIneVia` |
+**getLletresVia** | `codigoIneVia`<br/> `numero=false` |
+**getPlantesVia** | `codigoIneVia`<br/> `numero=false` |
+**getEscalesVia** | `codigoIneVia`<br/> `numero=false` |
+**getPortesVia** | `codigoIneVia`<br/> `numero=false`<br/> `nombrePlanta=false` |
 **searchViesByName** | `filter`<br/> `codiProvincia=false`<br/> `codiMunicipi=false` |
 **getAllVies** | `codiProvincia=false`<br/> `codiMunicipi=false` |
 **getVia** | `codigoIneVia` |
@@ -151,7 +157,7 @@ Funció | Paràmetres | Retorn
 **searchDomicilis** | `params=[]` |
 **getDomicilisByVia** | `codiVia`<br/>`numeroDesde=false`<br/>`numeroHasta=false` |
 
-> En tots els casos es retorna una excepció si falla o no es troba res.
+> En tots els casos es retorna una excepció `AccedeErrorException` si falla o `AccedeNoResultsException` si no es troba res.
 
 
 ## API Json
