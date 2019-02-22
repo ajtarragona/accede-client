@@ -157,54 +157,54 @@ Funció | Paràmetres | Retorn
 ## API Json
 ```php
 
-	//Paisos
+//Paisos
 
-	/ajtarragona/accede/api/paisos
-	/ajtarragona/accede/api/paisos/{codigoPais}
-	
-	//Provincies
-	/ajtarragona/accede/api/provincies
-	/ajtarragona/accede/api/provincies/{codigoProvincia}
-	
-	//Municipis
-	/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis
-	/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}
+/ajtarragona/accede/api/paisos
+/ajtarragona/accede/api/paisos/{codigoPais}
 
+//Provincies
+/ajtarragona/accede/api/provincies
+/ajtarragona/accede/api/provincies/{codigoProvincia}
 
-	//Vies
-	/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}/vies/search/{filter}
-	/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}/vies/combo
-	/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}/vies
-	/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}/vies/{codigoIneVia}
+//Municipis
+/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis
+/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}
 
 
-	//Numeros de la via
-	/ajtarragona/accede/api/numeros/combo/{codigoIneVia}
-	/ajtarragona/accede/api/numeros/{codigoIneVia}
+//Vies
+/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}/vies/search/{filter}
+/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}/vies/combo
+/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}/vies
+/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}/vies/{codigoIneVia}
 
-	//Blocs de la via
-	/ajtarragona/accede/api/blocs/combo/{codigoIneVia}
-	/ajtarragona/accede/api/blocs/{codigoIneVia}
 
-	//Escales de la via
-	/ajtarragona/accede/api/escales/combo/{codigoIneVia}/{numero?}
-	/ajtarragona/accede/api/escales/{codigoIneVia}/{numero?}
+//Numeros de la via
+/ajtarragona/accede/api/numeros/combo/{codigoIneVia}
+/ajtarragona/accede/api/numeros/{codigoIneVia}
 
-	//Lletres de la via
-	/ajtarragona/accede/api/lletres/combo/{codigoIneVia}/{numero?}
-	/ajtarragona/accede/api/lletres/{codigoIneVia}/{numero?}
+//Blocs de la via
+/ajtarragona/accede/api/blocs/combo/{codigoIneVia}
+/ajtarragona/accede/api/blocs/{codigoIneVia}
 
-	//Plantes de la via
-	/ajtarragona/accede/api/plantes/combo/{codigoIneVia}/{numero?}
-	/ajtarragona/accede/api/plantes/{codigoIneVia}/{numero?}
+//Escales de la via
+/ajtarragona/accede/api/escales/combo/{codigoIneVia}/{numero?}
+/ajtarragona/accede/api/escales/{codigoIneVia}/{numero?}
 
-	//Codis postals de la via
-	/ajtarragona/accede/api/codispostals/combo/{codigoIneVia}/{numero?}
-	/ajtarragona/accede/api/codispostals/{codigoIneVia}/{numero?}
-	
-	//Portes de la via
-	/ajtarragona/accede/api/portes/combo/{codigoIneVia}/{numero?}/{nombrePlanta?}
-	/ajtarragona/accede/api/portes/{codigoIneVia}/{numero?}/{nombrePlanta?}
+//Lletres de la via
+/ajtarragona/accede/api/lletres/combo/{codigoIneVia}/{numero?}
+/ajtarragona/accede/api/lletres/{codigoIneVia}/{numero?}
+
+//Plantes de la via
+/ajtarragona/accede/api/plantes/combo/{codigoIneVia}/{numero?}
+/ajtarragona/accede/api/plantes/{codigoIneVia}/{numero?}
+
+//Codis postals de la via
+/ajtarragona/accede/api/codispostals/combo/{codigoIneVia}/{numero?}
+/ajtarragona/accede/api/codispostals/{codigoIneVia}/{numero?}
+
+//Portes de la via
+/ajtarragona/accede/api/portes/combo/{codigoIneVia}/{numero?}/{nombrePlanta?}
+/ajtarragona/accede/api/portes/{codigoIneVia}/{numero?}/{nombrePlanta?}
 ```
 
 ## Component Web
