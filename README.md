@@ -25,10 +25,17 @@ ACCEDE_ORGANISM
 Alternativament, pots publicar l'arxiu de configuració del paquet amb la comanda:
 
 ```bash
-php artisan vendor:publish --tag=ajtarragona-accede
+php artisan vendor:publish --tag=ajtarragona-accede-config
 ```
 
 Això copiarà l'arxiu a `config/accede.php`.
+
+Publicar configuració Laroute
+php artisan vendor:publish --provider='Lord\Laroute\LarouteServiceProvider'
+posar rutes absolutes a app/config/laroute.php
+Publicar scripts laroute cada vegada que canviem una ruta
+php artisan laroute:generate
+
 
 
 
@@ -145,3 +152,12 @@ Funció | Paràmetres | Retorn
 **getDomicilisByVia** | `codiVia`<br/>`numeroDesde=false`<br/>`numeroHasta=false` |
 
 > En tots els casos es retorna una excepció si falla o no es troba res.
+
+
+#API Json
+
+#Component Web
+
+```bash
+php artisan vendor:publish --tag=ajtarragona-accede-assets --force
+```

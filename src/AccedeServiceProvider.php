@@ -28,10 +28,16 @@ class AccedeServiceProvider extends ServiceProvider
         
         $this->publishes([
             $config => config_path('accede.php'),
-        ], 'ajtarragona-accede');
+        ], 'ajtarragona-accede-config');
 
 
         $this->mergeConfigFrom($config, 'accede');
+
+
+         //publico assets
+        $this->publishes([
+            __DIR__.'/public' => public_path('vendor/ajtarragona'),
+        ], 'ajtarragona-accede-assets');
        
     }
 

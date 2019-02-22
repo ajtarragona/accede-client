@@ -17,7 +17,7 @@ use Ajtarragona\Accede\Models\Beans\Porta;
 use Ajtarragona\Accede\Models\Beans\Planta;
 use Ajtarragona\Accede\Models\Beans\Escala;
 use Ajtarragona\Accede\Models\Beans\Domicili;
-
+use Ajtarragona\Accede\Exceptions\AccedeNoResultsException;
 
 class AccedeVialerProvider extends AccedeProvider{
 	
@@ -473,7 +473,7 @@ class AccedeVialerProvider extends AccedeProvider{
 	public function getCodisPostalsVia($codigoIneVia, $numero=false){
 		//$via=self::getVia($codigoIneVia);
 		$args=["codigoIneVia"=>intval($codigoIneVia)];
-		if($numero) $args["numero"] =intval($numero);
+		if(!isFalse($numero)) $args["numero"] =intval($numero);
 		$domicilis=self::searchDomicilis($args);
 		$ret=[];
 		foreach($domicilis as $domicili){
@@ -495,14 +495,30 @@ class AccedeVialerProvider extends AccedeProvider{
 		sort($ret);
 		return $ret;
 	}
+
+
+	public function getLletresVia($codigoIneVia, $numero=false){
+		//$via=self::getVia($codigoIneVia);
+		$args=["codigoIneVia"=>intval($codigoIneVia)];
+		if(!isFalse($numero)) $args["numero"] =intval($numero);
+		
+		$domicilis=self::searchDomicilis($args);
+		$ret=[];
+		foreach($domicilis as $domicili){
+			if(isset($domicili->letraDesde) && $domicili->letraDesde && !in_array($domicili->letraDesde, $ret)) $ret[]=$domicili->letraDesde;
+		}
+		sort($ret);
+		return $ret;
+	}
 	
 
 	public function getPlantesVia($codigoIneVia, $numero=false){
 		//$via=self::getVia($codigoIneVia);
+		//dd($codigoIneVia);
 		$args=[
 			"codigoIneVia"=>intval($codigoIneVia)
 		];
-		if($numero) $args["numero"] =intval($numero);
+		if(!isFalse($numero)) $args["numero"] =intval($numero);
 		
 		$domicilis=self::searchDomicilis($args);
 
@@ -525,7 +541,7 @@ class AccedeVialerProvider extends AccedeProvider{
 		$args=[
 			"codigoIneVia"=>intval($codigoIneVia)
 		];
-		if($numero) $args["numero"] =intval($numero);
+		if(!isFalse($numero)) $args["numero"] =intval($numero);
 
 		$domicilis=self::searchDomicilis($args);
 
@@ -538,6 +554,31 @@ class AccedeVialerProvider extends AccedeProvider{
 				];
 			}
 		}
+		if(!$ret) throw new AccedeNoResultsException('No results');
+		
+		sort($ret);
+		return $ret;
+	}
+
+
+	public function getBlocsVia($codigoIneVia){
+		//$via=self::getVia($codigoIneVia);
+		$args=[
+			"codigoIneVia"=>intval($codigoIneVia)
+		];
+		//if($numero) $args["numero"] =intval($numero);
+
+		$domicilis=self::searchDomicilis($args);
+
+		$ret=[];
+		foreach($domicilis as $domicili){
+			if(isset($domicili->codigoBloque) && $domicili->codigoBloque && !isset($ret[$domicili->codigoBloque])){
+				$ret[$domicili->codigoBloque]=[
+					"codigoBloque"=> $domicili->codigoBloque,
+					"nombreBloque"=> $domicili->codigoBloque
+				];
+			}
+		}
 		sort($ret);
 		return $ret;
 	}
@@ -545,14 +586,15 @@ class AccedeVialerProvider extends AccedeProvider{
 
 	public function getPortesVia($codigoIneVia, $numero=false, $nombrePlanta=false){
 		//$via=self::getVia($codigoIneVia);
+		//dd($codigoIneVia);
 		$args=[
 			"codigoIneVia"=>intval($codigoIneVia),
 		];
-		if($numero) $args["numero"] =intval($numero);
+		if(!isFalse($numero)) $args["numero"] =intval($numero);
 		if($nombrePlanta) $args["nombrePlanta"] = ($nombrePlanta."");
-
+		
 		$domicilis=self::searchDomicilis($args);
-
+		//dd($domicilis);
 		$ret=[];
 		foreach($domicilis as $domicili){
 			if(isset($domicili->codigoPuerta) && $domicili->codigoPuerta && !isset($ret[$domicili->codigoPuerta])){

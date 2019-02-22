@@ -11,8 +11,9 @@ use Illuminate\Http\Request;
 use AccedeTercers; //facade
 use AccedeVialer; //facade
 use AccedeRegistre; //facade
-use \Exception;
-
+use Ajtarragona\Accede\Exceptions\AccedeErrorException;
+use Ajtarragona\Accede\Exceptions\AccedeNoResultsException;
+use \Artisan;
 
 
 class AccedeController extends Controller{
@@ -28,25 +29,46 @@ class AccedeController extends Controller{
 		//dd($municipis);
 		$currentMunicipi=AccedeVialer::getMunicipi(config("accede.codigo_municipio_tarragona"), intval($currentProvincia->codigoProvincia));
 
+
+		/*quitar en producció!!*/
+		Artisan::call('vendor:publish', [
+		    '--tag' => 'ajtarragona-accede-assets', 
+		    '--force' => 1
+		]);
+		/**/
+
 		return view("accede-client::home",compact('currentPais','currentProvincia','currentMunicipi'));
 
 
 	}
 
-	public function pais($codigoPais){
+
+	private function tryWrap(callable  $function){
 		try{
-			
-			return response()->json(AccedeVialer::getPais(intval($codigoPais)));
-		}catch(Exception $e){
+			return call_user_func($function);
+		}catch(AccedeNoResultsException $e){
+			return response()->json([], 200);
+		}catch(AccedeErrorException $e){
 			return response()->json([
 				'error' => $e->getCode(),
 				'message' => $e->getMessage()
 			], 500);
-		}	
+		}
+
+	}
+
+
+
+
+	public function pais($codigoPais){
+		return $this->tryWrap(function() use ($codigoPais){
+			return response()->json(AccedeVialer::getPais(intval($codigoPais)));
+		});
 	}
 
 	public function paisos($filter=false){
-		try{
+		return $this->tryWrap(function() use ($filter){
+			
 			if($filter){
 				$paisos=AccedeVialer::searchPaisosByName($filter);
 			}else{
@@ -54,29 +76,20 @@ class AccedeController extends Controller{
 			}
 
 			return response()->json($paisos);
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}
+
+		});
 		
 	}
 
 	public function provincia($codigoProvincia){
-		try{
+		return $this->tryWrap(function() use ($codigoProvincia){
 			return response()->json(AccedeVialer::getProvincia(intval($codigoProvincia)));
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}	
+		});
 	}
 	
 
 	public function provincies($filter=false){
-		try{
+		return $this->tryWrap(function() use ($filter){
 			if($filter){
 				$provincies=AccedeVialer::searchProvinciesByName($filter);
 			}else{
@@ -84,71 +97,46 @@ class AccedeController extends Controller{
 			}
 
 			return response()->json($provincies);
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}
+		});
 		
 	}
 
 	public function municipi($codigoProvincia,$codigoMunicipio){
-		try{
+		return $this->tryWrap(function() use ($codigoProvincia,$codigoMunicipio){
 			return response()->json(AccedeVialer::getMunicipi(intval($codigoMunicipio),intval($codigoProvincia)));
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}	
+		});
 	}
 
 	public function municipis($codigoProvincia,$filter=false){
-		try{
+		return $this->tryWrap(function() use ($codigoProvincia,$filter){
 			if($filter){
 				$municipis=AccedeVialer::searchMunicipisByName($filter,intval($codigoProvincia));
 			}else{
 				$municipis=AccedeVialer::getAllMunicipis(intval($codigoProvincia));
 			}
 			return response()->json($municipis);
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}
+		});
 		
 	}
 
 
 
 	public function via($codigoProvincia,$codigoMunicipio,$codigoIneVia){
-		try{
+		return $this->tryWrap(function() use ($codigoProvincia,$codigoMunicipio,$codigoIneVia){
 			//dd($codigoIneVia);
 			return response()->json(AccedeVialer::getVia(intval($codigoIneVia),intval($codigoProvincia),intval($codigoMunicipio)));
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}	
+		});
 	}
 
 	public function vies($codigoProvincia,$codigoMunicipio,$filter=false){
-		try{
+		return $this->tryWrap(function() use ($codigoProvincia,$codigoMunicipio,$filter){
 			if($filter){
 				$vies=AccedeVialer::searchViesByName($filter,intval($codigoProvincia),intval($codigoMunicipio));
 			}else{
 				$vies=AccedeVialer::getAllVies(intval($codigoProvincia),intval($codigoMunicipio));
 			}
 			return response()->json($vies);
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}
+		});
 		
 	}
 
@@ -178,7 +166,7 @@ class AccedeController extends Controller{
 				$registres= AccedeRegistre::getAnotacionPorDni($registerfilter->eje, $registerfilter->documento);
 				//dd($registres);
 			}
-		}catch(Exception $e){
+		}catch(AccedeErrorException $e){
 
 		}
 		return view("accede-client::registre",compact('registres','registerfilter'));
@@ -197,7 +185,8 @@ class AccedeController extends Controller{
 
 
 	public function viesCombo($codigoProvincia,$codigoMunicipio, Request $request){
-		try{
+		return $this->tryWrap(function() use ($codigoProvincia,$codigoMunicipio, $request){
+			
 			if($request->term){
 				$vies=AccedeVialer::searchViesByName($request->term,intval($codigoProvincia),intval($codigoMunicipio));
 			}else{
@@ -210,76 +199,151 @@ class AccedeController extends Controller{
 		    }
 		    return response()->json($ret);
 
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}
+		});
 		
 	}
 
+
 	public function numeros($codigoIneVia){
-		try{
+		return $this->tryWrap(function() use ($codigoIneVia){
 			$numeros=AccedeVialer::getNumerosVia($codigoIneVia);
 			return response()->json($numeros);
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}
+		});
+	}
+
+	public function numerosCombo($codigoIneVia){
+		return $this->tryWrap(function() use ($codigoIneVia){
+			$items=AccedeVialer::getNumerosVia($codigoIneVia);
+				
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[] = ["value"=>$item, "name"=>$item];
+		    }
+		    return response()->json($ret);
+		});
 	}
 	
+	
+	public function lletres($codigoIneVia, $numero=false){
+		return $this->tryWrap(function() use ($codigoIneVia, $numero){
+			$lletres=AccedeVialer::getLletresVia($codigoIneVia, $numero);
+			return response()->json($lletres);
+		});
+	}
+
+
+	public function lletresCombo($codigoIneVia, $numero=false){
+		return $this->tryWrap(function() use ($codigoIneVia, $numero){
+			$items=AccedeVialer::getLletresVia($codigoIneVia, $numero);
+			//dd($items);
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[] = ["value"=>$item, "name"=>$item];
+		    }
+		    return response()->json($ret);
+		});
+	}
+
+	
+	
+
+
 	public function escales($codigoIneVia, $numero=false){
-		try{
+		return $this->tryWrap(function() use ($codigoIneVia, $numero){
 			$escales=AccedeVialer::getEscalesVia($codigoIneVia, $numero);
 			return response()->json($escales);
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}
+		});
+	}
+
+	public function escalesCombo($codigoIneVia, $numero=false){
+		return $this->tryWrap(function() use ($codigoIneVia, $numero){
+			$items=AccedeVialer::getEscalesVia($codigoIneVia, $numero);
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[] = ["value"=>$item["codigoEscalera"], "name"=>$item["nombreEscalera"] ];
+		    }
+		    return response()->json($ret);
+		});
+	}
+	
+
+	public function blocs($codigoIneVia){
+		return $this->tryWrap(function() use ($codigoIneVia){
+			$blocs=AccedeVialer::getBlocsVia($codigoIneVia);
+			return response()->json($blocs);
+		});
+	}
+
+	public function blocsCombo($codigoIneVia){
+		return $this->tryWrap(function() use ($codigoIneVia){
+			$items=AccedeVialer::getBlocsVia($codigoIneVia);
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[] = ["value"=>$item["codigoBloque"], "name"=>$item["nombreBloque"]];
+		    }
+		    return response()->json($ret);
+		});
 	}
 
 	public function plantes($codigoIneVia, $numero=false){
-		try{
-			$escales=AccedeVialer::getPlantesVia($codigoIneVia, $numero);
-			return response()->json($escales);
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}
+		return $this->tryWrap(function() use ($codigoIneVia, $numero){
+			$plantes=AccedeVialer::getPlantesVia($codigoIneVia, $numero);
+			return response()->json($plantes);
+		});
 	}
 
-	public function portes($codigoIneVia, $numero=false, $nombrePlanta=false){
-		try{
-			$escales=AccedeVialer::getPortesVia($codigoIneVia, $numero, $nombrePlanta);
-			return response()->json($escales);
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}
-	}
-
-	public function codispostals($codigoIneVia, $numero=false){
-		try{
-			$escales=AccedeVialer::getCodisPostalsVia($codigoIneVia, $numero);
-			return response()->json($escales);
-		}catch(Exception $e){
-			return response()->json([
-				'error' => $e->getCode(),
-				'message' => $e->getMessage()
-			], 500);
-		}
+	public function plantesCombo($codigoIneVia, $numero=false){
+		return $this->tryWrap(function() use ($codigoIneVia, $numero){
+			$items=AccedeVialer::getPlantesVia($codigoIneVia, $numero);
+			//dd($items);
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[] = ["value"=>$item["codigoPlanta"], "name"=>$item["nombrePlanta"]];
+		    }
+		    return response()->json($ret);
+		});
 	}
 
 	
+
+	public function codispostals($codigoIneVia, $numero=false){
+		return $this->tryWrap(function() use ($codigoIneVia, $numero){
+			$cpostals=AccedeVialer::getCodisPostalsVia($codigoIneVia, $numero);
+			return response()->json($cpostals);
+		});
+	}
+
+	
+	public function codispostalsCombo($codigoIneVia, $numero=false){
+		return $this->tryWrap(function() use ($codigoIneVia, $numero){
+			$items=AccedeVialer::getCodisPostalsVia($codigoIneVia, $numero);
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[] = ["value"=>$item, "name"=>$item];
+		    }
+		    return response()->json($ret);
+		});
+	}
+
+
+
+	public function portes($codigoIneVia, $numero=false, $nombrePlanta=false){
+		return $this->tryWrap(function() use ($codigoIneVia, $numero, $nombrePlanta){
+			$portes=AccedeVialer::getPortesVia($codigoIneVia, $numero, $nombrePlanta);
+			return response()->json($portes);
+		});
+	}
+
+	public function portesCombo($codigoIneVia, $numero=false, $nombrePlanta=false){
+		return $this->tryWrap(function() use ($codigoIneVia, $numero, $nombrePlanta){
+			$items=AccedeVialer::getPortesVia($codigoIneVia, $numero, $nombrePlanta);
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[] = ["value"=>$item["codigoPuerta"], "name"=>$item["nombrePuerta"]];
+		    }
+		    return response()->json($ret);
+		});
+	}
 	
 
 }

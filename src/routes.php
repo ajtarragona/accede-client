@@ -37,10 +37,26 @@ Route::group(['prefix' => 'ajtarragona/accede/api'], function () {
 
 
 	//dades de la via
+	Route::get('/numeros/combo/{codigoIneVia}', 'Ajtarragona\Accede\Controllers\AccedeController@numerosCombo')->name('accede.numeros.combo');
 	Route::get('/numeros/{codigoIneVia}', 'Ajtarragona\Accede\Controllers\AccedeController@numeros')->name('accede.numeros');
+
+	Route::get('/escales/combo/{codigoIneVia}/{numero?}', 'Ajtarragona\Accede\Controllers\AccedeController@escalesCombo')->name('accede.escales.combo');
 	Route::get('/escales/{codigoIneVia}/{numero?}', 'Ajtarragona\Accede\Controllers\AccedeController@escales')->name('accede.escales');
+
+
+	Route::get('/lletres/combo/{codigoIneVia}/{numero?}', 'Ajtarragona\Accede\Controllers\AccedeController@lletresCombo')->name('accede.lletres.combo');
+	Route::get('/lletres/{codigoIneVia}/{numero?}', 'Ajtarragona\Accede\Controllers\AccedeController@lletres')->name('accede.lletres');
+
+	Route::get('/blocs/combo/{codigoIneVia}', 'Ajtarragona\Accede\Controllers\AccedeController@blocsCombo')->name('accede.blocs.combo');
+	Route::get('/blocs/{codigoIneVia}', 'Ajtarragona\Accede\Controllers\AccedeController@blocs')->name('accede.blocs');
+
+	Route::get('/plantes/combo/{codigoIneVia}/{numero?}', 'Ajtarragona\Accede\Controllers\AccedeController@plantesCombo')->name('accede.plantes.combo');
 	Route::get('/plantes/{codigoIneVia}/{numero?}', 'Ajtarragona\Accede\Controllers\AccedeController@plantes')->name('accede.plantes');
+
+	Route::get('/portes/combo/{codigoIneVia}/{numero?}/{nombrePlanta?}', 'Ajtarragona\Accede\Controllers\AccedeController@portesCombo')->name('accede.portes.combo');
 	Route::get('/portes/{codigoIneVia}/{numero?}/{nombrePlanta?}', 'Ajtarragona\Accede\Controllers\AccedeController@portes')->name('accede.portes');
+	
+	Route::get('/codispostals/combo/{codigoIneVia}/{numero?}', 'Ajtarragona\Accede\Controllers\AccedeController@codispostalsCombo')->name('accede.codispostals.combo');
 	Route::get('/codispostals/{codigoIneVia}/{numero?}', 'Ajtarragona\Accede\Controllers\AccedeController@codispostals')->name('accede.codispostals');
 	
 

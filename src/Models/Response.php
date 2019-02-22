@@ -2,7 +2,8 @@
 	namespace Ajtarragona\Accede\Models; 
 
 	use Ajtarragona\Accede\Models\AccedeObject;
-	use Ajtarragona\Accede\Exceptions\AccedeException;
+	use Ajtarragona\Accede\Exceptions\AccedeErrorException;
+	use Ajtarragona\Accede\Exceptions\AccedeNoResultsException;
 
 	class Response extends AccedeObject{
 		protected static $SML_SINGLE = "s";
@@ -20,7 +21,7 @@
 			}else{
 				$msg=isset($this->res['codigo'])?$this->res['codigo']:"";
 				$msg.=isset($this->res['desc'])?(": ".$this->res['desc']):"";
-	            throw new AccedeException('Error '.$msg);
+	            throw new AccedeErrorException('Error '.$msg);
 
 			}
 		}
@@ -32,7 +33,7 @@
 			 if($ret){
 			 	return true;
 			 }else{
-			 	throw new AccedeException('No results');
+			 	throw new AccedeNoResultsException('No results');
 			 }
 		}
 
