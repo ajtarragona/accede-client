@@ -154,9 +154,60 @@ Funció | Paràmetres | Retorn
 > En tots els casos es retorna una excepció si falla o no es troba res.
 
 
-#API Json
+## API Json
+```php
 
-#Component Web
+	//Paisos
+
+	/ajtarragona/accede/api/paisos
+	/ajtarragona/accede/api/paisos/{codigoPais}
+	
+	//Provincies
+	/ajtarragona/accede/api/provincies
+	/ajtarragona/accede/api/provincies/{codigoProvincia}
+	
+	//Municipis
+	/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis
+	/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}
+
+
+	//Vies
+	/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}/vies/search/{filter}
+	/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}/vies/combo
+	/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}/vies
+	/ajtarragona/accede/api/provincies/{codigoProvincia}/municipis/{codigoMunicipio}/vies/{codigoIneVia}
+
+
+	//Numeros de la via
+	/ajtarragona/accede/api/numeros/combo/{codigoIneVia}
+	/ajtarragona/accede/api/numeros/{codigoIneVia}
+
+	//Blocs de la via
+	/ajtarragona/accede/api/blocs/combo/{codigoIneVia}
+	/ajtarragona/accede/api/blocs/{codigoIneVia}
+
+	//Escales de la via
+	/ajtarragona/accede/api/escales/combo/{codigoIneVia}/{numero?}
+	/ajtarragona/accede/api/escales/{codigoIneVia}/{numero?}
+
+	//Lletres de la via
+	/ajtarragona/accede/api/lletres/combo/{codigoIneVia}/{numero?}
+	/ajtarragona/accede/api/lletres/{codigoIneVia}/{numero?}
+
+	//Plantes de la via
+	/ajtarragona/accede/api/plantes/combo/{codigoIneVia}/{numero?}
+	/ajtarragona/accede/api/plantes/{codigoIneVia}/{numero?}
+
+	//Codis postals de la via
+	/ajtarragona/accede/api/codispostals/combo/{codigoIneVia}/{numero?}
+	/ajtarragona/accede/api/codispostals/{codigoIneVia}/{numero?}
+	
+	//Portes de la via
+	/ajtarragona/accede/api/portes/combo/{codigoIneVia}/{numero?}/{nombrePlanta?}
+	/ajtarragona/accede/api/portes/{codigoIneVia}/{numero?}/{nombrePlanta?}
+```
+
+## Component Web
 
 ```bash
 php artisan vendor:publish --tag=ajtarragona-accede-assets --force
