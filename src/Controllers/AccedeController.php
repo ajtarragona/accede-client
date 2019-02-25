@@ -3,6 +3,7 @@
 namespace Ajtarragona\Accede\Controllers; 
 
 use App\Http\Controllers\Controller;
+use Ajtarragona\Accede\Models\Beans\Domicili;
 use Ajtarragona\Accede\Models\AccedeTercersProvider;
 use Ajtarragona\Accede\Models\AccedeVialerProvider;
 use Ajtarragona\Accede\Models\AccedeRegistreProvider;
@@ -42,6 +43,21 @@ class AccedeController extends Controller{
 
 	}
 
+	public function newdomicili(){
+		$currentPais=AccedeVialer::getPais(config("accede.codigo_pais_espana"));
+		$currentProvincia=AccedeVialer::getProvincia(config("accede.codigo_provincia_tarragona"));
+		$currentMunicipi=AccedeVialer::getMunicipi(config("accede.codigo_municipio_tarragona"), intval($currentProvincia->codigoProvincia));
+
+		$blocs=AccedeVialer::getAllBlocs(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
+		$escales=AccedeVialer::getAllEscales(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
+		$codispostals=AccedeVialer::getAllCodisPostals(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
+		$plantes=AccedeVialer::getAllPlantes(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
+		$portes=AccedeVialer::getAllPortes(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
+		$tipusvies=AccedeVialer::getAllTipusVia(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
+
+		$domicili=new Domicili();
+		return view("accede-client::newdomicili",compact('currentPais','currentProvincia','currentMunicipi','domicili','blocs','escales','codispostals','plantes','portes','tipusvies'));
+	}
 
 	private function tryWrap(callable  $function){
 		try{
@@ -181,6 +197,14 @@ class AccedeController extends Controller{
 
 
 
+
+
+	public function codificadors($codigoIneVia, $numero=false, $nombrePlanta=false){
+		return $this->tryWrap(function() use ($codigoIneVia,$numero,$nombrePlanta){
+			$codificadors=AccedeVialer::getCodificadorsVia($codigoIneVia,$numero,$nombrePlanta);
+			return response()->json($codificadors);
+		});
+	}
 
 
 

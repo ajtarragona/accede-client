@@ -204,12 +204,28 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 
-	public function getAllPortes( ) {	
+	public function getAllPortes( $codiProvincia=false, $codiMunicipi=false,$combo=false ) {	
 		
-		$params=array();
+		if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
+		if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
+		
+		$params=array(
+			 "codigoProvincia" => $codiProvincia,
+			 "codigoMunicipio" => $codiMunicipi
+		);
 
 		$response=$this->sendRequest("PTA","LST",$params);
-		return Porta::parseResponse($response);
+
+		$items=Porta::parseResponse($response);
+		if($combo){
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[$item->codigoPuerta] = $item->nombrePuerta;
+		    }
+		}else{
+			$ret=$items;
+		}
+		return $ret;
 	}
 
 
@@ -229,12 +245,28 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 
-	public function getAllPlantes( ) {	
+	public function getAllPlantes( $codiProvincia=false, $codiMunicipi=false,$combo=false ) {	
 		
-		$params=array();
+		if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
+		if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
+		
+		$params=array(
+			 "codigoProvincia" => $codiProvincia,
+			 "codigoMunicipio" => $codiMunicipi
+		);
 
 		$response=$this->sendRequest("PLT","LST",$params);
-		return Planta::parseResponse($response);
+		
+		$items=Planta::parseResponse($response);
+		if($combo){
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[$item->codigoPlanta] = $item->nombrePlanta;
+		    }
+		}else{
+			$ret=$items;
+		}
+		return $ret;
 	}
 
 
@@ -254,12 +286,27 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 
-	public function getAllEscales( ) {	
+	public function getAllEscales($codiProvincia=false, $codiMunicipi=false,$combo=false ) {	
 		
-		$params=array();
+		if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
+		if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
+		
+		$params=array(
+			 "codigoProvincia" => $codiProvincia,
+			 "codigoMunicipio" => $codiMunicipi
+		);
 
 		$response=$this->sendRequest("ESC","LST",$params);
-		return Escala::parseResponse($response);
+		$items=Escala::parseResponse($response);
+		if($combo){
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[$item->codigoEscalera] = $item->nombreEscalera;
+		    }
+		}else{
+			$ret=$items;
+		}
+		return $ret;
 	}
 
 
@@ -272,7 +319,7 @@ class AccedeVialerProvider extends AccedeProvider{
 	/*bloques*/
 	/***********/
 
-	public function getAllBlocs($codiProvincia=false, $codiMunicipi=false) {	
+	public function getAllBlocs($codiProvincia=false, $codiMunicipi=false, $combo=false) {	
 		if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
 		if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
 		
@@ -283,7 +330,16 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 		$response=$this->sendRequest("BLQ","LST",$params);
-		return Bloc::parseResponse($response);
+		$items=Bloc::parseResponse($response);
+		if($combo){
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[$item->codigoBloque] = $item->nombreBloque;
+		    }
+		}else{
+			$ret=$items;
+		}
+		return $ret;
 	}
 
 
@@ -308,7 +364,7 @@ class AccedeVialerProvider extends AccedeProvider{
 	/***********/	
 
 
-	public function getAllCodisPostals($codiProvincia=false, $codiMunicipi=false) {	
+	public function getAllCodisPostals($codiProvincia=false, $codiMunicipi=false, $combo=false) {	
 		if(!$codiProvincia && !$codiMunicipi ){
 			$codiProvincia=$this->options->codigo_provincia_tarragona;
 			$codiMunicipi=$this->options->codigo_municipio_tarragona;
@@ -320,7 +376,16 @@ class AccedeVialerProvider extends AccedeProvider{
 		if($codiMunicipi) $params["codigoMunicipio"] = $codiMunicipi;
 
 		$response=$this->sendRequest("CPO","LST",$params);
-		return CodiPostal::parseResponse($response);
+		$items=CodiPostal::parseResponse($response);
+		if($combo){
+			$ret=[];
+		    foreach($items as $item){
+		        if(intval($item->codigoPostal)>0) $ret[$item->codigoPostal] = $item->codigoPostal;
+		    }
+		}else{
+			$ret=$items;
+		}
+		return $ret;
 	}
 
 
@@ -378,7 +443,7 @@ class AccedeVialerProvider extends AccedeProvider{
 	}
 
 
-	public function getAllVies($codiProvincia=false, $codiMunicipi=false ) {	
+	public function getAllVies($codiProvincia=false, $codiMunicipi=false , $combo=false) {	
 		if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
 		if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
 		
@@ -388,7 +453,17 @@ class AccedeVialerProvider extends AccedeProvider{
 		);
 
 		$response=$this->sendRequest("VIA","LST",$params);
-		return Via::parseResponse($response);
+		$items=Via::parseResponse($response);
+		if($combo){
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[$item->codigoIneVia] = $item->nombreVia;
+		    }
+		}else{
+			$ret=$items;
+		}
+		return $ret;
+
 	}
 
 
@@ -404,7 +479,7 @@ class AccedeVialerProvider extends AccedeProvider{
 	/*tipus de via*/
 	/***********/	
 
-	public function getAllTipusVia($codiProvincia=false, $codiMunicipi=false ) {	
+	public function getAllTipusVia($codiProvincia=false, $codiMunicipi=false , $combo=false) {	
 		//if(!$codiProvincia) $codiProvincia=$this->options->codigo_provincia_tarragona;
 		//if(!$codiMunicipi) $codiMunicipi=$this->options->codigo_municipio_tarragona;
 		
@@ -415,7 +490,17 @@ class AccedeVialerProvider extends AccedeProvider{
 
 
 		$response=$this->sendRequest("TVI","LST",$params);
-		return TipusVia::parseResponse($response);
+
+		$items=TipusVia::parseResponse($response);
+		if($combo){
+			$ret=[];
+		    foreach($items as $item){
+		        $ret[$item->codigoTipoVia] = $item->nombreTipoVia;
+		    }
+		}else{
+			$ret=$items;
+		}
+		return $ret;
 	}
 
 
@@ -442,11 +527,17 @@ class AccedeVialerProvider extends AccedeProvider{
 	/***********/
 
 
-	//TODO: peta por todas partes
+	
 	public function searchDomicilis($params=[]) {
 		if(isset($params["numero"])){
-			$params["numeroDesde"]= $params["numero"];
-			$params["numeroHasta"]= $params["numero"];
+			if(strpos($params["numero"],"-")===false){
+				$params["numeroDesde"]= intval($params["numero"]);
+				$params["numeroHasta"]= intval($params["numero"]);
+			}else{
+				$num=explode("-", $params["numero"]);
+				$params["numeroDesde"] =intval($num[0]);
+				$params["numeroHasta"] =intval($num[0]); //si si, 0
+			}
 			unset($params["numero"]);
 		}
 		if(isset($params["nombreVia"])) $params["nombreVia"]=strtoupper($params["nombreVia"]);
@@ -466,14 +557,151 @@ class AccedeVialerProvider extends AccedeProvider{
 	
 	}
 
+	public function createDomicili($params=[]) {	
+		$required=["codigoTipoVia","codigoIneVia","numeroDesde"];
 
-	
+
+		$params=array_merge([
+			"normalizadoDomicilio" => 1,
+			"codigoPais" => $this->options->codigo_pais_espana,
+			"codigoProvincia" => $this->options->codigo_provincia_tarragona,
+			"codigoMunicipio" => $this->options->codigo_municipio_tarragona,
+			"codigoTipoNumeracion" => 1, // 1: senars, 2: parells
+			"codigoTipoVivienda" => 1 , //1:familiar, 2:colectivo
+
+
+
+		],$params);
+
+		//dump($params);
+
+		
+
+		if(array_diff_key(array_flip($required), $params)){
+			dump("faltan parametros");
+		}else{
+			//dump("VAMOS!");
+
+			//codigoTipoVia
+			$response=$this->sendRequest("DOM","CRE",$params,["ver"=>"2.0"]);
+			dump($response);
+		}
+	}
+
+
+	public function getCodificadorsVia($codigoIneVia, $numero=false, $nombrePlanta=false){
+		$args=["codigoIneVia"=>intval($codigoIneVia)];
+		if(!isFalse($numero)) $args["numero"] =$numero;
+		if($nombrePlanta) $args["nombrePlanta"] = ($nombrePlanta."");
+		
+		$numeros=[];
+		$lletres=[];
+		$blocs=[];
+		$escales=[];
+		$plantes=[];
+		$cpostals=[];
+		$portes=[];
+
+		$domicilis=self::searchDomicilis($args);
+		//dump($domicilis);
+		
+		foreach($domicilis as $domicili){
+			//numero
+			$thenum=[];
+			if(isset($domicili->numeroDesde) && $domicili->numeroDesde )  $thenum[]=$domicili->numeroDesde;
+			if(isset($domicili->numeroHasta) && $domicili->numeroHasta ) $thenum[]=$domicili->numeroHasta;
+			$thenum=implode("-",$thenum);
+
+			if($thenum && !isset($numeros[$thenum]) ){
+				$numeros[$thenum]=[
+					"value"=>$thenum,
+					"name"=>$thenum
+				];
+			}	
+			
+
+			//lletra
+			$letter=[];
+			if(isset($domicili->letraDesde) && $domicili->letraDesde )  $letter[]=$domicili->letraDesde;
+			if(isset($domicili->letraHasta) && $domicili->letraHasta ) $letter[]=$domicili->letraHasta;
+			$letter=implode("-",$letter);
+
+			if($letter &&  !isset($lletres[$letter]) ) {
+				$lletres[$letter]=[
+					"value"=>$letter,
+					"name"=>$letter
+				];
+			}
+			
+
+			//plantes
+			if(isset($domicili->codigoPlanta) &&  $domicili->codigoPlanta && !isset($plantes[$domicili->codigoPlanta]) ){
+				$plantes[$domicili->codigoPlanta]=[
+					"value"=>$domicili->codigoPlanta,
+					"name"=>$domicili->nombrePlanta
+				];
+			}
+			
+			//escales
+			if(isset($domicili->codigoEscalera) && $domicili->codigoEscalera && !isset($escales[$domicili->codigoEscalera])){
+				$escales[$domicili->codigoEscalera]=[
+					"value"=> $domicili->codigoEscalera,
+					"name"=> $domicili->nombreEscalera
+				];
+			}
+			
+			//blocs
+			if(isset($domicili->codigoBloque) && $domicili->codigoBloque && !isset($blocs[$domicili->codigoBloque])){
+				$blocs[$domicili->codigoBloque]=[
+					"value"=> $domicili->codigoBloque,
+					"name"=> $domicili->codigoBloque
+				];
+			}
+			
+			//codis postals
+			if(isset($domicili->codigoPostal) &&  $domicili->codigoPostal && !isset($cpostals[$domicili->codigoPostal])) {
+				$cpostals[$domicili->codigoPostal]=[
+					"value"=> $domicili->codigoPostal,
+					"name"=> $domicili->codigoPostal
+				];
+			}
+			
+			//portes
+			if(isset($domicili->codigoPuerta) && $domicili->codigoPuerta && !isset($portes[$domicili->codigoPuerta])){
+				$portes[$domicili->codigoPuerta]=[
+					"value"=>$domicili->codigoPuerta,
+					"name"=>$domicili->codigoPuerta
+				];
+			}
+			
+
+		}
+		//sort($numeros);
+		ksort($lletres);
+		ksort($blocs);
+		ksort($escales);
+		ksort($plantes);
+		ksort($cpostals);
+		ksort($portes);
+
+		$ret=[
+			"numeros"=>array_values($numeros),
+			"lletres"=>array_values($lletres),
+			"blocs"=>array_values($blocs),
+			"escales"=>array_values($escales),
+			"plantes"=>array_values($plantes),
+			"cpostals"=>array_values($cpostals),
+			"portes"=>array_values($portes),
+		];
+
+		return $ret;
+	}
 
 
 	public function getCodisPostalsVia($codigoIneVia, $numero=false){
 		//$via=self::getVia($codigoIneVia);
 		$args=["codigoIneVia"=>intval($codigoIneVia)];
-		if(!isFalse($numero)) $args["numero"] =intval($numero);
+		if(!isFalse($numero)) $args["numero"] =$numero;
 		$domicilis=self::searchDomicilis($args);
 		$ret=[];
 		foreach($domicilis as $domicili){
@@ -490,9 +718,16 @@ class AccedeVialerProvider extends AccedeProvider{
 		$domicilis=self::searchDomicilis($args);
 		$ret=[];
 		foreach($domicilis as $domicili){
-			if($domicili->numeroDesde && !in_array($domicili->numeroDesde, $ret)) $ret[]=$domicili->numeroDesde;
+			$thenum=[];
+			if(isset($domicili->numeroDesde) && $domicili->numeroDesde )  $thenum[]=$domicili->numeroDesde;
+			if(isset($domicili->numeroHasta) && $domicili->numeroHasta ) $thenum[]=$domicili->numeroHasta;
+			$thenum=implode("-",$thenum);
+
+			if($thenum && !in_array($thenum, $ret)){
+				$ret[]=$thenum;
+			}
 		}
-		sort($ret);
+		//sort($ret);
 		return $ret;
 	}
 
@@ -500,12 +735,21 @@ class AccedeVialerProvider extends AccedeProvider{
 	public function getLletresVia($codigoIneVia, $numero=false){
 		//$via=self::getVia($codigoIneVia);
 		$args=["codigoIneVia"=>intval($codigoIneVia)];
-		if(!isFalse($numero)) $args["numero"] =intval($numero);
+		if(!isFalse($numero)) $args["numero"] =$numero;
 		
 		$domicilis=self::searchDomicilis($args);
 		$ret=[];
 		foreach($domicilis as $domicili){
-			if(isset($domicili->letraDesde) && $domicili->letraDesde && !in_array($domicili->letraDesde, $ret)) $ret[]=$domicili->letraDesde;
+			$letter=[];
+			if(isset($domicili->letraDesde) && $domicili->letraDesde )  $letter[]=$domicili->letraDesde;
+			if(isset($domicili->letraHasta) && $domicili->letraHasta ) $letter[]=$domicili->letraHasta;
+			$letter=implode("-",$letter);
+
+			if($letter && !in_array($letter, $ret)){
+				$ret[]=$letter;
+			}
+
+			//if(isset($domicili->letraDesde) && $domicili->letraDesde && !in_array($domicili->letraDesde, $ret)) $ret[]=$domicili->letraDesde;
 		}
 		sort($ret);
 		return $ret;
@@ -518,7 +762,7 @@ class AccedeVialerProvider extends AccedeProvider{
 		$args=[
 			"codigoIneVia"=>intval($codigoIneVia)
 		];
-		if(!isFalse($numero)) $args["numero"] =intval($numero);
+		if(!isFalse($numero)) $args["numero"] =$numero;
 		
 		$domicilis=self::searchDomicilis($args);
 
@@ -541,7 +785,7 @@ class AccedeVialerProvider extends AccedeProvider{
 		$args=[
 			"codigoIneVia"=>intval($codigoIneVia)
 		];
-		if(!isFalse($numero)) $args["numero"] =intval($numero);
+		if(!isFalse($numero)) $args["numero"] =$numero;
 
 		$domicilis=self::searchDomicilis($args);
 
@@ -566,7 +810,7 @@ class AccedeVialerProvider extends AccedeProvider{
 		$args=[
 			"codigoIneVia"=>intval($codigoIneVia)
 		];
-		//if($numero) $args["numero"] =intval($numero);
+		//if($numero) $args["numero"] =$numero;
 
 		$domicilis=self::searchDomicilis($args);
 
@@ -590,7 +834,7 @@ class AccedeVialerProvider extends AccedeProvider{
 		$args=[
 			"codigoIneVia"=>intval($codigoIneVia),
 		];
-		if(!isFalse($numero)) $args["numero"] =intval($numero);
+		if(!isFalse($numero)) $args["numero"] =$numero;
 		if($nombrePlanta) $args["nombrePlanta"] = ($nombrePlanta."");
 		
 		$domicilis=self::searchDomicilis($args);

@@ -47,6 +47,22 @@ $.fn.initVialerField = function(){
 		 o.$codispostals=$(o).find('select.field_codipostal');
 		 o.$km=$(o).find('input.field_km');
 
+		 
+		 o.defaultCodificadors = function(){
+		 	return {
+			 	numeros: [],
+				lletres: [],
+				escales: [],
+				blocs: [],
+				plantes: [],
+				portes: [],
+				cpostals: []
+			 };
+		 }
+
+		 o.codificadors=o.defaultCodificadors();
+
+
 //al(o.$numeros);
 
 		o.save = function(){
@@ -287,45 +303,68 @@ $.fn.initVialerField = function(){
 
 
         o.refreshNumeros = function(codigoIneVia){
-         	o.refreshComponent(o.$numeros,'accede.numeros.combo',codigoIneVia);
+        	o.refreshComponent(o.$numeros,o.codificadors.numeros);
         }
 
 
 		o.refreshEscales = function(codigoIneVia, numero){
-			o.refreshComponent(o.$escales,'accede.escales.combo',codigoIneVia, numero);	
+			o.refreshComponent(o.$escales,o.codificadors.escales);	
         }
 
 		o.refreshLletres = function(codigoIneVia, numero){
-			o.refreshComponent(o.$lletres,'accede.lletres.combo',codigoIneVia, numero);	
+			o.refreshComponent(o.$lletres,o.codificadors.lletres);	
         }
 
 
+
         o.refreshBlocs = function(codigoIneVia){
-         	o.refreshComponent(o.$blocs,'accede.blocs.combo',codigoIneVia);	
+         	o.refreshComponent(o.$blocs,o.codificadors.blocs);	
         }
 
 
         o.refreshPlantes = function(codigoIneVia, numero){
-        	o.refreshComponent(o.$plantes,'accede.plantes.combo',codigoIneVia, numero);	
+        	o.refreshComponent(o.$plantes,o.codificadors.plantes);	
 		}
 
 
 		o.refreshPortes = function(codigoIneVia, numero, planta){
-			o.refreshComponent(o.$portes,'accede.portes.combo',codigoIneVia, numero, planta);	
+			o.refreshComponent(o.$portes,o.codificadors.portes);	
         }
 
 
         o.refreshCodispostals = function(codigoIneVia, numero){
-			o.refreshComponent(o.$codispostals,'accede.codispostals.combo',codigoIneVia, numero);	
+			o.refreshComponent(o.$codispostals,o.codificadors.cpostals);	
         }
 
 
-        o.refreshComponent = function($component,route,codigoIneVia, numero, planta){
-        	if(codigoIneVia ){
-        		
-        		//al(route+"-"+codigoIneVia+"-"+numero+"-"+planta);
+        o.refreshComponent = function($component,data){
+        	$component.empty();
+        	$component.closest(".form-group").stopLoading();
+    		al('refreshComponent');
+        	//al($component);
+        	//al(data);
+        	//al(data.length);
+     		if( data && data.length > 0 ){
+         		$.each(data,function(key, item){
+         			//al(key);
+         			//al(item);
+         			$component.append($('<option value="'+item.value+'">'+item.name+'</option>'));
+         		});
+         		$component.enableSelect();
+         		if(data.length==1) $component.selectpicker('val', data[0].value);
+         	}else{
+         		$component.disableSelect();
 
-         		$component.closest(".form-group").startLoading();
+         	}
+        }	
+
+
+        o.loadCodificadors = function(codigoIneVia, numero, planta, callback){
+        	
+        	if(codigoIneVia){
+        		
+        		//$component.closest(".form-group").startLoading();
+
          		var params={codigoIneVia:codigoIneVia};
          		
          		if(numero) params.numero=numero;
@@ -334,34 +373,28 @@ $.fn.initVialerField = function(){
          		if(planta) params.nombrePlanta=planta;
 
          		//al(params);
-	         	var url= laroute.route(route,params);
+	         	var url= laroute.route('accede.codificadors',params);
 	         	//al('refreshComponent:'+url);
 
-	         	$.getJSON(url,function(data){
-	         		
-	         		$component.empty();
-	         		if( data && data.length > 0 ){
-		         		$.each(data,function(key, item){
-		         			$component.append($('<option value="'+item.value+'">'+item.name+'</option>'));
-		         		});
-		         		$component.enableSelect();
-		         		if(data.length==1) $component.selectpicker('val', data[0].value);
-		         	}else{
-		         		$component.disableSelect();
-		         	}
+	         	$.getJSON(url, function(data){
+	         		//al(o.codificadors);
+	         		//al(data);
+	         		o.codificadors=data;
+	         		executeCallback(callback);
 	         	}).fail(function() {
-				    $component.disableSelect();
+				    //$component.disableSelect();
 				}).always(function() {
-				   $component.closest(".form-group").stopLoading();
+				   //$component.closest(".form-group").stopLoading();
 				   o.save();
 				});
 
          	}else{
-         		$component.empty();
-	         	$component.disableSelect();
+         		o.codificadors=o.defaultCodificadors();
+         		//$component.empty();
+	         	//$component.disableSelect();
 	         	o.save();
+	         	executeCallback(callback);
          	}
-         	
         }
         
 
@@ -379,15 +412,51 @@ $.fn.initVialerField = function(){
           	o.save();
          }
 
-        o.refreshAll = function(lletres){
+        o.refreshAll = function(){
+        	var carrerval=o.$carrer.closest('.form-group').find('input[type=hidden]').val();
+			var numero=o.$numeros.val();
+				
+			
+			
+			o.$numeros.closest(".form-group").startLoading();
+			o.$lletres.closest(".form-group").startLoading();
+			o.$blocs.closest(".form-group").startLoading();
+			o.$escales.closest(".form-group").startLoading();
+			o.$plantes.closest(".form-group").startLoading();
+			o.$codispostals.closest(".form-group").startLoading();
+			o.$portes.closest(".form-group").startLoading();
+
+			o.loadCodificadors(carrerval,false, false, function(){
+				 o.refreshNumeros();
+				 o.refreshLletres();
+				 o.refreshBlocs();
+				 o.refreshEscales();
+				 o.refreshPlantes();
+				 o.refreshCodispostals();
+				 o.refreshPortes();
+			});
+			
+        }
+        o.refreshSecondary = function(){
          	var carrerval=o.$carrer.closest('.form-group').find('input[type=hidden]').val();
 			var numero=o.$numeros.val();
+			
+			o.$blocs.closest(".form-group").startLoading();
+			o.$escales.closest(".form-group").startLoading();
+			o.$plantes.closest(".form-group").startLoading();
+			o.$codispostals.closest(".form-group").startLoading();
+			o.$portes.closest(".form-group").startLoading();
 
-			if(lletres) o.refreshLletres(carrerval,numero);
-			o.refreshEscales(carrerval,numero);
-			o.refreshPlantes(carrerval,numero);
-			o.refreshCodispostals(carrerval,numero);
-			o.refreshPortes(carrerval,numero);
+			o.loadCodificadors(carrerval,numero, false, function(){
+				 
+				 o.refreshBlocs();
+				 o.refreshEscales();
+				 o.refreshPlantes();
+				 o.refreshCodispostals();
+				 o.refreshPortes();
+			});
+			
+
         }
 
         o.init = function(){
@@ -410,24 +479,21 @@ $.fn.initVialerField = function(){
 
          	
 			o.$carrer.bind('typeahead:select', function(ev, suggestion) {
-				var carrerval=suggestion.value;
-				o.refreshNumeros(carrerval);
-				o.refreshBlocs(carrerval);
-				o.refreshEscales(carrerval);
-				o.refreshLletres(carrerval);
-				o.refreshPlantes(carrerval);
-				o.refreshPortes(carrerval);
-				o.refreshCodispostals(carrerval);
-				o.$km.val('');
+				o.refreshAll();
             });
 
 			o.$numeros.on('change', function() {
-				o.refreshAll(true);
+				o.refreshSecondary();
             });
 
-            o.$blocs.on('change', function() {
-				o.refreshAll(true);
-			});
+
+			// o.$lletres.on('change', function() {
+			// 	o.refreshAll(false);
+   //          });
+
+   //          o.$blocs.on('change', function() {
+			// 	o.refreshAll(true);
+			// });
 
 			
 
@@ -436,19 +502,21 @@ $.fn.initVialerField = function(){
 				//al(o.$numero);
 				var numero= o.$numeros.val();
 				var planta= $(this).val();
-				o.refreshPortes(carrerval,numero,planta);
-				o.save();
+
+				o.$portes.closest(".form-group").startLoading();
+
+				o.loadCodificadors(carrerval,numero, planta, function(){
+					 o.refreshPortes();
+				});
 
             });
+
 
             o.$portes.on('change', function() {
 				o.save();
             });
 
- 			o.$lletres.on('change', function() {
-				o.refreshAll(false);
-            });
- 			
+ 				
  			o.$escales.on('change', function() {
 				o.save();
             });
@@ -458,7 +526,6 @@ $.fn.initVialerField = function(){
             });
 
             o.$adreca.on('keyup',function(){
-             	
              	o.save();
             });
 

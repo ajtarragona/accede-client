@@ -20,8 +20,15 @@ class AccedeProvider {
 	}
 
 
-	protected function sendRequest($tobj,$cmd, $params=false,$apl="TER",$options=[]){
-		$op=new AccedeOperation($apl,$tobj, $cmd,"2.0");
+	protected function sendRequest($tobj, $cmd, $params=false,$options=[]){
+		$apl="TER";
+		$ver="2.0";
+		if($options && is_array($options)){
+			if(isset($options["apl"])) $apl=$options["apl"];
+			if(isset($options["ver"])) $ver=$options["ver"];
+		}
+
+		$op=new AccedeOperation($apl,$tobj, $cmd,$ver);
 		//dd($op);
 		$sec=new AccedeSecurity($this->options);
 		//dd($sec);

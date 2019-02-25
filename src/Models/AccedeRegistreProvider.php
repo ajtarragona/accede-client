@@ -19,7 +19,7 @@ class AccedeRegistreProvider extends AccedeProvider{
 			"documento" => $documento
 		];
 		//dd($params);
-		$response=$this->sendRequest("REG","LST",$params,"REG");//,["excluded"=>["documento"]]);
+		$response=$this->sendRequest("REG","LST",$params,["apl"=>"REG"]);//,["excluded"=>["documento"]]);
 		//dd($response);
 		$ret=Anotacion::parseResponse($response);
 		//dd($ret);
@@ -38,7 +38,7 @@ class AccedeRegistreProvider extends AccedeProvider{
 		];
 
 		//dd($params);
-		$response=$this->sendRequest("REG","LST",$params,"REG");
+		$response=$this->sendRequest("REG","LST",$params,["apl"=>"REG"]);
 		
 		//dd($response);
 		return Anotacion::parseResponse($response);

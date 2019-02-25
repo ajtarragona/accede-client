@@ -193,6 +193,8 @@
 					])
 				</div>
 			</div>
+
+			<a href="{{ route('accede.domicili.create') }} " class="btn btn-light btn-sm">@icon('plus') Afegir domicili</a>
 		@endform
 
 	@endcol
