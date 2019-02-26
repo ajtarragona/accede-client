@@ -4,16 +4,25 @@
 	@lang('Accede Home')
 @endsection
 
+
+
+@section('breadcrumb')
+    @breadcrumb([
+    	'items'=> [
+    		['name'=>__("Vialer")]
+    	]
+    ])
+@endsection
+
+
+@section('menu')
+   @include('accede-client::menu')
+@endsection
+
+
 @section('body')
 
-@row
-	@col(['size'=>3])
-		@include('accede-client::menu')
-	@endcol
-
-
-	@col(['size'=>9])
-	
+		
 		@form(['method'=>'POST','action'=>route('accede.home')])
 			<div 
 				class="vialer-container" 
@@ -193,12 +202,8 @@
 					])
 				</div>
 			</div>
-
-			<a href="{{ route('accede.domicili.create') }} " class="btn btn-light btn-sm">@icon('plus') Afegir domicili</a>
+			
 		@endform
-
-	@endcol
-@endrow
 
 @endsection
 

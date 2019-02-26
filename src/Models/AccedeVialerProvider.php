@@ -541,8 +541,21 @@ class AccedeVialerProvider extends AccedeProvider{
 			unset($params["numero"]);
 		}
 		if(isset($params["nombreVia"])) $params["nombreVia"]=strtoupper($params["nombreVia"]);
+		if(isset($params["codigoIneVia"])) $params["codigoIneVia"]=intval($params["codigoIneVia"]);
+		if(isset($params["numeroDesde"])) $params["numeroDesde"]=intval($params["numeroDesde"]);
+		if(isset($params["numeroHasta"])) $params["numeroHasta"]=intval($params["numeroHasta"]);
+		//dd($params);
+
 		$response=$this->sendRequest("DOM","LST",$params);
 		return Domicili::parseResponse($response);
+	}
+
+
+	public function getDomicili($codigoDomicilio){
+		$domicilis=$this->searchDomicilis(["codigoDomicilio"=>intval($codigoDomicilio)]);
+		if($domicilis) return $domicilis[0];
+		return false;
+		//if()
 	}
 
 	public function getDomicilisByVia($codiVia,$numeroDesde=false,$numeroHasta=false) {	
@@ -557,7 +570,8 @@ class AccedeVialerProvider extends AccedeProvider{
 	
 	}
 
-	public function createDomicili($params=[]) {	
+
+	public function createDomicili($params=[]){	
 		$required=["codigoTipoVia","codigoIneVia","numeroDesde"];
 
 
@@ -573,18 +587,24 @@ class AccedeVialerProvider extends AccedeProvider{
 
 		],$params);
 
-		//dump($params);
-
-		
 
 		if(array_diff_key(array_flip($required), $params)){
-			dump("faltan parametros");
+			return false;
+			//dump("faltan parametros");
 		}else{
 			//dump("VAMOS!");
-
+			$params["codigoTipoNumeracion"]= (intval($params["numeroDesde"]) % 2 == 0)?Domicili::TIPO_NUMERACION_PARELL:Domicili::TIPO_NUMERACION_IMPARELL;
+			//dd($params);
 			//codigoTipoVia
 			$response=$this->sendRequest("DOM","CRE",$params,["ver"=>"2.0"]);
-			dump($response);
+			//dump($response);
+
+			//retorna el codigo de domicilio credo
+			$ret=Domicili::parseCreate($response,"codigoDomicilio");
+
+			if(intval($ret)>0) return intval($ret);
+			else return false;
+			
 		}
 	}
 

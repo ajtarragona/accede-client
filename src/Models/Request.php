@@ -4,6 +4,7 @@ use Ajtarragona\Accede\Models\AccedeObject;
 use Ajtarragona\Accede\Models\Response as AccedeResponse;
 use Ajtarragona\Accede\Models\Helpers\AccedeHelper;
 use \SoapClient;
+use \SoapFault;
 use Illuminate\Support\Facades\Log;
 
 
@@ -34,14 +35,21 @@ class Request  extends AccedeObject{
 		$this->par = AccedeHelper::encodeArray($par, $this->options);
 		//dd($this->par);
 		$this->dat=$dat;
-
-		if($wsurl) $this->client = new SoapClient($wsurl);
+		try{
+			if($wsurl) $this->client = new SoapClient($wsurl, ['exceptions' => true]);
+		}catch(SoapFault $e){
+			return false;
+		}
 
 	}
 
 	public function setWSUrl($wsurl){
-		$this->wsurl=$wsurl;
-		$this->client = new SoapClient($this->wsurl);
+		try{
+			$this->wsurl=$wsurl;
+			$this->client = new SoapClient($this->wsurl, ['exceptions' => true]);
+		}catch(SoapFault $e){
+			return false;
+		}
 	}
 
 
@@ -57,8 +65,14 @@ class Request  extends AccedeObject{
 		$params = array('in0'=>$sml);
 
 		try{
+			if(!$this->client){
+				return AccedeResponse::errorReponse(1,"Error de connexió al WS ACCEDE");
+			}
+
 			$ret=$this->client->__soapCall(self::SERVICIO, $params);
+			
 			if(config("accede.debug")) Log::debug('Accede Response: \n'.$ret);
+
 			$ret=AccedeHelper::decodeArray(AccedeHelper::fromSML($ret));
 			//dd($ret);
 			$response=AccedeResponse::parseArray($ret);
@@ -66,7 +80,7 @@ class Request  extends AccedeObject{
 			//_dump($response);
 			return $response;
 		}catch(SoapFault $e){
-			return false;
+			return AccedeResponse::errorReponse(1,"Error de connexió al WS ACCEDE");
 		}
 
 	}

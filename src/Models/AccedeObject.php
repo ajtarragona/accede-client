@@ -70,9 +70,13 @@ class AccedeObject {
     }
     
 
-    public static function parseCreate($response){
+    public static function parseCreate($response, $return=false){
          if($response->success()){
-            return reset($response->par); //devuelve primer elemento
+            if($return)
+                if(isset($response->par[$return])) return $response->par[$return];
+                else return reset($response->par); 
+            else 
+                return reset($response->par); //devuelve primer elemento
          }else{
             return false;
          }

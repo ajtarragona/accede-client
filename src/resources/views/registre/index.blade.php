@@ -1,20 +1,23 @@
-@extends('ajtarragona-web-components::layout/master')
+@extends('ajtarragona-web-components::layout/master-sidebar')
 
 @section('title')
 	@lang('Accede Registre')
 @endsection
 
+@section('menu')
+   @include('accede-client::menu')
+@endsection
+
+
 @section('body')
 @row
-	@col(['size'=>3])
-		@include('accede-client::menu')
-	@endcol
+	
 
 
 	@col(['size'=>3])
 
 		@form([
-			"action"=>route('accede.searchregister'),
+			"action"=>route('accede.register.dosearch'),
 			"method" =>"post"
 
 		])	
@@ -39,7 +42,7 @@
 		@endform				
 	@endcol
 
-	@col(['size'=>6])
+	@col(['size'=>9])
 		@if($registres)
 			<table class="table">
 				<thead>

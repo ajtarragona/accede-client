@@ -1,10 +1,35 @@
-@list
-	@li(['active'=> isActiveRoute('accede.registerform'), 'href'=>route('accede.registerform')])
-		Registre
-	@endli
 
-	@li(['active'=> isActiveRoute('accede.home'), 'href'=>route('accede.home')])
-		Vialer
-	@endli
+<div id="main-menu">
 
-@endlist
+@nav([
+	"navigation"=> 'drilldown',
+	'class'=>'nav-dark',
+	'fullwidth'=>true,
+	"items"=> [
+		[
+			"title" => __('Vialer' ) ,
+			"icon" => 'map-marker-alt',
+			"route" => 'accede.home',
+		],
+		[
+			"title" => __('Registre E/S' ) ,
+			"icon" => 'book',
+			"route" => 'accede.register.search',
+		],
+		[
+			"title" => __('Domicilis' ) ,
+			"icon" => 'map-marked',
+			"route" => 'accede.domicili.search',
+			"activeroute" => 'accede.domicili.*'
+		],
+		[
+			"title" => __('Tercers' ) ,
+			"icon" => 'users',
+			"route" => 'accede.tercer.search',
+			"activeroute" => 'accede.tercer.*'
+		],
+	]
+	
+])
+
+</div>

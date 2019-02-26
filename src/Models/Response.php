@@ -15,6 +15,16 @@
 
 
 
+		public static function errorReponse($codigo="",$desc=""){
+			$ret= new self();
+			$ret->res=[
+				"exito"=>self::ACCEDE_BOOL_FALSE,
+				"codigo" => $codigo,
+				"desc" => $desc
+			];
+			return $ret;
+		}
+		
 		public function success(){
 			if(isset($this->res["exito"]) && $this->res["exito"]==self::ACCEDE_BOOL_TRUE ){
 				return true;
