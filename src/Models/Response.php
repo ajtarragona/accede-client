@@ -35,6 +35,19 @@
 
 			}
 		}
+
+		public function successUpdate(){
+			return $this->success();
+
+			/*if(!isset($this->res["exito"]) && !isset($this->res["desc"])){
+				return true;
+			}else{
+				$msg=isset($this->res['codigo'])?$this->res['codigo']:"";
+				$msg.=isset($this->res['desc'])?(": ".$this->res['desc']):"";
+	            throw new AccedeErrorException('Error '.$msg);
+
+			}*/
+		}
 		
 		public function hasResults($list,$single){
 			 //$classname=get_called_class();

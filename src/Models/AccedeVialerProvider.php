@@ -18,11 +18,27 @@ use Ajtarragona\Accede\Models\Beans\Planta;
 use Ajtarragona\Accede\Models\Beans\Escala;
 use Ajtarragona\Accede\Models\Beans\Domicili;
 use Ajtarragona\Accede\Exceptions\AccedeNoResultsException;
+use Illuminate\Http\Request;
 
 class AccedeVialerProvider extends AccedeProvider{
 	
 
 
+	public static function getCodificadors(){
+		$obj=new self();
+		$currentPais=$obj->getPais(config("accede.codigo_pais_espana"));
+		$currentProvincia=$obj->getProvincia(config("accede.codigo_provincia_tarragona"));
+		$currentMunicipi=$obj->getMunicipi(config("accede.codigo_municipio_tarragona"), intval($currentProvincia->codigoProvincia));
+
+		$blocs=$obj->getAllBlocs(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
+		$escales=$obj->getAllEscales(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
+		$codispostals=$obj->getAllCodisPostals(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
+		$plantes=$obj->getAllPlantes(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
+		$portes=$obj->getAllPortes(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
+		$tipusvies=$obj->getAllTipusVia(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
+		return compact('currentPais','currentProvincia','currentMunicipi','blocs','escales','codispostals','plantes','portes','tipusvies');
+
+	}
 
 
 	/***********/
@@ -529,24 +545,44 @@ class AccedeVialerProvider extends AccedeProvider{
 
 	
 	public function searchDomicilis($params=[]) {
-		if(isset($params["numero"])){
-			if(strpos($params["numero"],"-")===false){
-				$params["numeroDesde"]= intval($params["numero"]);
-				$params["numeroHasta"]= intval($params["numero"]);
-			}else{
-				$num=explode("-", $params["numero"]);
-				$params["numeroDesde"] =intval($num[0]);
-				$params["numeroHasta"] =intval($num[0]); //si si, 0
-			}
-			unset($params["numero"]);
+
+		$args=[];
+		foreach($params as $key=>$param){
+			if($param!==null) $args[$key]=$param;
 		}
-		if(isset($params["nombreVia"])) $params["nombreVia"]=strtoupper($params["nombreVia"]);
-		if(isset($params["codigoIneVia"])) $params["codigoIneVia"]=intval($params["codigoIneVia"]);
-		if(isset($params["numeroDesde"])) $params["numeroDesde"]=intval($params["numeroDesde"]);
-		if(isset($params["numeroHasta"])) $params["numeroHasta"]=intval($params["numeroHasta"]);
+		
+		if(isset($args["nombreVia"])) unset($args["nombreVia"]);
+		
+		if(isset($args["codigoPlanta"])){
+			//$planta=AccedeVialer::getPlanta($args["codigoPlanta"]);
+			$args["nombrePlanta"]=$args["codigoPlanta"];
+			unset($args["codigoPlanta"]);
+		}
+
+		if(isset($args["codigoEscalera"])){
+			//$escala=AccedeVialer::getEscala($args["codigoEscalera"]);
+			$args["nombreEscalera"]=$args["codigoEscalera"];
+			unset($args["codigoEscalera"]);
+		}
+
+		if(isset($args["numero"])){
+			if(strpos($args["numero"],"-")===false){
+				$args["numeroDesde"]= intval($args["numero"]);
+				$args["numeroHasta"]= intval($args["numero"]);
+			}else{
+				$num=explode("-", $args["numero"]);
+				$args["numeroDesde"] =intval($num[0]);
+				$args["numeroHasta"] =intval($num[0]); //si si, 0
+			}
+			unset($args["numero"]);
+		}
+		if(isset($args["nombreVia"])) $args["nombreVia"]=strtoupper($args["nombreVia"]);
+		if(isset($args["codigoIneVia"])) $args["codigoIneVia"]=intval($args["codigoIneVia"]);
+		if(isset($args["numeroDesde"])) $args["numeroDesde"]=intval($args["numeroDesde"]);
+		if(isset($args["numeroHasta"])) $args["numeroHasta"]=intval($args["numeroHasta"]);
 		//dd($params);
 
-		$response=$this->sendRequest("DOM","LST",$params);
+		$response=$this->sendRequest("DOM","LST",$args);
 		return Domicili::parseResponse($response);
 	}
 
@@ -570,6 +606,35 @@ class AccedeVialerProvider extends AccedeProvider{
 	
 	}
 
+
+
+	public function createDomiciliFromRequest(Request $request){
+		$via=$this->getVia(intval($request->codigoIneVia));
+		//dd($via);
+		$args=[
+			"codigoTipoVia"=> $via->codigoTipoVia,
+			"codigoIneVia"=> intval($via->codigoIneVia),
+			"numeroDesde"=> intval($request->numeroDesde)
+		];
+		//dd($args);
+		if($request->numeroHasta) $args["numeroHasta"]=intval($request->numeroHasta);
+		if($request->letraDesde) $args["letraDesde"]=$request->letraDesde."";
+		if($request->letraHasta) $args["letraHasta"]=$request->letraHasta."";
+		if($request->codigoBloque) $args["codigoBloque"]=$request->codigoBloque."";
+
+		if($request->codigoPlanta) $args["codigoPlanta"]=$request->codigoPlanta."";
+		if($request->codigoEscalera) $args["codigoEscalera"]=$request->codigoEscalera."";
+		
+
+		if($request->codigoPuerta) $args["codigoPuerta"]=$request->codigoPuerta."";
+		if($request->kilometro) $args["kilometro"]=$request->kilometro;
+		if($request->codigoPostal) $args["codigoPostal"]=intval($request->codigoPostal);
+		if($request->codigoTipoVivienda) $args["codigoTipoVivienda"]=intval($request->codigoTipoVivienda);
+		
+	
+		$codigoDomicilio=$this->createDomicili($args);
+		return $codigoDomicilio;
+	}
 
 	public function createDomicili($params=[]){	
 		$required=["codigoTipoVia","codigoIneVia","numeroDesde"];

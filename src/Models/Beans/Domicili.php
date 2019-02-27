@@ -15,6 +15,8 @@
 		const TIPO_VIVIENDA_FAMILIAR = 1;
 		const TIPO_VIVIENDA_COLECTIVA = 2;
 
+		const TIPO_OCUPACION_PRINCIPAL = 1;
+		const TIPO_OCUPACION_SECUNDARIA = 2;
 
 
 
@@ -84,6 +86,10 @@
 			else return "";
 		}
 
+
+		public function esPrincipal(){
+			return $this->codigoTipoOcupacion==self::TIPO_OCUPACION_PRINCIPAL;
+		}
 		
 
 	}

@@ -31,8 +31,10 @@ class AccedeProvider {
 		$op=new AccedeOperation($apl,$tobj, $cmd,$ver);
 		//dd($op);
 		$sec=new AccedeSecurity($this->options);
+		//dump($params);
 		//dd($sec);
 		$request = new AccedeRequest($op,$sec,$params,false,false,$options);
+		//dump($request);
 		$request->setWSUrl($this->options->ws_url."?wsdl");
 		//dd($request);
 		return $request->send();

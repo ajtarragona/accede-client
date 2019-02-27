@@ -40,6 +40,11 @@ class AccedeVialerController extends Controller{
 			    '--tag' => 'ajtarragona-accede-assets', 
 			    '--force' => 1
 			]);
+
+			Artisan::call('vendor:publish', [
+			    '--tag' => 'ajtarragona-web-components-assets', 
+			    '--force' => 1
+			]);
 			/**/
 
 			return view("accede-client::vialer",compact('currentPais','currentProvincia','currentMunicipi'));
@@ -53,21 +58,7 @@ class AccedeVialerController extends Controller{
 
 
 
-	private function getCodificadors(){
-		$currentPais=AccedeVialer::getPais(config("accede.codigo_pais_espana"));
-		$currentProvincia=AccedeVialer::getProvincia(config("accede.codigo_provincia_tarragona"));
-		$currentMunicipi=AccedeVialer::getMunicipi(config("accede.codigo_municipio_tarragona"), intval($currentProvincia->codigoProvincia));
-
-		$blocs=AccedeVialer::getAllBlocs(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
-		$escales=AccedeVialer::getAllEscales(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
-		$codispostals=AccedeVialer::getAllCodisPostals(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
-		$plantes=AccedeVialer::getAllPlantes(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
-		$portes=AccedeVialer::getAllPortes(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
-		$tipusvies=AccedeVialer::getAllTipusVia(intval($currentProvincia->codigoProvincia), intval($currentMunicipi->codigoMunicipio), true);
-		return compact('currentPais','currentProvincia','currentMunicipi','blocs','escales','codispostals','plantes','portes','tipusvies');
-
-	}
-
+	
 
 
 
@@ -94,35 +85,14 @@ class AccedeVialerController extends Controller{
 	public function search(){
 		$params=[];
 		try{
-			$params=$this->getCodificadors();
+			$params=AccedeVialer::getCodificadors();
 			
 			$domicilisfilter=session('domicilisfilter',$this->defaultdomicilisfilter);
 			$domicilisfilter["nombreVia"]=$domicilisfilter["content_codigoIneVia"];
 			$params["domicilisfilter"]=json_decode(json_encode($domicilisfilter), FALSE);
 		
-			$args=[];
-			foreach($domicilisfilter as $key=>$param){
-				if($param!==null) $args[$key]=$param;
-			}
 			
-			if(isset($args["nombreVia"])) unset($args["nombreVia"]);
-			
-			if(isset($args["codigoPlanta"])){
-				//$planta=AccedeVialer::getPlanta($args["codigoPlanta"]);
-				$args["nombrePlanta"]=$args["codigoPlanta"];
-				unset($args["codigoPlanta"]);
-			}
-
-			if(isset($args["codigoEscalera"])){
-				//$escala=AccedeVialer::getEscala($args["codigoEscalera"]);
-				$args["nombreEscalera"]=$args["codigoEscalera"];
-				unset($args["codigoEscalera"]);
-			}
-
-			//dd($params);
-			//dd($args);
-
-			$domicilis=AccedeVialer::searchDomicilis($args);
+			$domicilis=AccedeVialer::searchDomicilis($domicilisfilter);
 			$params["domicilis"]=$domicilis;
 			
 
@@ -151,7 +121,7 @@ class AccedeVialerController extends Controller{
 
 	public function create(){
 		try{
-			$args=$this->getCodificadors();
+			$args=AccedeVialer::getCodificadors();
 			$args["domicili"]=new Domicili();
 
 			return view("accede-client::domicilis.new",$args);
@@ -165,7 +135,7 @@ class AccedeVialerController extends Controller{
 
 	public function newmodal(){
 		try{
-			$args=$this->getCodificadors();
+			$args=AccedeVialer::getCodificadors();
 			$args["domicili"]=new Domicili();
 
 			return view("accede-client::domicilis.modalnew",$args);
@@ -181,7 +151,7 @@ class AccedeVialerController extends Controller{
 
 	public function show($codigoDomicilio){
 		try{
-			$args=$this->getCodificadors();
+			$args=AccedeVialer::getCodificadors();
 			//dd($codigoDomicilio);
 			$args["domicili"]=AccedeVialer::getDomicili($codigoDomicilio);
 
@@ -200,30 +170,8 @@ class AccedeVialerController extends Controller{
 	public function store(Request $request){
 		//dump($request->all());
 		try{
-			$via=AccedeVialer::getVia(intval($request->codigoIneVia));
-			//dd($via);
-			$args=[
-				"codigoTipoVia"=> $via->codigoTipoVia,
-				"codigoIneVia"=> intval($via->codigoIneVia),
-				"numeroDesde"=> intval($request->numeroDesde)
-			];
-			//dd($args);
-			if($request->numeroHasta) $args["numeroHasta"]=intval($request->numeroHasta);
-			if($request->letraDesde) $args["letraDesde"]=$request->letraDesde."";
-			if($request->letraHasta) $args["letraHasta"]=$request->letraHasta."";
-			if($request->codigoBloque) $args["codigoBloque"]=$request->codigoBloque."";
-
-			if($request->codigoPlanta) $args["codigoPlanta"]=$request->codigoPlanta."";
-			if($request->codigoEscalera) $args["codigoEscalera"]=$request->codigoEscalera."";
 			
-
-			if($request->codigoPuerta) $args["codigoPuerta"]=$request->codigoPuerta."";
-			if($request->kilometro) $args["kilometro"]=$request->kilometro;
-			if($request->codigoPostal) $args["codigoPostal"]=intval($request->codigoPostal);
-			if($request->codigoTipoVivienda) $args["codigoTipoVivienda"]=intval($request->codigoTipoVivienda);
-			
-		
-			$codigoDomicilio=AccedeVialer::createDomicili($args);
+			$codigoDomicilio=AccedeVialer::createDomiciliFromRequest($request);
 			
 			return redirect()->route('accede.domicili.search')
 	                    ->with(['success'=>"Domicili ".$codigoDomicilio. "creat"]);

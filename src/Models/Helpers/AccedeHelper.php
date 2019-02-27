@@ -46,25 +46,41 @@ class AccedeHelper{
 					// make string key...
 					$key = "node_". $key;
 				}
-	 
-				// replace anything not alpha numeric
-				//$key = preg_replace('/[^a-z]/i', '', $key);
-	 
-				// if there is another array found recrusively call this function
-				if (is_array($value) || is_object($value))
-				{
-					if(is_object($value) || self::isAssoc($value)){
-						// recrusive call.
-						$xml.=self::toSML($value, $key,($tab+1));
+
+				if(starts_with($key, "l_")){
+					$singlekey=str_replace("l_", "", $key);
+					$xml.= "$tabs1<$key>\n";
+					if (is_array($value) || is_object($value)){
+						foreach($value as $v){
+							//$xml.= "$tabs1<$singlekey>";
+							$xml.=self::toSML($v, $singlekey,($tab+2));
+							//$xml.= "$tabs1<$singlekey>";
+						}
 					}else{
-						$xml.= "$tabs1<$key>".implode(",",$value)."</$key>\n";
+						$xml.=self::toSML($value, $singlekey,($tab+2));
 					}
-				}
-				else 
-				{
-					// add single node.
-	                //$value = self::accedeEncodedValue($value);
-					$xml.= "$tabs1<$key>$value</$key>\n";
+					$xml.="$tabs1</$key>\n";
+				}else{
+		 
+					// replace anything not alpha numeric
+					//$key = preg_replace('/[^a-z]/i', '', $key);
+		 
+					// if there is another array found recrusively call this function
+					if (is_array($value) || is_object($value))
+					{
+						if(is_object($value) || self::isAssoc($value)){
+							// recrusive call.
+							$xml.=self::toSML($value, $key,($tab+1));
+						}else{
+							$xml.= "$tabs1<$key>".implode(",",$value)."</$key>\n";
+						}
+					}
+					else 
+					{
+						// add single node.
+		                //$value = self::accedeEncodedValue($value);
+						$xml.= "$tabs1<$key>$value</$key>\n";
+					}
 				}
 			}
  
@@ -171,27 +187,42 @@ class AccedeHelper{
 					// make string key...
 					$key = "node_". $key;
 				}
-	 
-				// if there is another array found recrusively call this function
-				if (is_array($value) || is_object($value))
-				{
-					if(is_object($value) || self::isAssoc($value)){
-						// recrusive call.
-						$ret[$key]=self::encodeArray($value,$options);
+	 	
+	 			if(starts_with($key, "l_")){
+					//$singlekey=str_replace("l_", "", $key);
+					$ret[$key]= [];
+					if (is_array($value) || is_object($value)){
+						foreach($value as $v){
+							$ret[$key][]=self::encodeArray($v, $options);
+						}
 					}else{
-						$ret[$key]= implode(",",$value);
+						$excluded=isset($options["excluded"]) && is_array($options["excluded"]) && in_array($key, $options["excluded"]);
+						$ret[$key][]=self::accedeEncodedValue($value, !$excluded);
 					}
-				}
-				else 
-				{
 					
-					// add single node.
-					//dd($options);
-					//dd(isset($options["excluded"]) && in_array($key, $options["excluded"]));
-					$excluded=isset($options["excluded"]) && is_array($options["excluded"]) && in_array($key, $options["excluded"]);
-					//dd($excluded);
-	                $ret[$key] = self::accedeEncodedValue($value, !$excluded);
-	                
+				}else{
+
+					// if there is another array found recrusively call this function
+					if (is_array($value) || is_object($value))
+					{
+						if(is_object($value) || self::isAssoc($value)){
+							// recrusive call.
+							$ret[$key]=self::encodeArray($value,$options);
+						}else{
+							$ret[$key]= implode(",",$value);
+						}
+					}
+					else 
+					{
+						
+						// add single node.
+						//dd($options);
+						//dd(isset($options["excluded"]) && in_array($key, $options["excluded"]));
+						$excluded=isset($options["excluded"]) && is_array($options["excluded"]) && in_array($key, $options["excluded"]);
+						//dd($excluded);
+		                $ret[$key] = self::accedeEncodedValue($value, !$excluded);
+		                
+					}
 				}
 			}
  

@@ -1,7 +1,9 @@
 <?php
     namespace Ajtarragona\Accede\Models\Beans; 
     use Ajtarragona\Accede\Models\AccedeObject;
-        
+    use AccedeTercers; //facade
+    use Ajtarragona\Accede\Exceptions\AccedeNoResultsException;
+
     class Tercer extends AccedeObject  {
         protected static $SML_SINGLE = "tercero";
     	protected static $SML_LIST = "l_tercero";
@@ -22,17 +24,74 @@
 
         
        
-        public function nombreCompleto(){
-            $ret=[];
+        public function nombreCompleto($namelast=true){
+            $cognoms=[];
 
-            if(isset($this->nombre) && $this->nombre) $ret[]=$this->nombre;
-            if(isset($this->particula1) && $this->particula1) $ret[]=$this->particula1;
-            if(isset($this->apellido1) && $this->apellido1) $ret[]=$this->apellido1;
-            if(isset($this->particula2) && $this->particula2) $ret[]=$this->particula2;
-            if(isset($this->apellido2) && $this->apellido2) $ret[]=$this->apellido2;
+            $ret="";
 
-            return implode(" ", $ret);
+            if(isset($this->particula1) && $this->particula1) $cognoms[]=$this->particula1;
+            if(isset($this->apellido1) && $this->apellido1) $cognoms[]=$this->apellido1;
+            if(isset($this->particula2) && $this->particula2) $cognoms[]=$this->particula2;
+            if(isset($this->apellido2) && $this->apellido2) $cognoms[]=$this->apellido2;
+
+            if($namelast){
+                if($cognoms) $ret=implode(" ", $cognoms).", ";
+                $ret.=$this->nombre;
+            }else{
+                $ret=$this->nombre;
+                if($cognoms) $ret.=" ".implode(" ", $cognoms);
+            }
+            return $ret;
         }
 
+        public function setDomicilis($codigosDomicilio, $onlycodes=false){
+            $domicilis=$this->getDomicilis($onlycodes);
+            
+            if($codigosDomicilio){
+                if(!is_array($codigosDomicilio)) $codigosDomicilio=[$codigosDomicilio];
+
+                foreach($codigosDomicilio as $codigoDomicilio){
+                    $domicilis[]=[
+                        "codigoDomicilio" => intval($codigoDomicilio),
+                        "codigoTipoOcupacion" => Domicili::TIPO_OCUPACION_SECUNDARIA,
+                    ];
+                }
+            }
+
+            $this->l_domicilio=$domicilis;
+        }
+        
+
+        public function removeDomicili($codigoDomicili, $onlycodes=false){
+            $domicilis=$this->getDomicilis($onlycodes);
+            $ret=[];
+
+            foreach($domicilis as $domicili){
+                if($domicili["codigoDomicilio"] != $codigoDomicili) $ret[]=$domicili;
+            }
+
+            $this->l_domicilio=$ret;
+        }
+
+        public function getDomicilis($onlycodes=false){
+            try{
+                $domicilis=AccedeTercers::getDomicilisTercer($this->codigoTercero);
+                if($onlycodes){
+                    $ret=[];
+                    foreach($domicilis as $domicili){
+                        $ret[]=[
+                           "codigoDomicilio" => intval($domicili->codigoDomicilio),
+                           "codigoTipoOcupacion" => intval($domicili->codigoTipoOcupacion)?intval($domicili->codigoTipoOcupacion):Domicili::TIPO_OCUPACION_SECUNDARIA,
+                        ];
+
+                    }
+                    return $ret;
+                }else{
+                    return $domicilis;
+                }
+            }catch(AccedeNoResultsException $e){
+                return [];
+            }
+        }
 
     }

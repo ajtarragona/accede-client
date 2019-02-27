@@ -43,11 +43,38 @@ class AccedeObject {
 	}
 
 	public function fromArray($array){
-		//_dump($array);
-    	foreach($array as $key=>$value){
-    		$this->$key=$value;
-    	}
+        //_dump($array);
+        foreach($array as $key=>$value){
+            $this->$key=$value;
+        }
     }
+
+
+    public static function castAll($arr){
+        $ret=array();
+        foreach($arr as $object) $ret[]=self::cast($object);
+        return $ret;
+    }
+
+    public static function cast($array)
+    {
+        
+        $classname=get_called_class();
+        $classattributes= get_class_vars($classname);
+        $new = new $classname;
+        
+        foreach($array as $property => $value)
+        {
+            
+            if(array_key_exists($property, $classattributes)){// && !is_array($value) && ! is_object($value)){
+                $new->$property = $value;
+            }
+            
+        }
+
+        return $new;
+    }
+
 
 	public function toSML(){
 		$ret=AccedeHelper::toSML($this,$this->SMLNAME);
@@ -80,6 +107,15 @@ class AccedeObject {
          }else{
             return false;
          }
+    }
+
+
+    public static function parseUpdate($response, $return=false){
+         return $response->successUpdate();
+    }
+
+    public static function parseDelete($response, $return=false){
+         dd($response);
     }
 
     public static function parseResponse($response, $single=false){

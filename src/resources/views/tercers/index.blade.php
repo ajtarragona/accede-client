@@ -28,14 +28,27 @@
 		@col(['size'=>3])
 			{{-- @dump($domicilisfilter) --}}
 
-			@form(['method'=>'POST','action'=>route('accede.tercer.dosearch')])
-				{{-- @dump($domicilisfilter) --}}
-				@include('accede-client::tercers._filterfields')
+			@include('accede-client::tercers._filterfields')
 				
+				<hr/>
+				<h3>Autocomplete</h3>
 
-				@button(['type'=>'submit','size'=>'sm']) @icon('search') Buscar @endbutton
+			@input([
+				'label'=>'Tercer', 
+				'name'=>'codigoTercero',
+				'class'=> 'field_tercer autocomplete form-control',
+				'value' => '',
+				'data' => [
+					'multiple'=> false,
+					'url' => route('accede.tercers.combo'),
+					'value' => '',
+					'savevalue' => true,
+					'showvalue' => false,
+					'min-length' => 3
+				],
+				'icon' => 'user'
+			])
 
-			@endform
 		@endcol
 		@col(['size'=>9])
 			@include('accede-client::tercers._searchresults')

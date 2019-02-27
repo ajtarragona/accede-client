@@ -25,10 +25,26 @@
 @section('body')
 
 
-
+@row
+	@col(['size'=>5])
+		@form(['method'=>'POST','action'=>route('accede.tercer.save',[$tercer->codigoTercero])])
 	
-		@include('accede-client::tercers._fields',["readonly"=>true])
+			@include('accede-client::tercers._fields',["readonly"=>true])
 		
-	
+			@button(['type'=>'submit','size'=>'sm']) @icon('disk') Guardar @endbutton
+
+		@endform
+		
+	@endcol
+
+
+	@col(['size'=>7])
+		@include('accede-client::tercers._domicilis',["domicilis"=>$tercer->getDomicilis()])
+
+		    <a href="{{ route('accede.tercer.domicilis.addmodal',[$tercer->codigoTercero]) }}" class="btn btn-light btn-sm tgn-modal-opener" data-size="lg">@icon('plus') Afegir domicili</a>
+
+
+	@endcol
+@endrow
 
 @endsection
