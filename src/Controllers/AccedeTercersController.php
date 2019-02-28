@@ -50,11 +50,11 @@ class AccedeTercersController extends Controller{
 				$tercers=AccedeTercers::getTercerByDocument($tercersfilter["documento"], $tercersfilter["codigoTipoDocumento"]);
 				
 			}else if($tercersfilter["busqueda"]){
-				$tercers=AccedeTercers::searchTercersByFullName($tercersfilter["busqueda"]);
-				
+				$tercers=AccedeTercers::searchTercersByParts($tercersfilter["busqueda"]);
 			}
 
 			$params["tercers"]=$tercers;
+			//dd($tercers);
 			
 			return view("accede-client::tercers.index",$params);
 
@@ -137,6 +137,27 @@ class AccedeTercersController extends Controller{
 			
 			return redirect()->route('accede.tercer.search')
 	                    ->with(['success'=>"Tercer ".$codigoTercero. "creat"]);
+	    }catch(AccedeErrorException $e){
+			return redirect()
+                ->route('accede.tercer.search')
+                ->with(['error'=>"ACCEDE: ".$e->getMessage()]); 
+		}catch(Exception $e){
+           return redirect()
+                ->route('accede.tercer.search')
+                ->with(['error'=>"Error creant tercer"]); 
+        }    
+
+
+	}
+
+
+	public function delete($codigoTercero){
+		try{
+			
+			$ret=AccedeTercers::deleteTercer($codigoTercero);
+			
+			return redirect()->route('accede.tercer.search')
+	                    ->with(['success'=>"Tercer ".$codigoTercero. "esborrat"]);
 	    }catch(AccedeErrorException $e){
 			return redirect()
                 ->route('accede.tercer.search')

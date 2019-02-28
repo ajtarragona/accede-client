@@ -21,6 +21,7 @@ Route::group(['prefix' => 'ajtarragona/accede','middleware' => ['web']	], functi
 	Route::post('/tercer/search', 'Ajtarragona\Accede\Controllers\AccedeTercersController@dosearch')->name('accede.tercer.dosearch');
 	Route::get('/tercer/{codigoTercero}', 'Ajtarragona\Accede\Controllers\AccedeTercersController@show')->name('accede.tercer.show');
 	Route::post('/tercer/{codigoTercero}', 'Ajtarragona\Accede\Controllers\AccedeTercersController@save')->name('accede.tercer.save');
+	Route::delete('/tercer/{codigoTercero}', 'Ajtarragona\Accede\Controllers\AccedeTercersController@delete')->name('accede.tercer.delete');
 	Route::post('/tercer', 'Ajtarragona\Accede\Controllers\AccedeTercersController@store')->name('accede.tercer.store');
 	
 	Route::get('/tercer/{codigoTercero}/domicilis/add', 'Ajtarragona\Accede\Controllers\AccedeTercersController@newdomicili')->name('accede.tercer.domicilis.addmodal');

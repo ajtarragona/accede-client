@@ -23,44 +23,45 @@
 	@endrow
 
 
+	@input([
+		'label'=>'Nombre', 
+		'name'=>'nombre',
+		'value' => $tercer->nombre,
+	])
+
 	@row(['class'=>'gap-0'])	
 		
-			@col(['size'=>4])
+						
+			@col(['size'=>3])
 				@input([
-					'label'=>'Nombre', 
-					'name'=>'nombre',
-					'value' => $tercer->nombre,
-				])
-			@endcol
-			
-			@col(['size'=>1])
-				@input([
-					'label'=>'P1', 
+					'label'=>'Particula 1', 
 					'name'=>'particula1',
 					'value' => $tercer->particula1,
 				])
 			@endcol
 
 
-			@col(['size'=>3])
+			@col(['size'=>9])
 				@input([
 					'label'=>'Apellido 1', 
 					'name'=>'apellido1',
 					'value' => $tercer->apellido1,
 				])
 			@endcol
-			
+	@endrow		
 
-			@col(['size'=>1])
+
+	@row(['class'=>'gap-0'])	
+			@col(['size'=>3])
 				@input([
-					'label'=>'P2', 
+					'label'=>'Particula 2', 
 					'name'=>'particula2',
 					'value' => $tercer->particula2,
 				])
 			@endcol
 
 
-			@col(['size'=>3])
+			@col(['size'=>9])
 				@input([
 					'label'=>'Apellido 2', 
 					'name'=>'apellido2',

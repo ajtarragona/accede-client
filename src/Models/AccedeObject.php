@@ -115,7 +115,7 @@ class AccedeObject {
     }
 
     public static function parseDelete($response, $return=false){
-         dd($response);
+        return $response->successUpdate();
     }
 
     public static function parseResponse($response, $single=false){

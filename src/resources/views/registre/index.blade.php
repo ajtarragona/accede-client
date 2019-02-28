@@ -9,6 +9,15 @@
 @endsection
 
 
+@section('breadcrumb')
+    @breadcrumb([
+    	'items'=> [
+    		['name'=>__("Registre")]
+    	]
+    ])
+	
+@endsection
+
 @section('body')
 @row
 	

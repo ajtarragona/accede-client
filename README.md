@@ -30,12 +30,17 @@ php artisan vendor:publish --tag=ajtarragona-accede-config
 
 Això copiarà l'arxiu a `config/accede.php`.
 
-Publicar configuració Laroute
-php artisan vendor:publish --provider='Lord\Laroute\LarouteServiceProvider'
-posar rutes absolutes a app/config/laroute.php
-Publicar scripts laroute cada vegada que canviem una ruta
-php artisan laroute:generate
 
+Publicar configuració Laroute
+```bash
+php artisan vendor:publish --provider='Lord\Laroute\LarouteServiceProvider'
+```
+posar rutes absolutes a `app/config/laroute.php`
+
+Publicar scripts laroute cada vegada que canviem una ruta
+```bash
+php artisan laroute:generate
+```
 
 
 

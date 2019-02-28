@@ -110,6 +110,26 @@ class AccedeTercersProvider extends AccedeProvider{
 	}
 
 
+	/*busca por las diferentes palabras y devuelve la intereseccion (que contenga todas)*/
+	public function searchTercersByParts($parts){
+		if(!is_array($parts)) $parts=explode(" ", $parts);
+			
+		$tercers=collect();
+		foreach($parts as $part){
+			if($part){
+				//dump($part);
+				$tmp=$this->searchTercersByFullName($part);
+				//dump($tmp);
+				if(!$tercers->isEmpty()) $tercers=$tercers->intersect($tmp);
+				else $tercers=collect($tmp);
+				//dump($tercers);
+			}
+		}
+		return $tercers;
+		
+	}
+
+
 
 	public function getTercerByPasaporte($pasaporte){
 		$params=array(
@@ -192,13 +212,18 @@ class AccedeTercersProvider extends AccedeProvider{
 	}
 
 
-
+	//busca por nombre aprellidos y por DNI, los fusiona y luego devuelvo resultados unicos
 	public function searchTercers($filter){
 
 		$tercers=collect();
 		//dump($filter);
 		try{
-			$tercers=collect($this->searchTercersByFullName($filter));
+			if(str_contains($filter," ")){
+				//dd($filter);
+				$tercers=$this->searchTercersByParts($filter);
+			}else{
+				$tercers=collect($this->searchTercersByFullName($filter));
+			}
 			//dump($tercers);
 		}catch(AccedeNoResultsException | Exception $e){
 
@@ -238,7 +263,7 @@ class AccedeTercersProvider extends AccedeProvider{
 		
 		$params=array(
 			"codigoTipoDocumento" => isset($tercer->codigoTipoDocumento)?intval($tercer->codigoTipoDocumento):self::TIPO_DOCUMENTO_NIF,
-			"documento" => isset($tercer->documento)?$tercer->documento:'',
+			"documento" => isset($tercer->documento)?strtoupper($tercer->documento):'',
 			"nombre" => isset($tercer->nombre)?$tercer->nombre:'',
 			"particula1" => isset($tercer->particula1)?$tercer->particula1:'',
 			"apellido1" => isset($tercer->apellido1)?$tercer->apellido1:'',
@@ -262,7 +287,7 @@ class AccedeTercersProvider extends AccedeProvider{
 		$params=array(
 			"codigoTercero" => intval($tercer->codigoTercero),
 			"codigoTipoDocumento" => isset($tercer->codigoTipoDocumento)?intval($tercer->codigoTipoDocumento):self::TIPO_DOCUMENTO_NIF,
-			"documento" => isset($tercer->documento)?$tercer->documento:'',
+			"documento" => isset($tercer->documento)?strtoupper($tercer->documento):'',
 			"nombre" => isset($tercer->nombre)?$tercer->nombre:'',
 			"particula1" => isset($tercer->particula1)?$tercer->particula1:'',
 			"apellido1" => isset($tercer->apellido1)?$tercer->apellido1:'',
@@ -292,7 +317,7 @@ class AccedeTercersProvider extends AccedeProvider{
 
 	public function deleteTercer($codigoTercero){
 		$params=[
-			"codigoTercero"=> $codigoTercero
+			"codigoTercero"=> intval($codigoTercero)
 		];
 		$response=$this->sendRequest("TER","DEL",$params);
 		return TercerAccede::parseDelete($response);
