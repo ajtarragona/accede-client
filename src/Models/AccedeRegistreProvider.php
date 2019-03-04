@@ -16,10 +16,12 @@ class AccedeRegistreProvider extends AccedeProvider{
 		$params=[
 			"eje" => intval($eje),
 			"efecto_registral" => 1,
-			"documento" => $documento
+			"interesado" => [
+				"documento"=> $documento
+			]
 		];
 		//dd($params);
-		$response=$this->sendRequest("REG","LST",$params,["apl"=>"REG"]);//,["excluded"=>["documento"]]);
+		$response=$this->sendRequest("REG","LST",$params,["apl"=>"REG","excluded"=>["documento"]]);
 		//dd($response);
 		$ret=Anotacion::parseResponse($response);
 		//dd($ret);
@@ -32,7 +34,7 @@ class AccedeRegistreProvider extends AccedeProvider{
 			"tip" => $es,
 			"l_numero" => [
 				"numero" => [
-					"GENERAL"=> intval($numero)
+					"general"=> intval($numero)
 				]
 			]
 		];

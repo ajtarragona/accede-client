@@ -41,10 +41,15 @@ class AccedeRegistreController extends Controller{
 				$registres= AccedeRegistre::getAnotacionPorDni($registerfilter->eje, $registerfilter->documento);
 				//dd($registres);
 			}
+			return view("accede-client::registre.index",compact('registres','registerfilter'));
+			
+		}catch(AccedeNoResultsException $e){
+			return view("accede-client::registre.index",compact('registres','registerfilter'));
+
 		}catch(AccedeErrorException $e){
+			return view("accede-client::registre.index",compact('registres','registerfilter'));
 
 		}
-		return view("accede-client::registre.index",compact('registres','registerfilter'));
 	}
 
 

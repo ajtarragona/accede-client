@@ -57,7 +57,8 @@ class Request  extends AccedeObject{
 	public function send(){
 		$sml=$this->toSML();
 		//dd($sml);
-		if(config("accede.debug")) Log::debug('Accede Request: \n'.$sml);
+		if(config("accede.debug")) Log::debug('Calling: '. $this->wsurl );
+		if(config("accede.debug")) Log::debug('Request: '. PHP_EOL .$sml);
 		//$sml="<![CDATA[".$sml."]]>";
 		
 		//_dump(htmlentities($sml));
@@ -69,9 +70,10 @@ class Request  extends AccedeObject{
 				return AccedeResponse::errorReponse(1,"Error de connexió al WS ACCEDE");
 			}
 
+
 			$ret=$this->client->__soapCall(self::SERVICIO, $params);
 			
-			if(config("accede.debug")) Log::debug('Accede Response: \n'.$ret);
+			if(config("accede.debug")) Log::debug('Response: '.PHP_EOL.$ret);
 
 			$ret=AccedeHelper::decodeArray(AccedeHelper::fromSML($ret));
 			//dd($ret);

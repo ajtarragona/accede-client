@@ -36,7 +36,7 @@ class AccedeVialerController extends Controller{
 
 
 			/*quitar en producció!!*/
-			Artisan::call('vendor:publish', [
+			/*Artisan::call('vendor:publish', [
 			    '--tag' => 'ajtarragona-accede-assets', 
 			    '--force' => 1
 			]);
@@ -44,7 +44,7 @@ class AccedeVialerController extends Controller{
 			Artisan::call('vendor:publish', [
 			    '--tag' => 'ajtarragona-web-components-assets', 
 			    '--force' => 1
-			]);
+			]);*/
 			/**/
 
 			return view("accede-client::vialer",compact('currentPais','currentProvincia','currentMunicipi'));
