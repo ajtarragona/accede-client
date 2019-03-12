@@ -16,6 +16,7 @@ class AccedeRegistreProvider extends AccedeProvider{
 		$params=[
 			"eje" => intval($eje),
 			"efecto_registral" => 1,
+			"estado_anotacion" => "-3,-2,-1,0,1,2,3",
 			"interesado" => [
 				"documento"=> $documento
 			]
@@ -29,14 +30,35 @@ class AccedeRegistreProvider extends AccedeProvider{
 	}
 
 	public function getAnotacion($es, $eje, $numero){
+		//dump($numero);
+
+		$numeros = [];
+		if(!is_array($numero)){
+			if(str_contains($numero,"-")){
+				$range=explode("-",$numero);
+				$numeros=range($range[0],$range[1]);
+			}else if(str_contains($numero,",")){
+				$numeros=explode(",",$numero);
+			}else{
+				$numeros=[$numero];
+			}
+		}else{
+			$numeros=$numero;
+		}
+		$lnumero=[];
+		foreach($numeros as $num){
+			$lnumero[]=[
+				"general" => intval($num)
+			];
+		}
+
+
 		$params=[
 			"eje" => intval($eje),
+			"efecto_registral" => 1,
 			"tip" => $es,
-			"l_numero" => [
-				"numero" => [
-					"general"=> intval($numero)
-				]
-			]
+			"estado_anotacion" => "-3,-2,-1,0,1,2,3",
+			"l_numero" => $lnumero
 		];
 
 		//dd($params);

@@ -42,7 +42,7 @@
 			])
 
 			@input(["name"=>"eje","label"=>"Ejercicio",'value' =>  $registerfilter->eje ])
-			@input(["name"=>"numero","label"=>"Número",'value' =>  $registerfilter->numero ])
+			@input(["name"=>"numero","label"=>"Número",'value' =>  $registerfilter->numero ,"helptext"=>"Numero individual, varios separats per comes o un rang separat per un guió"])
 
 			@input(["name"=>"documento","label"=>"DNI",'value' =>  $registerfilter->documento ])
 
@@ -62,6 +62,7 @@
 						<th>Explicacion</th>
 						<th>Interesado</th>
 						<th>Destino</th>
+						<th>Estat</th>
 				</thead>
 				<tbody>
 					@foreach($registres as $anotacion)
@@ -90,6 +91,7 @@
 									@endforeach
 								@endif
 							</td>
+							<td>{{ $anotacion->estado_anotacion }}</td>
 						</tr>
 					@endforeach
 				</tbody>
