@@ -47,7 +47,7 @@ class AccedeVialerProvider extends AccedeProvider{
 
 	public function getPais($codigoPais) {	
 		$params=array(
-			"codigoPais" => $codigoPais,
+			"codigoPais" => intval($codigoPais),
 		);
 
 		$response=$this->sendRequest("PAI","LST",$params);

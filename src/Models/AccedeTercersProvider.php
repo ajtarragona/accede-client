@@ -32,6 +32,7 @@ class AccedeTercersProvider extends AccedeProvider{
 		);
 		$response=$this->sendRequest("TER","LST",$params);
 		$tercer=TercerAccede::parseSingle($response);
+		
 		unset($tercer->l_domicilio);
 		return $tercer;
 	} 
