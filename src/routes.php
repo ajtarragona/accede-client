@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['prefix' => 'ajtarragona/accede','middleware' => ['web']	], function () {
+Route::group(['prefix' => 'ajtarragona/accede','middleware' => ['web','auth','language']	], function () {
 	Route::get('/', 'Ajtarragona\Accede\Controllers\AccedeVialerController@home')->name('accede.home');
 	//Route::get('/domicili/new', 'Ajtarragona\Accede\Controllers\AccedeVialerController@create')->name('accede.domicili.create');
 	

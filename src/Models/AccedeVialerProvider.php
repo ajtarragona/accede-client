@@ -717,8 +717,7 @@ class AccedeVialerProvider extends AccedeProvider{
 					"name"=>$letter
 				];
 			}
-			
-
+		
 			//plantes
 			if(isset($domicili->codigoPlanta) &&  $domicili->codigoPlanta && !isset($plantes[$domicili->codigoPlanta]) ){
 				$plantes[$domicili->codigoPlanta]=[

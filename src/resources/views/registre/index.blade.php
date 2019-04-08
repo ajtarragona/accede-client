@@ -61,14 +61,14 @@
 						<th>Fecha</th>
 						<th>Explicacion</th>
 						<th>Interesado</th>
-						<th>Destino</th>
+						<th>Departament</th>
 						<th>Estat</th>
 				</thead>
 				<tbody>
 					@foreach($registres as $anotacion)
 						
 						<tr>
-							<td>{{ $anotacion->numero }}</td>
+							<td class="text-nowrap">{{ $anotacion->getMatricula() }}</td>
 							<td>{{ $anotacion->eje }}</td>
 							<td>{{ $anotacion->fecha }}</td>
 							<td>{{ $anotacion->explicacion }}</td>
@@ -85,10 +85,24 @@
 								@endif
 							</td>
 							<td>
-								@if($anotacion->l_destino)
-									@foreach($anotacion->l_destino as $destino)
-									{{ $destino["nombre_destino"] }} 
-									@endforeach
+								@if($anotacion->deEntrada())
+									{{-- @dump($anotacion->l_destino) --}}
+									@if($anotacion->l_destino)
+										@foreach($anotacion->l_destino as $destino)
+											@if(is_array($destino)) 
+												{{ isset($destino["nombre_destino"])?$destino["nombre_destino"]:(isset($destino["codigo_destino"])?$destino["codigo_destino"]:'-') }} 
+											@endif
+										@endforeach
+									@endif
+								@else
+									{{-- @dump($anotacion->l_origen) --}}
+									@if($anotacion->l_origen)
+										@foreach($anotacion->l_origen as $origen)
+											@if(is_array($origen))  
+												{{ isset($origen["nombre_origen"])?$origen["nombre_origen"]:(isset($origen["codigo_origen"])?$origen["codigo_origen"]:'-') }} 
+											@endif
+										@endforeach
+									@endif
 								@endif
 							</td>
 							<td>{{ $anotacion->estado_anotacion }}</td>

@@ -27,6 +27,17 @@
 
 		public $l_interesado;
 
+		public function deEntrada(){
+			return $this->tip== self::ENTRADA;
+		}
+		public function deSalida(){
+			return $this->tip== self::SALIDA;
+		}
+		
+
+		public function getMatricula(){
+			return $this->eje."-".$this->numero."-".$this->tip;
+		}
 
 		public function getInteresados(){
 			$ret=$this->l_interesado["interesado"];

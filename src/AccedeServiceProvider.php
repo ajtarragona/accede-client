@@ -49,7 +49,6 @@ class AccedeServiceProvider extends ServiceProvider
     public function register()
     {
        	
-
         //defino facades
         $this->app->bind('accedetercers', function(){
             return new \Ajtarragona\Accede\Models\AccedeTercersProvider;
