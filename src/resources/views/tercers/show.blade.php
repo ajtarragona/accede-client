@@ -43,31 +43,32 @@
 
 
 @section('body')
+	<div class="pt-3">
 
 
-@row
-	@col(['size'=>5])
-		@form([
-			'method'=>'POST',
-			'action'=>route('accede.tercer.save',[$tercer->codigoTercero])
-		])
-	
-			@include('accede-client::tercers._fields',["readonly"=>true])
-		
-			@button(['type'=>'submit','size'=>'sm','id'=>'save-tercer-btn','hidden'=>true]) @icon('disk') Guardar @endbutton
+		@row
+			@col(['size'=>5])
+				@form([
+					'method'=>'POST',
+					'action'=>route('accede.tercer.save',[$tercer->codigoTercero])
+				])
+			
+					@include('accede-client::tercers._fields',["readonly"=>true])
+				
+					@button(['type'=>'submit','size'=>'sm','id'=>'save-tercer-btn','hidden'=>true]) @icon('disk') Guardar @endbutton
 
-		@endform
-		
-	@endcol
-
-
-	@col(['size'=>7])
-		@include('accede-client::tercers._domicilis',["domicilis"=>$tercer->getDomicilis()])
-
-		    <a href="{{ route('accede.tercer.domicilis.addmodal',[$tercer->codigoTercero]) }}" class="btn btn-light btn-sm tgn-modal-opener" data-size="lg">@icon('plus') Afegir domicili</a>
+				@endform
+				
+			@endcol
 
 
-	@endcol
-@endrow
+			@col(['size'=>7])
+				@include('accede-client::tercers._domicilis',["domicilis"=>$tercer->getDomicilis()])
 
+				    <a href="{{ route('accede.tercer.domicilis.addmodal',[$tercer->codigoTercero]) }}" class="btn btn-light btn-sm tgn-modal-opener" data-size="lg">@icon('plus') Afegir domicili</a>
+
+
+			@endcol
+		@endrow
+	</div>
 @endsection

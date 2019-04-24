@@ -16,6 +16,8 @@ class AccedeServiceProvider extends ServiceProvider
     public function boot()
     {
         
+        
+
         //vistas
         $this->loadViewsFrom(__DIR__.'/resources/views', 'accede-client');
         
@@ -38,6 +40,9 @@ class AccedeServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/public' => public_path('vendor/ajtarragona'),
         ], 'ajtarragona-accede-assets');
+
+
+
        
     }
 
@@ -48,7 +53,9 @@ class AccedeServiceProvider extends ServiceProvider
      */
     public function register()
     {
-       	
+       	//registro middleware
+        $this->app['router']->aliasMiddleware('accede-backend', \Ajtarragona\Accede\Middlewares\AccedeBackend::class);
+
         //defino facades
         $this->app->bind('accedetercers', function(){
             return new \Ajtarragona\Accede\Models\AccedeTercersProvider;

@@ -21,7 +21,7 @@
 
 
 @section('body')
-
+	<div class="pt-3">
 		
 		@form(['method'=>'POST','action'=>route('accede.home')])
 			<div 
@@ -204,7 +204,7 @@
 			</div>
 			
 		@endform
-
+	</div>
 @endsection
 
 

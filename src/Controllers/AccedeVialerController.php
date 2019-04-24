@@ -22,6 +22,7 @@ class AccedeVialerController extends Controller{
 
 
 	public function home(){
+		
 		try{
 
 			//$paisos=AccedeVialer::getAllPaisos();

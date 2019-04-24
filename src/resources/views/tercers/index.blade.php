@@ -23,6 +23,7 @@
 @endsection
 
 @section('body')
+<div class="pt-3">
 
 	@row
 		@col(['size'=>3])
@@ -55,7 +56,7 @@
 		@endcol
 	@endrow
 
-		
+</div>		
 
 @endsection
 

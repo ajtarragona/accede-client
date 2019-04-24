@@ -24,11 +24,9 @@
 
 @section('body')
 
-
-
-	
+	<div class="pt-3">
 		@include('accede-client::domicilis._fields',["readonly"=>true])
-		
+	</div>	
 	
 
 @endsection

@@ -20,26 +20,27 @@
             
 
 @section('body')
+	<div class="pt-3">
 
-@row
-	@col(['size'=>3])
-		@include('accede-client::menu')
-	@endcol
+		@row
+			@col(['size'=>3])
+				@include('accede-client::menu')
+			@endcol
 
 
-	@col(['size'=>9])
-	
-		@form(['method'=>'POST','action'=>route('accede.domicili.store')])
-	
-			@include('accede-client::domicilis._fields',["readonly"=>false])
-		
-			@button(['type'=>'submit','size'=>'sm']) @icon('check') Crear @endbutton
+			@col(['size'=>9])
+			
+				@form(['method'=>'POST','action'=>route('accede.domicili.store')])
+			
+					@include('accede-client::domicilis._fields',["readonly"=>false])
+				
+					@button(['type'=>'submit','size'=>'sm']) @icon('check') Crear @endbutton
 
-		@endform
-		
-	@endcol
-@endrow
-
+				@endform
+				
+			@endcol
+		@endrow
+	</div>
 @endsection
 
 

@@ -1,19 +1,18 @@
-@extends('ajtarragona-web-components::layout/master-sidebar')
+@extends('ajtarragona-web-components::layout/master')
 
 @section('title')
 	@lang('Error Accede')
 @endsection
 
-@section('menu')
-   @include('accede-client::menu')
-@endsection
 
 @section('body')
 
+	@container(['fluid'=>false,'class'=>'pt-5'])
 		@alert(['type'=>'danger'])
-			{{ $error }}
+			{!! $error !!}
 		@endalert
-
+	@endcontainer
+	
 
 @endsection
 

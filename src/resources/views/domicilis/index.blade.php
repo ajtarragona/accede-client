@@ -23,26 +23,27 @@
 @endsection
 
 @section('body')
+	<div class="pt-3">
 
-	@row
-		@col(['size'=>3])
-			{{-- @dump($domicilisfilter) --}}
-
-			@form(['method'=>'POST','action'=>route('accede.domicili.dosearch')])
+		@row
+			@col(['size'=>3])
 				{{-- @dump($domicilisfilter) --}}
-				@include('accede-client::domicilis._fields',["domicili"=>$domicilisfilter,"readonly"=>false,"small"=>true])
-				
 
-				@button(['type'=>'submit','size'=>'sm']) @icon('search') Buscar @endbutton
+				@form(['method'=>'POST','action'=>route('accede.domicili.dosearch')])
+					{{-- @dump($domicilisfilter) --}}
+					@include('accede-client::domicilis._fields',["domicili"=>$domicilisfilter,"readonly"=>false,"small"=>true])
+					
 
-			@endform
+					@button(['type'=>'submit','size'=>'sm']) @icon('search') Buscar @endbutton
+
+				@endform
+				@endcol
+			@col(['size'=>9])
+				@include('accede-client::domicilis._searchresults')
 			@endcol
-		@col(['size'=>9])
-			@include('accede-client::domicilis._searchresults')
-		@endcol
-	@endrow
+		@endrow
 
-		
+	</div>	
 
 @endsection
 
