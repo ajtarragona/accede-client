@@ -28,7 +28,8 @@
             "aliases": {
                 "AccedeTercers" : "Ajtarragona\\Accede\\Facades\\AccedeTercers",
                 "AccedeVialer" : "Ajtarragona\\Accede\\Facades\\AccedeVialer",
-                "AccedeRegistre" : "Ajtarragona\\Accede\\Facades\\AccedeRegistre"
+                "AccedeRegistre" : "Ajtarragona\\Accede\\Facades\\AccedeRegistre",
+                "Firmadoc" : "Ajtarragona\\Accede\\Facades\\Firmadoc"
         
             }
         }

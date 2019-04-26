@@ -69,6 +69,10 @@ class AccedeServiceProvider extends ServiceProvider
             return new \Ajtarragona\Accede\Models\AccedeRegistreProvider;
         });
 
+        $this->app->bind('firmadoc', function(){
+            return new \Ajtarragona\Accede\Models\FirmadocProvider;
+        });
+
 
         //helpers
         foreach (glob(__DIR__.'/Helpers/*.php') as $filename){
