@@ -109,6 +109,7 @@ Funció | Paràmetres | Retorn
 **searchTercersBySurname1** | `surname`: que contingui el primer cognom del tercer | Un array d'objectes `Tercer`
 **searchTercersBySurname2** | `surname`: que contingui el segon cognom del tercer | Un array d'objectes `Tercer`
 **searchTercersBySurnames** | `surname1`: que contingui el primer cognom del tercer<br/>`surname2`: que contingui el segon cognom del tercer | Un array d'objectes `Tercer`
+**searchTercersByParts** | `filter`: agafa les parts de l'string passat (separat per espais) i busca a nom i a cognoms i interseca | Un array d'objectes `Tercer`
 **searchTercersByFullName** | `filter`: que es contingui a nom o cognoms | Un array d'objectes `Tercer`
 **getTercerByPasaporte** | `pasaporte`: que el passaport sigui igual | Un array d'objectes `Tercer`
 **getTercerByTarjetaResidencia** | `tresidencia`: que la tarjeta sigui igual | Un array d'objectes `Tercer`
