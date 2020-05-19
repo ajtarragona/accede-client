@@ -169,8 +169,10 @@ class AccedeVialerProvider extends AccedeProvider{
 			"busquedaExacta" => AccedeObject::ACCEDE_BOOL_FALSE,
 
 		);
+		// dd($params);
 
 		$response=$this->sendRequest("MUN","LST",$params);
+		// dd($response);
 		return Municipi::parseResponse($response);
 	}
 

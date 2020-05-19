@@ -2,7 +2,7 @@
 
 namespace Ajtarragona\Accede\Controllers; 
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Ajtarragona\Accede\Models\AccedeTercersProvider;
 use Ajtarragona\Accede\Models\AccedeVialerProvider;
 use AccedeTercers; //facade

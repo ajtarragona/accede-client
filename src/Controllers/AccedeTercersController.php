@@ -2,7 +2,7 @@
 
 namespace Ajtarragona\Accede\Controllers; 
 
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Ajtarragona\Accede\Models\Beans\Domicili;
 use Ajtarragona\Accede\Models\Beans\Tercer;
 use Ajtarragona\Accede\Models\AccedeTercersProvider;
