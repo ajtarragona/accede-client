@@ -2,6 +2,8 @@
 
 namespace Ajtarragona\Accede\Models\Helpers; 
 use Ajtarragona\Accede\Models\AccedeObject;
+use Illuminate\Support\Str;
+
 
 class AccedeHelper{
 
@@ -47,7 +49,7 @@ class AccedeHelper{
 					$key = "node_". $key;
 				}
 
-				if(starts_with($key, "l_")){
+				if(Str::startsWith($key, "l_")){
 					$singlekey=str_replace("l_", "", $key);
 					$xml.= "$tabs1<$key>\n";
 					if (is_array($value) || is_object($value)){
@@ -188,7 +190,7 @@ class AccedeHelper{
 					$key = "node_". $key;
 				}
 	 	
-	 			if(starts_with($key, "l_")){
+	 			if(Str::startsWith($key, "l_")){
 					//$singlekey=str_replace("l_", "", $key);
 					$ret[$key]= [];
 					if (is_array($value) || is_object($value)){
