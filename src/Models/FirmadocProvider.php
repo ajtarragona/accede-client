@@ -76,7 +76,6 @@ class FirmadocProvider extends AccedeProvider
     {
         $document = FirmadocDocument::cast($array);
 
-        //$params=TercerAccede::toArray($tercer);
         if (isset($document->lngExpId)) {
             $params = array(
                 "binDocumento"       => $document->binDocumento,
