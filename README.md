@@ -1,4 +1,4 @@
-# ACCEDE (Tercers i Vialer) Client for Laravel 5.6
+# ACCEDE (Tercers, Vialer i Firmadoc) Client for Laravel 5.6
 
 
 Paquet d'accés al WS de Accede (Aytos) per a **Tercers** i **Vialer**
@@ -55,10 +55,12 @@ Ho pots fer de les següents maneres:
 ```php
 use AccedeTercers;
 use AccedeVialer;
+use Firmadoc;
 ...
 public function test(){
 	$tercer=AccedeTercers::getTercerById(123456);
 	$vies=AccedeVialer::getAllVies();
+	$tipusdoc=Firmadoc::getTipusDocument(1234);
 	...
 }
 ```
@@ -68,7 +70,8 @@ En aquest cas, per facilitar-ne l'ús, es pot registrar l'alias de la Facade a l
 'aliases' => [
 	...
 	'AccedeTercers' => Ajtarragona\Accede\Facades\AccedeTercers::class,
-	'AccedeVialer' => Ajtarragona\Accede\Facades\AccedeVialer::class
+	'AccedeVialer' => Ajtarragona\Accede\Facades\AccedeVialer::class,
+	'Firmadoc' => Ajtarragona\Accede\Facades\Firmadoc::class
 ]
 
 ```
@@ -80,10 +83,12 @@ Als teus controlladors, helpers, model:
 ```php
 use Ajtarragona\Accede\Models\AccedeTercersProvider;
 use Ajtarragona\Accede\Models\AccedeVialerProvider;
+use Ajtarragona\Accede\Models\FirmadocProvider;
 ...
 public function test(AccedeTercersProvider $accedetercers, AccedeVialerProvider $accedevialer){
 	$tercer=$accedetercers->getTercerById(123456);
 	$vies=$accedevialer->getAllVies();
+	$tipusdoc=Firmadoc::getTipusDocument(1234);
 	...
 }
 ```
@@ -94,6 +99,7 @@ public function test(AccedeTercersProvider $accedetercers, AccedeVialerProvider 
 public function test(){
 	$tercer=accedetercers()->getTercerById(123456);
 	$vies=accedevialer()->getAllVies();
+	$tipusdoc=firmadoc()->getTipusDocument(1234);
 	...
 }
 ```
@@ -165,7 +171,10 @@ Funció | Paràmetres | Retorn
 
 > En tots els casos es retorna una excepció `AccedeErrorException` si falla o `AccedeNoResultsException` si no es troba res.
 
-
+### Firmadoc
+Funció | Paràmetres | Retorn 
+--- | --- | --- 
+**createDocument** | `params=[]` | Id del document
 ## API Json
 ```php
 
